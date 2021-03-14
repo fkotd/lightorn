@@ -5,21 +5,20 @@
 
 void PlayerControlSystem::Update(World* world)
 {
-	Signature playerControlSystemSignature = GetSignature();
-	std::set<Entity> entities = world->Find(playerControlSystemSignature);
+	std::set<Entity> entities = world->Find(GetSignature());
 
 	for (auto entity : entities) {
-		Position position = world->GetComponent<Position>(entity);
-		Renderable renderable = world->GetComponent<Renderable>(entity);
+		Position* position = world->GetComponent<Position>(entity);
+		Renderable* renderable = world->GetComponent<Renderable>(entity);
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 			// TODO : fix the name of the component positon
-			position.position.x -= 50.0f;
+			position->position.x -= 10.0f;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-			position.position.x += 50.0f;
+			position->position.x += 10.0f;
 		}
 
-		renderable.shape->setPosition(position.position);
+		renderable->shape->setPosition(position->position);
 	}
 }

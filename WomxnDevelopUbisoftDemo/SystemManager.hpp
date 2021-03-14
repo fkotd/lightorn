@@ -70,9 +70,6 @@ public:
 	bool AcceptEntity(Signature entitySignature, Signature systemSignature)
 	{
 		// Each bit set to one in system signature must be set to one in entity signature
-		std::cout << "Entity signature" << " - " << entitySignature << "\n";
-		std::cout << "System signature" << " - " << systemSignature << "\n";
-		std::cout << "Logic &         " << " - " << (entitySignature & systemSignature) << "\n";
 		return (entitySignature & systemSignature) == systemSignature;
 	}
 

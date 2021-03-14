@@ -12,7 +12,6 @@ void SpawnSystem::Spawn(World* world)
 void SpawnSystem::SpawnPlayer(World* world)
 {
 	Entity player = world->AddEntity();
-	std::cout << "Add player entity" << "\n";
 
 	sf::Color color = sf::Color::Magenta;
 	sf::Vector2f size = sf::Vector2f{ 100, 100 };
@@ -33,7 +32,6 @@ void SpawnSystem::SpawnPlayer(World* world)
 void SpawnSystem::SpawnElement(World* world)
 {
 	Entity groundEntity = world->AddEntity();
-	std::cout << "Add ground entity" << "\n";
 
 	sf::Color color = sf::Color::Cyan;
 	sf::Vector2f size = sf::Vector2f{ 1024, 100 };

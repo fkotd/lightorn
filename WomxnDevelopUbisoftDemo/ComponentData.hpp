@@ -15,7 +15,7 @@ public:
 		componentData.insert({ entity, component });
 	}
 
-	T GetComponent(Entity entity)
+	T* GetComponent(Entity entity)
 	{
 		auto it = componentData.find(entity);
 
@@ -23,7 +23,7 @@ public:
 			//return NULL;
 		//}
 
-		return it->second;
+		return &(it->second);
 	}
 
 private:

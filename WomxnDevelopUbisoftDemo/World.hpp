@@ -40,7 +40,7 @@ public:
 	}
 
 	template <typename T>
-	T GetComponent(Entity entity)
+	T* GetComponent(Entity entity)
 	{
 		return componentManager->GetComponent<T>(entity);
 	}
