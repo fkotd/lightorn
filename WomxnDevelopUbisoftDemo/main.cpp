@@ -30,6 +30,8 @@ int main()
 	}
 	std::cout << "Create ground entity (id = " << groundEntity << " signature = " << groundEntitySignature << ")\n";
 
+	Entity playerEntity = world.AddEntity();
+
 	// Register components
 
 	world.RegisterComponent<Position>();
@@ -57,20 +59,14 @@ int main()
 	// Add components to entities
 
 	// Initialize ground component attributes
-
-	float width = 100;
-	float height = 200;
-	float centerX = 900;
-	float centerY = 600;
-	sf::Color color = sf::Color{ 0, 1, 1 };
-	sf::Vector2f size = sf::Vector2f{ width, height };
-	sf::Vector2f center = sf::Vector2f{ centerX, centerY };
+	sf::Color color = sf::Color::Cyan;
+	sf::Vector2f size = sf::Vector2f{ static_cast<float>(APP_INIT_WINDOW_SIZE.x), 100 };
+	sf::Vector2f center = sf::Vector2f{ APP_INIT_WINDOW_SIZE.x / 2.0f, APP_INIT_WINDOW_SIZE.y - (size.y / 2.0f) };
 	sf::RectangleShape rectangle = sf::RectangleShape{};
 	rectangle.setSize(size);
 	rectangle.setOrigin(size * 0.5f);
 	rectangle.setPosition(center);
-
-	rectangle.setFillColor(sf::Color(0, 0, 0, 0));
+	rectangle.setFillColor(color);
 	rectangle.setOutlineThickness(1);
 	rectangle.setOutlineColor(sf::Color{ static_cast<uint8_t>(color.r * 255.0f), static_cast<uint8_t>(color.g * 255.0f), static_cast<uint8_t>(color.b * 255.0f) });
 
@@ -88,9 +84,27 @@ int main()
 	Renderable renderable = world.GetComponent<Renderable>(groundEntity);
 	std::cout << "Values of renderable component for the ground entity (width = " << renderable.size.x << " height = " << renderable.size.y << ")\n";
 
+	// Initialize player attributes
+
+	sf::Color playerColor = sf::Color::Magenta;
+	sf::Vector2f playerSize = sf::Vector2f{ 100, 100 };
+	sf::Vector2f playerCenter = sf::Vector2f{ APP_INIT_WINDOW_SIZE.x / 2.0f, APP_INIT_WINDOW_SIZE.y / 2.0f };
+	sf::CircleShape playerShape = sf::CircleShape{50};
+	//playerShape.setSize(playerSize);
+	playerShape.setOrigin(playerSize * 0.5f);
+	playerShape.setPosition(playerCenter);
+	playerShape.setFillColor(playerColor);
+	playerShape.setOutlineThickness(1);
+	playerShape.setOutlineColor(sf::Color{ static_cast<uint8_t>(playerColor.r * 255.0f), static_cast<uint8_t>(playerColor.g * 255.0f), static_cast<uint8_t>(playerColor.b * 255.0f) });
+
+	// Add components
+
+	world.AddComponent(playerEntity, Position{ playerCenter });
+	world.AddComponent(playerEntity, Renderable{ &playerShape, color, size });
+
 	// Call systems
 
-	sf::RenderWindow renderWindow{ sf::VideoMode(APP_INIT_WINDOW_SIZE.x, APP_INIT_WINDOW_SIZE.y), "My Game", sf::Style::Titlebar | sf::Style::Close };
+	sf::RenderWindow renderWindow{ sf::VideoMode(APP_INIT_WINDOW_SIZE.x, APP_INIT_WINDOW_SIZE.y), "Lightorn", sf::Style::Titlebar | sf::Style::Close };
 	renderWindow.setVerticalSyncEnabled(true);
 	renderWindow.setFramerateLimit(static_cast<uint32_t>(APP_MAX_FRAMERATE));
 	renderWindow.setActive();
