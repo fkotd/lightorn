@@ -6,6 +6,5 @@
 class RenderSystem : public System
 {
 public:
-	void Render(World* world, sf::RenderWindow& window);
+	void Render(World* world, sf::RenderWindow* window);
 };
-

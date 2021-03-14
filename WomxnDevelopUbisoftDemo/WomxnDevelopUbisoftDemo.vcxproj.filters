@@ -38,6 +38,12 @@
     <ClCompile Include="RenderSystem.cpp">
       <Filter>Game\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="SpawnSystem.cpp">
+      <Filter>Game\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="App.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -100,6 +106,12 @@
     </ClInclude>
     <ClInclude Include="ComponentData.hpp">
       <Filter>Game\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="App.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnSystem.hpp">
+      <Filter>Game\Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

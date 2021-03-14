@@ -86,16 +86,16 @@ public:
 
 		// The component does not exists or hasn't been registered
 		if (componentIdIterator == componentIds.end()) {
-			std::cout << "Component not found \n";
+			// TODO : log component not found
 			return;
 		}
 
 		// This is the first component of the entity
 		// TODO : move that in another function
 		if (entitySignatureIterator == entitySignatures.end()) {
-			std::cout << "Entity not found \n";
+			// TODO : log entity not found
 			Signature signature;
-			std::cout << "New signature " << signature << "\n";
+			// TODO : log the new signature
 			entitySignatures.insert({entity, signature});
 			entitySignatureIterator = entitySignatures.find(entity);
 		}
