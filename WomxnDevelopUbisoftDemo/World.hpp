@@ -68,8 +68,13 @@ public:
 	{
 		componentManager->AddComponent(entity, component);
 		
-		Signature entitySignature = componentManager->GetEntitySignature(entity);
-		systemManager->AddEntity(entity, entitySignature);
+		// Signature entitySignature = componentManager->GetEntitySignature(entity);
+		// systemManager->AddEntity(entity, entitySignature);
+	}
+
+	std::set<Entity> Find(Signature systemSignature)
+	{
+		return systemManager->Find(componentManager->GetEntitiesSignature(), systemSignature);
 	}
 
 private: 

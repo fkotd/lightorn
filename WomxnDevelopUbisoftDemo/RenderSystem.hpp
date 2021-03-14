@@ -1,6 +1,5 @@
 #pragma once
 
-#include "System.hpp"
 #include "World.hpp"
 
 class RenderSystem : public System

@@ -37,6 +37,7 @@ void App::Run()
 			}
 		}
 
+		playerControlSystem->Update(&world);
 		renderSystem->Render(&world, &window);
 	}
 }
@@ -50,14 +51,17 @@ void App::RegisterComponents()
 void App::RegisterSystems()
 {
 	spawnSystem = world.RegisterSystem<SpawnSystem>();
-
 	Signature spawnSystemSignature{};
 	world.SetSystemSignature<SpawnSystem>(spawnSystemSignature);
 
 	renderSystem = world.RegisterSystem<RenderSystem>();
-
 	Signature renderSystemSignature{};
-	renderSystemSignature.set(world.GetComponent<Position>());
 	renderSystemSignature.set(world.GetComponent<Renderable>());
 	world.SetSystemSignature<RenderSystem>(renderSystemSignature);
+
+	playerControlSystem = world.RegisterSystem<PlayerControlSystem>();
+	Signature playerControlSystemSignature{};
+	playerControlSystemSignature.set(world.GetComponent<Position>());
+	playerControlSystemSignature.set(world.GetComponent<Renderable>());
+	world.SetSystemSignature<PlayerControlSystem>(playerControlSystemSignature);
 }

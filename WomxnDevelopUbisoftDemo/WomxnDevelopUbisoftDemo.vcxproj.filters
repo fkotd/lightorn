@@ -44,6 +44,9 @@
     <ClCompile Include="App.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerControlSystem.cpp">
+      <Filter>Game\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -111,6 +114,9 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="SpawnSystem.hpp">
+      <Filter>Game\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerControlSystem.hpp">
       <Filter>Game\Systems</Filter>
     </ClInclude>
   </ItemGroup>

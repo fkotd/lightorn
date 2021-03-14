@@ -1,5 +1,6 @@
 #pragma once
 
+#include "PlayerControlSystem.hpp"
 #include "RenderSystem.hpp"
 #include "SpawnSystem.hpp"
 #include "World.hpp"
@@ -19,5 +20,6 @@ private:
 
 	std::shared_ptr<SpawnSystem> spawnSystem;
 	std::shared_ptr<RenderSystem> renderSystem;
+	std::shared_ptr<PlayerControlSystem> playerControlSystem;
 };
 

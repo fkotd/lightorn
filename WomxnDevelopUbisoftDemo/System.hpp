@@ -17,13 +17,13 @@ public:
 		return this->signature;
 	}
 
-	void AddEntity(Entity entity)
+	/*void AddEntity(Entity entity)
 	{
 		entities.insert(entity);
-	}
+	}*/
 
 protected:
-	std::set<Entity> entities;
+	// std::set<Entity> entities;
 
 private:
 	Signature signature;

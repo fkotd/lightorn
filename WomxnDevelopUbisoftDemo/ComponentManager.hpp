@@ -57,8 +57,8 @@ public:
 
 	Signature GetEntitySignature(Entity entity)
 	{
-		auto it = entitySignatures.find(entity);
-		if (it == entitySignatures.end()) {
+		auto it = entitiesSignature.find(entity);
+		if (it == entitiesSignature.end()) {
 			return NULL;
 		}
 
@@ -82,7 +82,7 @@ public:
 		// Update entity signature
 		const char* componentName = typeid(T).name();
 		auto componentIdIterator = componentIds.find(componentName);
-		auto entitySignatureIterator = entitySignatures.find(entity);
+		auto entitySignatureIterator = entitiesSignature.find(entity);
 
 		// The component does not exists or hasn't been registered
 		if (componentIdIterator == componentIds.end()) {
@@ -92,12 +92,12 @@ public:
 
 		// This is the first component of the entity
 		// TODO : move that in another function
-		if (entitySignatureIterator == entitySignatures.end()) {
+		if (entitySignatureIterator == entitiesSignature.end()) {
 			// TODO : log entity not found
 			Signature signature;
 			// TODO : log the new signature
-			entitySignatures.insert({entity, signature});
-			entitySignatureIterator = entitySignatures.find(entity);
+			entitiesSignature.insert({entity, signature});
+			entitySignatureIterator = entitiesSignature.find(entity);
 		}
 		
 		Component componentType = componentIdIterator->second;
@@ -110,11 +110,16 @@ public:
 		componentData->AddComponent(entity, component);
 	}
 
+	std::unordered_map<Entity, Signature> GetEntitiesSignature()
+	{
+		return entitiesSignature;
+	}
+
 private:
 	std::unordered_map<const char*, Component> componentIds{};
 	Component componentIdsCounter = 0;
 
-	std::unordered_map<Entity, Signature> entitySignatures{};
+	std::unordered_map<Entity, Signature> entitiesSignature{};
 
 	std::unordered_map<Component, std::shared_ptr<IComponentData>> componentsData{};
 };

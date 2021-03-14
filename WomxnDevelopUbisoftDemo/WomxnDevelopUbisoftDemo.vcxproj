@@ -214,6 +214,7 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Game\GameDemo.cpp" />
     <ClCompile Include="Game\MainCharacter.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PlayerControlSystem.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="SpawnSystem.cpp" />
   </ItemGroup>
@@ -232,6 +233,7 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Game\Door.h" />
     <ClInclude Include="Game\GameDemo.h" />
     <ClInclude Include="Game\MainCharacter.h" />
+    <ClInclude Include="PlayerControlSystem.hpp" />
     <ClInclude Include="Position.hpp" />
     <ClInclude Include="Renderable.hpp" />
     <ClInclude Include="RenderSystem.hpp" />
