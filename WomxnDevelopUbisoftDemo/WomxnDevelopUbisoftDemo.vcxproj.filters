@@ -47,6 +47,9 @@
     <ClCompile Include="PlayerControlSystem.cpp">
       <Filter>Game\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="PhysicSystem.cpp">
+      <Filter>Game\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -76,9 +79,6 @@
     </ClInclude>
     <ClInclude Include="Entity.hpp">
       <Filter>Game\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Position.hpp">
-      <Filter>Game\Components</Filter>
     </ClInclude>
     <ClInclude Include="Renderable.hpp">
       <Filter>Game\Components</Filter>
@@ -118,6 +118,15 @@
     </ClInclude>
     <ClInclude Include="PlayerControlSystem.hpp">
       <Filter>Game\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicSystem.hpp">
+      <Filter>Game\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBody.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Transformable.hpp">
+      <Filter>Game\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

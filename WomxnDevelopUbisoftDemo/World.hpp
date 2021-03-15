@@ -64,7 +64,7 @@ public:
 	}
 
 	template <typename T>
-	void AddComponent(Entity entity, T component)
+	void AddComponentToEntity(Entity entity, T component)
 	{
 		componentManager->AddComponent(entity, component);
 		

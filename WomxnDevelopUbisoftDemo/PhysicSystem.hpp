@@ -1,10 +1,10 @@
 #pragma once
 
+#include "System.hpp"
 #include "World.hpp"
 
-class PlayerControlSystem : public System
+class PhysicSystem : public System
 {
-public:
 	void Update(World* world, float deltaTime);
 };
 
