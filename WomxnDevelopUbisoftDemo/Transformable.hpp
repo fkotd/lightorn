@@ -2,6 +2,6 @@
 
 struct Transformable
 {
-	sf::Transformable transformable;
+	sf::Transformable transformable; // TODO : find another combination of name
 };
 

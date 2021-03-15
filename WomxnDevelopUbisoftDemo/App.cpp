@@ -44,6 +44,7 @@ void App::Run()
 		}
 
 		playerControlSystem->Update(&world, deltaTime);
+		physicSystem->Update(&world, deltaTime);
 		renderSystem->Render(&world, &window);
 
 		deltaTime = clock.getElapsedTime().asSeconds();
@@ -66,12 +67,20 @@ void App::RegisterSystems()
 	renderSystem = world.RegisterSystem<RenderSystem>();
 	Signature renderSystemSignature{};
 	renderSystemSignature.set(world.GetComponent<Renderable>());
-	world.SetSystemSignature<RenderSystem>(renderSystemSignature);
 
+	world.SetSystemSignature<RenderSystem>(renderSystemSignature);
 	playerControlSystem = world.RegisterSystem<PlayerControlSystem>();
 	Signature playerControlSystemSignature{};
 	playerControlSystemSignature.set(world.GetComponent<Transformable>());
-	playerControlSystemSignature.set(world.GetComponent<Renderable>());
+	playerControlSystemSignature.set(world.GetComponent<Renderable>()); // find a way to remove it
 	playerControlSystemSignature.set(world.GetComponent<RigidBody>());
 	world.SetSystemSignature<PlayerControlSystem>(playerControlSystemSignature);
+
+	physicSystem = world.RegisterSystem<PhysicSystem>();
+	physicSystem->SetGravity(sf::Vector2f({ 0.0f, 100.0f }));
+	Signature physicSystemSignature{};
+	physicSystemSignature.set(world.GetComponent<Transformable>());
+	physicSystemSignature.set(world.GetComponent<Renderable>()); // find a way to remove it 
+	physicSystemSignature.set(world.GetComponent<RigidBody>());
+	world.SetSystemSignature<PhysicSystem>(physicSystemSignature);
 }
