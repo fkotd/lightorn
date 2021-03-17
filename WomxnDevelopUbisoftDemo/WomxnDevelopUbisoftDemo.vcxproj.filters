@@ -128,6 +128,9 @@
     <ClInclude Include="Transformable.hpp">
       <Filter>Game\Components</Filter>
     </ClInclude>
+    <ClInclude Include="CameraCenter.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">

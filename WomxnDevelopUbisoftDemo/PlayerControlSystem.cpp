@@ -29,6 +29,6 @@ void PlayerControlSystem::Update(World* world, float deltaTime)
 
 		
 		transformable->transformable.move(rigidBody->velocity * deltaTime);
-		renderable->shape->setPosition(transformable->transformable.getPosition());
+		//renderable->shape->setPosition(transformable->transformable.getPosition());
 	}
 }

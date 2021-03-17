@@ -26,6 +26,17 @@ public:
 		return &(it->second);
 	}
 
+	T* GetComponentIfExists(Entity entity)
+	{
+		auto it = componentData.find(entity);
+
+		if (it == componentData.end()) {
+			return NULL;
+		}
+
+		return &(it->second);
+	}
+
 private:
 	std::unordered_map<Entity, T> componentData;
 };

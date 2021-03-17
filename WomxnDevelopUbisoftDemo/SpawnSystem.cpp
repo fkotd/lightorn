@@ -3,6 +3,7 @@
 #include "Transformable.hpp"
 #include "Renderable.hpp"
 #include "RigidBody.hpp"
+#include "CameraCenter.hpp"
 
 void SpawnSystem::Spawn(World* world)
 {
@@ -31,7 +32,7 @@ void SpawnSystem::SpawnPlayer(World* world)
 	world->AddComponentToEntity(player, Transformable{ transformable });
 	world->AddComponentToEntity(player, Renderable{ shape, color, size });
 	world->AddComponentToEntity(player, RigidBody{ velocity });
-
+	world->AddComponentToEntity(player, CameraCenter{});
 }
 
 void SpawnSystem::SpawnElement(World* world)

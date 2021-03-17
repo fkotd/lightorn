@@ -55,6 +55,16 @@ public:
 		return componentData->GetComponent(entity);
 	}
 
+	template <typename T>
+	T* GetComponentIfExists(Entity entity)
+	{
+		Component componentType = GetComponent<T>();
+
+		std::shared_ptr<ComponentData<T>> componentData = std::static_pointer_cast<ComponentData<T>>(componentsData[componentType]);
+
+		return componentData->GetComponentIfExists(entity);
+	}
+
 	Signature GetEntitySignature(Entity entity)
 	{
 		auto it = entitiesSignature.find(entity);

@@ -224,6 +224,7 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\external\imgui-master\imgui_internal.h" />
     <ClInclude Include="..\external\imgui-sfml-master\imgui-SFML.h" />
     <ClInclude Include="App.hpp" />
+    <ClInclude Include="CameraCenter.hpp" />
     <ClInclude Include="Component.hpp" />
     <ClInclude Include="ComponentData.hpp" />
     <ClInclude Include="ComponentManager.hpp" />

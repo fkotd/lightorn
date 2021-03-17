@@ -46,6 +46,12 @@ public:
 	}
 
 	template <typename T>
+	T* GetComponentIfExists(Entity entity)
+	{
+		return componentManager->GetComponentIfExists<T>(entity);
+	}
+
+	template <typename T>
 	std::shared_ptr<T> RegisterSystem()
 	{
 		return systemManager->RegisterSystem<T>();

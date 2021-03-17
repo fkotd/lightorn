@@ -3,9 +3,10 @@
 #include "Transformable.hpp"
 #include "Renderable.hpp"
 #include "RigidBody.hpp"
+#include "CameraCenter.hpp"
 
 static constexpr float APP_MAX_FRAMERATE{ 60.0f };
-static const sf::Vector2u APP_WINDOW_SIZE{ 1024, 768 };
+static const sf::Vector2u APP_WINDOW_SIZE{ 1024, 1000 };
 
 App::App(const char* appName) : window{sf::VideoMode(APP_WINDOW_SIZE.x, APP_WINDOW_SIZE.y), appName, sf::Style::Titlebar | sf::Style::Close}
 {
@@ -56,6 +57,7 @@ void App::RegisterComponents()
 	world.RegisterComponent<Transformable>();
 	world.RegisterComponent<Renderable>();
 	world.RegisterComponent<RigidBody>();
+	world.RegisterComponent<CameraCenter>();
 }
 
 void App::RegisterSystems()
