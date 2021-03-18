@@ -22,7 +22,6 @@ void SpawnSystem::SpawnPlayer(World* world)
 	sf::Transformable transformable{};
 	transformable.setPosition(center);
 	sf::CircleShape* shape = new sf::CircleShape{ 50 };
-	//playerShape.setSize(playerSize);
 	shape->setOrigin(size * 0.5f);
 	shape->setPosition(center);
 	shape->setFillColor(color);

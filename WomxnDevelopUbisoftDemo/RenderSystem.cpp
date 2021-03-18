@@ -11,7 +11,7 @@ void RenderSystem::Render(World* world, sf::RenderWindow* window)
     window->clear(sf::Color(0, 0, 0));
 
     for (auto entity : entities) {
-        // if entity has the camera component
+        // if the current entity has the camera component
         CameraCenter* cameraCenter = world->GetComponentIfExists<CameraCenter>(entity);
         if (cameraCenter != NULL) {
             // this is player
@@ -24,7 +24,7 @@ void RenderSystem::Render(World* world, sf::RenderWindow* window)
 
         Renderable* renderable = world->GetComponent<Renderable>(entity);
 
-        // if entity has a transformable component
+        // if the current entity has a transformable component
         // update its shape
         Transformable* transformable = world->GetComponentIfExists<Transformable>(entity);
         if (transformable != NULL) {

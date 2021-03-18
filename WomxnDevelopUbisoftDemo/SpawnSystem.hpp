@@ -8,7 +8,7 @@ public:
 	void Spawn(World* world);
 
 private:
-	// FIXME : find another way to do that
+	// FIXME : maybe find another way to do that
 	void SpawnPlayer(World* world);
 	void SpawnElement(World* world);
 };

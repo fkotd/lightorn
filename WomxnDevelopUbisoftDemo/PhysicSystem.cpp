@@ -20,6 +20,5 @@ void PhysicSystem::Update(World* world, float deltaTime)
 
 		transformable->transformable.move(rigidBody->velocity * deltaTime);
 		rigidBody->velocity += gravity * deltaTime;
-		//renderable->shape->setPosition(transformable->transformable.getPosition());
 	}
 }

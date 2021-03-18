@@ -26,9 +26,7 @@ void PlayerControlSystem::Update(World* world, float deltaTime)
 		else {
 			rigidBody->velocity.x *= SLOWDOWN_RATE;
 		}
-
 		
 		transformable->transformable.move(rigidBody->velocity * deltaTime);
-		//renderable->shape->setPosition(transformable->transformable.getPosition());
 	}
 }

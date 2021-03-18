@@ -48,8 +48,8 @@ public:
 	{
 		Component componentType = GetComponent<T>();
 
-
 		std::shared_ptr<ComponentData<T>> componentData = std::static_pointer_cast<ComponentData<T>>(componentsData[componentType]);
+		// TODO: try to use this function again
 		// std::shared_ptr<ComponentData<T>> componentData = GetComponentData(componentType);
 
 		return componentData->GetComponent(entity);
@@ -60,6 +60,7 @@ public:
 	{
 		Component componentType = GetComponent<T>();
 
+		// TODO: try to use GetComponentData
 		std::shared_ptr<ComponentData<T>> componentData = std::static_pointer_cast<ComponentData<T>>(componentsData[componentType]);
 
 		return componentData->GetComponentIfExists(entity);
@@ -96,16 +97,16 @@ public:
 
 		// The component does not exists or hasn't been registered
 		if (componentIdIterator == componentIds.end()) {
-			// TODO : log component not found
+			// TODO: log component not found
 			return;
 		}
 
 		// This is the first component of the entity
-		// TODO : move that in another function
+		// TODO: move that in another function
 		if (entitySignatureIterator == entitiesSignature.end()) {
-			// TODO : log entity not found
+			// TODO: log entity not found
 			Signature signature;
-			// TODO : log the new signature
+			// TODO: log the new signature
 			entitiesSignature.insert({entity, signature});
 			entitySignatureIterator = entitiesSignature.find(entity);
 		}
@@ -116,6 +117,7 @@ public:
 
 		// Add the compoment to the component data
 		std::shared_ptr<ComponentData<T>> componentData = std::static_pointer_cast<ComponentData<T>>(componentsData[componentType]);
+		// TODO: use that function again
 		// std::shared_ptr<ComponentData<T>> componentData = GetComponentData(componentType);
 		componentData->AddComponent(entity, component);
 	}

@@ -25,7 +25,7 @@ App& App::Build()
 
 void App::Run()
 {
-	// Call initalization systems
+	// Call initalization system
 	spawnSystem->Spawn(&world);
 
 	float deltaTime{ 1.0f / APP_MAX_FRAMERATE };

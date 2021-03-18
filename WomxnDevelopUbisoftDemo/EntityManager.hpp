@@ -10,7 +10,6 @@ public:
 	EntityManager()
 	{
 		for (int entity = 0; entity < MAX_ENTITIES; entity++) {
-			// std::cout << "create new entity of id = " << entity << "\n";
 			entitiesPool.push(entity);
 		}
 	}
