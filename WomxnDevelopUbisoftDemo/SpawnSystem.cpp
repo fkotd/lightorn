@@ -4,6 +4,7 @@
 #include "Renderable.hpp"
 #include "RigidBody.hpp"
 #include "CameraCenter.hpp"
+#include "Collideable.hpp"
 
 void SpawnSystem::Spawn(World* world)
 {
@@ -26,12 +27,15 @@ void SpawnSystem::SpawnPlayer(World* world)
 	shape->setPosition(center);
 	shape->setFillColor(color);
 	shape->setOutlineThickness(1);
-	shape->setOutlineColor(sf::Color{ static_cast<uint8_t>(color.r * 255.0f), static_cast<uint8_t>(color.g * 255.0f), static_cast<uint8_t>(color.b * 255.0f) });
+	shape->setOutlineColor(color);
+	BoxCollideable* boxCollideable = new BoxCollideable{};
+	boxCollideable->SetBoundingBox(center, size);
 
 	world->AddComponentToEntity(player, Transformable{ transformable });
 	world->AddComponentToEntity(player, Renderable{ shape, color, size });
 	world->AddComponentToEntity(player, RigidBody{ velocity });
 	world->AddComponentToEntity(player, CameraCenter{});
+	world->AddComponentToEntity(player, Collideable{ boxCollideable });
 }
 
 void SpawnSystem::SpawnElement(World* world)
@@ -47,8 +51,11 @@ void SpawnSystem::SpawnElement(World* world)
 	shape->setPosition(center);
 	shape->setFillColor(color);
 	shape->setOutlineThickness(1);
-	shape->setOutlineColor(sf::Color{ static_cast<uint8_t>(color.r * 255.0f), static_cast<uint8_t>(color.g * 255.0f), static_cast<uint8_t>(color.b * 255.0f) });
+	shape->setOutlineColor(color);
+	BoxCollideable* boxCollideable = new BoxCollideable{};
+	boxCollideable->SetBoundingBox(center, size);
 
 	//world->AddComponent(groundEntity, Position{ center });
 	world->AddComponentToEntity(groundEntity, Renderable{ shape, color , size });
+	world->AddComponentToEntity(groundEntity, Collideable{ boxCollideable });
 }

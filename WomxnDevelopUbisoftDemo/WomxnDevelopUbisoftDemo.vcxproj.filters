@@ -50,6 +50,9 @@
     <ClCompile Include="PhysicSystem.cpp">
       <Filter>Game\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionSystem.cpp">
+      <Filter>Game\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -129,6 +132,12 @@
       <Filter>Game\Components</Filter>
     </ClInclude>
     <ClInclude Include="CameraCenter.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionSystem.hpp">
+      <Filter>Game\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Collideable.hpp">
       <Filter>Game\Components</Filter>
     </ClInclude>
   </ItemGroup>

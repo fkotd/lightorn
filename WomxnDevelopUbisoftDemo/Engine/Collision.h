@@ -23,7 +23,6 @@ public:
         return sf::Vector2f(m_BoundingBox.left + (m_BoundingBox.width / 2.0f), m_BoundingBox.top + (m_BoundingBox.height / 2.0f));
     }
 
-protected:
     inline void SetBoundingBox(float left, float top, float width, float height)
     {
         m_BoundingBox.left = left;
@@ -46,5 +45,6 @@ protected:
         m_BoundingBox.top = center.y - (m_BoundingBox.height / 2.0f);
     }
 
+protected:
     sf::FloatRect m_BoundingBox;
 };

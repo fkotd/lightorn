@@ -3,6 +3,7 @@
 #include "Renderable.hpp"
 #include "CameraCenter.hpp"
 #include "Transformable.hpp"
+#include "Collideable.hpp"
 
 void RenderSystem::Render(World* world, sf::RenderWindow* window)
 {
@@ -30,6 +31,13 @@ void RenderSystem::Render(World* world, sf::RenderWindow* window)
         if (transformable != NULL) {
             // we should update the shape of the entity accordingly to its position
             renderable->shape->setPosition(transformable->transformable.getPosition());
+
+            // if the current entity has a bounding box
+            // update its position
+            Collideable* collideable = world->GetComponentIfExists<Collideable>(entity);
+            if (collideable != NULL) {
+                collideable->boxCollideable->SetCenter(transformable->transformable.getPosition());
+            }
         }
        
         window->draw(*renderable->shape);

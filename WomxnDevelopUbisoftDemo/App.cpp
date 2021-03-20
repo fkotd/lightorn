@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "App.hpp"
+#include "Collideable.hpp"
 #include "Transformable.hpp"
 #include "Renderable.hpp"
 #include "RigidBody.hpp"
@@ -46,6 +47,8 @@ void App::Run()
 
 		playerControlSystem->Update(&world, deltaTime);
 		physicSystem->Update(&world, deltaTime);
+		collisionSystem->Update(&world);
+
 		renderSystem->Render(&world, &window);
 
 		deltaTime = clock.getElapsedTime().asSeconds();
@@ -58,6 +61,7 @@ void App::RegisterComponents()
 	world.RegisterComponent<Renderable>();
 	world.RegisterComponent<RigidBody>();
 	world.RegisterComponent<CameraCenter>();
+	world.RegisterComponent<Collideable>();
 }
 
 void App::RegisterSystems()
@@ -85,4 +89,10 @@ void App::RegisterSystems()
 	physicSystemSignature.set(world.GetComponent<Renderable>()); // find a way to remove it 
 	physicSystemSignature.set(world.GetComponent<RigidBody>());
 	world.SetSystemSignature<PhysicSystem>(physicSystemSignature);
+
+	collisionSystem = world.RegisterSystem<CollisionSystem>();
+	Signature collisionSystemSignature{};
+	collisionSystemSignature.set(world.GetComponent<Collideable>());
+	//collisionSystemSignature.set(world.GetComponent<RigidBody>());
+	world.SetSystemSignature<CollisionSystem>(collisionSystemSignature);
 }
