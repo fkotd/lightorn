@@ -93,6 +93,6 @@ void App::RegisterSystems()
 	collisionSystem = world.RegisterSystem<CollisionSystem>();
 	Signature collisionSystemSignature{};
 	collisionSystemSignature.set(world.GetComponent<Collideable>());
-	//collisionSystemSignature.set(world.GetComponent<RigidBody>());
+	collisionSystemSignature.set(world.GetComponent<RigidBody>());
 	world.SetSystemSignature<CollisionSystem>(collisionSystemSignature);
 }

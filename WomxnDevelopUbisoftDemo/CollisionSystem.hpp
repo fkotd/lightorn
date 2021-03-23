@@ -7,5 +7,8 @@ class CollisionSystem : public System
 {
 public:
 	void Update(World* world);
+
+private:
+	sf::Vector2f* GetVelocity(World* world, Entity entity);
 };
 

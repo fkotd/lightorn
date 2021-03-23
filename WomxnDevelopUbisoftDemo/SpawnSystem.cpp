@@ -54,8 +54,11 @@ void SpawnSystem::SpawnElement(World* world)
 	shape->setOutlineColor(color);
 	BoxCollideable* boxCollideable = new BoxCollideable{};
 	boxCollideable->SetBoundingBox(center, size);
+	sf::Vector2f velocity = sf::Vector2f{ 0, 0 };
 
 	//world->AddComponent(groundEntity, Position{ center });
 	world->AddComponentToEntity(groundEntity, Renderable{ shape, color , size });
 	world->AddComponentToEntity(groundEntity, Collideable{ boxCollideable });
+	world->AddComponentToEntity(groundEntity, RigidBody{ velocity });
+
 }
