@@ -51,7 +51,7 @@ void CollisionSystem::Update(World* world)
 	}
 }
 
-// Let here for explanations: même si je renvoyais le pointeur, la vélocité n'était pas modifiée par la fonction qui la recevait
+// Let here for explanations: même si je renvoyai le pointeur, la vélocité n'était pas modifiée par la fonction qui la recevait
 // TODO: remove it after
 sf::Vector2f* CollisionSystem::GetVelocity(World* world, Entity entity) {
 	RigidBody* rigidBody = world->GetComponentIfExists<RigidBody>(entity);

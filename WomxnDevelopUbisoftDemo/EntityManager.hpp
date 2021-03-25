@@ -27,5 +27,5 @@ public:
 	}
 
 private:
-	std::queue<Entity> entitiesPool{};
+	std::queue<Entity> entitiesPool;
 };

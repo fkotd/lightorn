@@ -20,7 +20,7 @@ void SpawnSystem::SpawnPlayer(World* world)
 	sf::Vector2f size = sf::Vector2f{ 100, 100 };
 	sf::Vector2f center = sf::Vector2f{ 1024 / 2.0f, 768 / 2.0f };
 	sf::Vector2f velocity = sf::Vector2f{ 0, 0 };
-	sf::Transformable transformable{};
+	sf::Transformable transformable;
 	transformable.setPosition(center);
 	sf::CircleShape* shape = new sf::CircleShape{ 50 };
 	shape->setOrigin(size * 0.5f);

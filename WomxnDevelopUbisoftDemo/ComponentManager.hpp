@@ -128,12 +128,12 @@ public:
 	}
 
 private:
-	std::unordered_map<const char*, Component> componentIds{};
+	std::unordered_map<const char*, Component> componentIds;
 	Component componentIdsCounter = 0;
 
-	std::unordered_map<Entity, Signature> entitiesSignature{};
+	std::unordered_map<Entity, Signature> entitiesSignature;
 
-	std::unordered_map<Component, std::shared_ptr<IComponentData>> componentsData{};
+	std::unordered_map<Component, std::shared_ptr<IComponentData>> componentsData;
 };
 
 

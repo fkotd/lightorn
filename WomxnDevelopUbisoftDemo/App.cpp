@@ -67,16 +67,16 @@ void App::RegisterComponents()
 void App::RegisterSystems()
 {
 	spawnSystem = world.RegisterSystem<SpawnSystem>();
-	Signature spawnSystemSignature{};
+	Signature spawnSystemSignature;
 	world.SetSystemSignature<SpawnSystem>(spawnSystemSignature);
 
 	renderSystem = world.RegisterSystem<RenderSystem>();
-	Signature renderSystemSignature{};
+	Signature renderSystemSignature;
 	renderSystemSignature.set(world.GetComponent<Renderable>());
 
 	world.SetSystemSignature<RenderSystem>(renderSystemSignature);
 	playerControlSystem = world.RegisterSystem<PlayerControlSystem>();
-	Signature playerControlSystemSignature{};
+	Signature playerControlSystemSignature;
 	playerControlSystemSignature.set(world.GetComponent<Transformable>());
 	playerControlSystemSignature.set(world.GetComponent<Renderable>()); // find a way to remove it
 	playerControlSystemSignature.set(world.GetComponent<RigidBody>());
@@ -84,14 +84,14 @@ void App::RegisterSystems()
 
 	physicSystem = world.RegisterSystem<PhysicSystem>();
 	physicSystem->SetGravity(sf::Vector2f({ 0.0f, 100.0f }));
-	Signature physicSystemSignature{};
+	Signature physicSystemSignature;
 	physicSystemSignature.set(world.GetComponent<Transformable>());
 	physicSystemSignature.set(world.GetComponent<Renderable>()); // find a way to remove it 
 	physicSystemSignature.set(world.GetComponent<RigidBody>());
 	world.SetSystemSignature<PhysicSystem>(physicSystemSignature);
 
 	collisionSystem = world.RegisterSystem<CollisionSystem>();
-	Signature collisionSystemSignature{};
+	Signature collisionSystemSignature;
 	collisionSystemSignature.set(world.GetComponent<Collideable>());
 	collisionSystemSignature.set(world.GetComponent<RigidBody>());
 	world.SetSystemSignature<CollisionSystem>(collisionSystemSignature);
