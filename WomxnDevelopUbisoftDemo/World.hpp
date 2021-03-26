@@ -10,13 +10,6 @@
 class World
 {
 public:
-	World()
-	{
-		entityManager = std::make_unique<EntityManager>();
-		componentManager = std::make_unique<ComponentManager>();
-		systemManager = std::make_unique<SystemManager>();
-	}
-
 	Entity AddEntity()
 	{
 		return entityManager->AddEntity();
@@ -83,9 +76,9 @@ public:
 		return systemManager->Find(componentManager->GetEntitiesSignature(), systemSignature);
 	}
 
-private: 
-	std::unique_ptr<EntityManager> entityManager;
-	std::unique_ptr<ComponentManager> componentManager;
-	std::unique_ptr<SystemManager> systemManager;
+private:
+	std::unique_ptr<EntityManager> entityManager = std::make_unique<EntityManager>();
+	std::unique_ptr<ComponentManager> componentManager = std::make_unique<ComponentManager>();
+	std::unique_ptr<SystemManager> systemManager = std::make_unique<SystemManager>();
 };
 
