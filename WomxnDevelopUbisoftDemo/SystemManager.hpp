@@ -32,18 +32,6 @@ public:
 
 	}
 
-	template <typename T>
-	Signature GetSystemSignature() const
-	{
-		const char* systemName = typeid(T).name();
-
-		auto it = systems.find(systemName);
-
-		// TODO: check that we found the system
-
-		return it->second->GetSignature();
-	}
-
 private:
 	std::unordered_map<const char*, std::shared_ptr<System>> systems;
 };

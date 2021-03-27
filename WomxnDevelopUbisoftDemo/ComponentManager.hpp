@@ -68,16 +68,6 @@ public:
 		return componentData->GetComponentIfExists(entity);
 	}
 
-	Signature GetEntitySignature(Entity entity) const
-	{
-		auto it = entitiesSignature.find(entity);
-		if (it == entitiesSignature.end()) {
-			return NULL;
-		}
-
-		return it->second;
-	}
-
 	template <typename T>
 	Signature GetComponentSignature()
 	{

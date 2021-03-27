@@ -15,11 +15,6 @@ public:
 		return entityManager.AddEntity();
 	}
 
-	Signature GetEntitySignature(Entity entity) const
-	{
-		return componentManager.GetEntitySignature(entity);
-	}
-
 	template <typename T>
 	void RegisterComponent()
 	{
@@ -54,12 +49,6 @@ public:
 	void SetSystemSignature(Signature signature)
 	{
 		systemManager.SetSystemSignature<T>(signature);
-	}
-
-	template <typename T>
-	Signature GetSystemSignature() const
-	{
-		return systemManager.GetSystemSignature<T>();
 	}
 
 	template <typename T>
