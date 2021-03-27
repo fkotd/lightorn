@@ -4,6 +4,8 @@
 
 class IComponentData
 {
+public:
+	virtual ~IComponentData() = default;
 };
 
 template <typename T>

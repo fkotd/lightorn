@@ -17,6 +17,8 @@ public:
 		return signature;
 	}
 
+	virtual ~System() = default;
+
 private:
 	Signature signature;
 };
