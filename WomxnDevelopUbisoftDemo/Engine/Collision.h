@@ -32,15 +32,15 @@ public:
         return m_BoundingBox.contains(bbox.left, bbox.top) && m_BoundingBox.contains(bbox.left + bbox.width, bbox.top + bbox.height);
     }
 
-    inline const sf::Vector2f GetCenter() 
+    inline const sf::Vector2f GetCenter() const
     {
         return sf::Vector2f(m_BoundingBox.left + (m_BoundingBox.width / 2.0f), m_BoundingBox.top + (m_BoundingBox.height / 2.0f));
     }
 
-    sf::Vector2f const GetNormalizedCollisionVetor(BoxCollideable& other)
+    sf::Vector2f const GetNormalizedCollisionVetor(const BoxCollideable& other) const
     {
-        sf::Vector2f center = GetCenter();
-        sf::Vector2f otherCenter = other.GetCenter();
+        const sf::Vector2f center = GetCenter();
+        const sf::Vector2f otherCenter = other.GetCenter();
 
         sf::Vector2f collisionVector = sf::Vector2f(otherCenter.x - center.x, otherCenter.y - center.y);
         float distance = sqrt(pow((otherCenter.x - center.x), 2) + pow((otherCenter.y - center.y), 2));

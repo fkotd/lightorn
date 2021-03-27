@@ -15,7 +15,7 @@ public:
 		return entityManager.AddEntity();
 	}
 
-	Signature GetEntitySignature(Entity entity)
+	Signature GetEntitySignature(Entity entity) const
 	{
 		return componentManager.GetEntitySignature(entity);
 	}
@@ -27,7 +27,7 @@ public:
 	}
 
 	template <typename T>
-	Component GetComponent()
+	Component GetComponent() const
 	{
 		return componentManager.GetComponent<T>();
 	}
@@ -57,7 +57,7 @@ public:
 	}
 
 	template <typename T>
-	Signature GetSystemSignature()
+	Signature GetSystemSignature() const
 	{
 		return systemManager.GetSystemSignature<T>();
 	}
@@ -68,7 +68,7 @@ public:
 		componentManager.AddComponent(entity, component);
 	}
 
-	std::set<Entity> Find(Signature searchedSignature)
+	std::set<Entity> Find(Signature searchedSignature) const
 	{
 		return componentManager.Find(searchedSignature);
 	}

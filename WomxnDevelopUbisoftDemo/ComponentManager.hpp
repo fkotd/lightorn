@@ -27,7 +27,7 @@ public:
 	}
 
 	template <typename T>
-	Component GetComponent()
+	Component GetComponent() const
 	{
 		const char* componentName = typeid(T).name();
 		auto it = componentIds.find(componentName);
@@ -37,11 +37,13 @@ public:
 		return it->second;
 	}
 
+	/*
 	template <typename T>
 	std::shared_ptr<ComponentData<T>> GetComponentData(Component componentType)
 	{
 		return std::static_pointer_cast<ComponentData<T>>(componentsData[componentType]);
 	}
+	*/
 
 	template <typename T>
 	T* GetComponent(Entity entity)
@@ -66,7 +68,7 @@ public:
 		return componentData->GetComponentIfExists(entity);
 	}
 
-	Signature GetEntitySignature(Entity entity)
+	Signature GetEntitySignature(Entity entity) const
 	{
 		auto it = entitiesSignature.find(entity);
 		if (it == entitiesSignature.end()) {
@@ -127,7 +129,7 @@ public:
 		return entitiesSignature;
 	}
 
-	std::set<Entity> Find(Signature searchedSignature)
+	std::set<Entity> Find(Signature searchedSignature) const
 	{
 		std::set<Entity> entities{};
 
@@ -140,7 +142,7 @@ public:
 		return entities;
 	}
 
-	bool AcceptEntity(Signature entitySignature, Signature searchedSignature)
+	bool AcceptEntity(Signature entitySignature, Signature searchedSignature) const
 	{
 		// Each bit set to one in system signature must be set to one in entity signature
 		return (entitySignature & searchedSignature) == searchedSignature;

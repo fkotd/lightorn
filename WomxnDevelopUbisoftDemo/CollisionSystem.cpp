@@ -20,10 +20,6 @@ void CollisionSystem::Update(const std::unique_ptr<World>& world)
 					// Get the collision direction
 					sf::Vector2f collisionNorm = collideable1->boxCollideable->GetNormalizedCollisionVetor(*collideable2->boxCollideable);
 
-					// Get the collision speed
-					//sf::Vector2f* velocity1 = GetVelocity(world, entity1);
-					//sf::Vector2f* velocity2 = GetVelocity(world, entity2);
-
 					RigidBody* rigidBody1 = world->GetComponent<RigidBody>(entity1);
 					RigidBody* rigidBody2 = world->GetComponent<RigidBody>(entity2);
 
@@ -49,20 +45,4 @@ void CollisionSystem::Update(const std::unique_ptr<World>& world)
 			}
 		}
 	}
-}
-
-// Let here for explanations: même si je renvoyai le pointeur, la vélocité n'était pas modifiée par la fonction qui la recevait
-// TODO: remove it after
-sf::Vector2f* CollisionSystem::GetVelocity(const std::unique_ptr<World>& world, Entity entity) {
-	RigidBody* rigidBody = world->GetComponentIfExists<RigidBody>(entity);
-
-	sf::Vector2f velocity;
-	if (rigidBody != nullptr) {
-		velocity = rigidBody->velocity;
-	}
-	else {
-		velocity = sf::Vector2f{ 0, 0 };
-	}
-
-	return &velocity;
 }

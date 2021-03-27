@@ -33,7 +33,7 @@ public:
 	}
 
 	template <typename T>
-	Signature GetSystemSignature()
+	Signature GetSystemSignature() const
 	{
 		const char* systemName = typeid(T).name();
 

@@ -12,18 +12,10 @@ public:
 		this->signature = signature;
 	}
 
-	Signature GetSignature()
+	Signature GetSignature() const
 	{
-		return this->signature;
+		return signature;
 	}
-
-	/*void AddEntity(Entity entity)
-	{
-		entities.insert(entity);
-	}*/
-
-protected:
-	// std::set<Entity> entities;
 
 private:
 	Signature signature;
