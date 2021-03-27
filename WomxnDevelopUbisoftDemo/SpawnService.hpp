@@ -2,7 +2,7 @@
 
 #include "World.hpp"
 
-class SpawnSystem : public System
+class SpawnService
 {
 public:
 	void Spawn(const std::unique_ptr<World>& world);

@@ -5,7 +5,7 @@
 #include "PlayerControlSystem.hpp"
 #include "PhysicSystem.hpp"
 #include "RenderSystem.hpp"
-#include "SpawnSystem.hpp"
+#include "SpawnService.hpp"
 #include "World.hpp"
 
 class App
@@ -23,7 +23,8 @@ private:
 
 	std::unique_ptr<World> world = std::make_unique<World>();
 
-	std::shared_ptr<SpawnSystem> spawnSystem;
+	std::shared_ptr<SpawnService> spawnService;
+
 	std::shared_ptr<RenderSystem> renderSystem;
 	std::shared_ptr<PlayerControlSystem> playerControlSystem;
 	std::shared_ptr<PhysicSystem> physicSystem;

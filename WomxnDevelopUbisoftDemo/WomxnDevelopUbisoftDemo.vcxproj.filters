@@ -38,9 +38,6 @@
     <ClCompile Include="RenderSystem.cpp">
       <Filter>Game\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="SpawnSystem.cpp">
-      <Filter>Game\Systems</Filter>
-    </ClCompile>
     <ClCompile Include="App.cpp">
       <Filter>Game</Filter>
     </ClCompile>
@@ -52,6 +49,9 @@
     </ClCompile>
     <ClCompile Include="CollisionSystem.cpp">
       <Filter>Game\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnService.cpp">
+      <Filter>Game\Service</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,9 +116,6 @@
     <ClInclude Include="App.hpp">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="SpawnSystem.hpp">
-      <Filter>Game\Systems</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerControlSystem.hpp">
       <Filter>Game\Systems</Filter>
     </ClInclude>
@@ -140,6 +137,9 @@
     <ClInclude Include="Collideable.hpp">
       <Filter>Game\Components</Filter>
     </ClInclude>
+    <ClInclude Include="SpawnService.hpp">
+      <Filter>Game\Service</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -159,6 +159,9 @@
     </Filter>
     <Filter Include="Game\Systems">
       <UniqueIdentifier>{72b36ecf-0f0b-493b-bb18-e3f41c987d1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Service">
+      <UniqueIdentifier>{06643c53-0483-485e-ae89-41e697136a73}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

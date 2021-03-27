@@ -27,7 +27,7 @@ App& App::Build()
 void App::Run()
 {
 	// Call initalization system
-	spawnSystem->Spawn(world);
+	spawnService->Spawn(world);
 
 	float deltaTime{ 1.0f / APP_MAX_FRAMERATE };
 	sf::Clock clock;
@@ -66,10 +66,6 @@ void App::RegisterComponents()
 
 void App::RegisterSystems()
 {
-	spawnSystem = world->RegisterSystem<SpawnSystem>();
-	Signature spawnSystemSignature;
-	world->SetSystemSignature<SpawnSystem>(spawnSystemSignature);
-
 	renderSystem = world->RegisterSystem<RenderSystem>();
 	Signature renderSystemSignature;
 	renderSystemSignature.set(world->GetComponent<Renderable>());

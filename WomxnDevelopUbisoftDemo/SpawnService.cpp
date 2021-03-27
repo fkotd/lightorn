@@ -1,18 +1,18 @@
 #include "stdafx.h"
-#include "SpawnSystem.hpp"
+#include "SpawnService.hpp"
 #include "Transformable.hpp"
 #include "Renderable.hpp"
 #include "RigidBody.hpp"
 #include "CameraCenter.hpp"
 #include "Collideable.hpp"
 
-void SpawnSystem::Spawn(const std::unique_ptr<World>& world)
+void SpawnService::Spawn(const std::unique_ptr<World>& world)
 {
 	SpawnPlayer(world);
 	SpawnElement(world);
 }
 
-void SpawnSystem::SpawnPlayer(const std::unique_ptr<World>& world)
+void SpawnService::SpawnPlayer(const std::unique_ptr<World>& world)
 {
 	Entity player = world->AddEntity();
 
@@ -38,7 +38,7 @@ void SpawnSystem::SpawnPlayer(const std::unique_ptr<World>& world)
 	world->AddComponentToEntity(player, Collideable{ boxCollideable });
 }
 
-void SpawnSystem::SpawnElement(const std::unique_ptr<World>& world)
+void SpawnService::SpawnElement(const std::unique_ptr<World>& world)
 {
 	Entity groundEntity = world->AddEntity();
 
