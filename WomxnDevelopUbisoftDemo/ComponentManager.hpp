@@ -20,10 +20,10 @@ public:
 
 		// Map component type name to id
 		int componentId = componentIdsCounter++;
-		componentIds.insert({componentName, componentId});
+		componentIds.emplace(componentName, componentId);
 
 		// Create a map to hold component data
-		componentsData.insert({ componentId, std::make_shared<ComponentData<T>>() });
+		componentsData.emplace(componentId, std::make_shared<ComponentData<T>>());
 	}
 
 	template <typename T>
@@ -107,7 +107,7 @@ public:
 			// TODO: log entity not found
 			Signature signature;
 			// TODO: log the new signature
-			entitiesSignature.insert({entity, signature});
+			entitiesSignature.emplace(entity, signature);
 			entitySignatureIterator = entitiesSignature.find(entity);
 		}
 		

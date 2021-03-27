@@ -14,7 +14,7 @@ public:
 		// TODO: Test that we do not register the same system more than once
 
 		std::shared_ptr<T> system = std::make_shared<T>();
-		systems.insert({systemName, system});
+		systems.emplace(systemName, system);
 
 		return system;
 	}

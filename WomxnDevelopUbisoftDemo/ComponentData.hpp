@@ -12,7 +12,7 @@ class ComponentData : public IComponentData
 public:
 	void AddComponent(Entity entity, T component)
 	{
-		componentData.insert({ entity, component });
+		componentData.emplace(entity, component);
 	}
 
 	T* GetComponent(Entity entity)
