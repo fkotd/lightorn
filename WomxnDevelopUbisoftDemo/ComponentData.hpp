@@ -27,7 +27,7 @@ public:
 		auto it = componentData.find(entity);
 
 		if (it == componentData.end()) {
-			return NULL;
+			return nullptr;
 		}
 
 		return &(it->second);

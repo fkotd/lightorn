@@ -14,7 +14,7 @@ void RenderSystem::Render(const std::unique_ptr<World>& world, sf::RenderWindow*
     for (auto entity : entities) {
         // if the current entity has the camera component
         CameraCenter* cameraCenter = world->GetComponentIfExists<CameraCenter>(entity);
-        if (cameraCenter != NULL) {
+        if (cameraCenter != nullptr) {
             // this is player
             Transformable* transformable = world->GetComponent<Transformable>(entity);
             // update the view
@@ -28,14 +28,14 @@ void RenderSystem::Render(const std::unique_ptr<World>& world, sf::RenderWindow*
         // if the current entity has a transformable component
         // update its shape
         Transformable* transformable = world->GetComponentIfExists<Transformable>(entity);
-        if (transformable != NULL) {
+        if (transformable != nullptr) {
             // we should update the shape of the entity accordingly to its position
             renderable->shape->setPosition(transformable->transformable.getPosition());
 
             // if the current entity has a bounding box
             // update its position
             Collideable* collideable = world->GetComponentIfExists<Collideable>(entity);
-            if (collideable != NULL) {
+            if (collideable != nullptr) {
                 collideable->boxCollideable->SetCenter(transformable->transformable.getPosition());
             }
         }
