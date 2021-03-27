@@ -6,13 +6,13 @@
 #include "CameraCenter.hpp"
 #include "Collideable.hpp"
 
-void SpawnSystem::Spawn(World* world)
+void SpawnSystem::Spawn(const std::unique_ptr<World>& world)
 {
 	SpawnPlayer(world);
 	SpawnElement(world);
 }
 
-void SpawnSystem::SpawnPlayer(World* world)
+void SpawnSystem::SpawnPlayer(const std::unique_ptr<World>& world)
 {
 	Entity player = world->AddEntity();
 
@@ -38,7 +38,7 @@ void SpawnSystem::SpawnPlayer(World* world)
 	world->AddComponentToEntity(player, Collideable{ boxCollideable });
 }
 
-void SpawnSystem::SpawnElement(World* world)
+void SpawnSystem::SpawnElement(const std::unique_ptr<World>& world)
 {
 	Entity groundEntity = world->AddEntity();
 

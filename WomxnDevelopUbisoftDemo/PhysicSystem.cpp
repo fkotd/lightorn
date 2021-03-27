@@ -9,7 +9,7 @@ void PhysicSystem::SetGravity(sf::Vector2f gravity)
 	this->gravity = gravity;
 }
 
-void PhysicSystem::Update(World* world, float deltaTime)
+void PhysicSystem::Update(const std::unique_ptr<World>& world, float deltaTime)
 {
 	std::set<Entity> entities = world->Find(GetSignature());
 

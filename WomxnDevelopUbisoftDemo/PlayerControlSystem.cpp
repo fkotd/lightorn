@@ -8,7 +8,7 @@ static const float SPEED_MAX = 400.0f;
 static const float SPEED_INC = 30.0f;
 static const float SLOWDOWN_RATE = 0.90f;
 
-void PlayerControlSystem::Update(World* world, float deltaTime)
+void PlayerControlSystem::Update(const std::unique_ptr<World>& world, float deltaTime)
 {
 	std::set<Entity> entities = world->Find(GetSignature());
 

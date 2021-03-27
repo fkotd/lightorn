@@ -5,7 +5,7 @@
 #include "Transformable.hpp"
 #include "Collideable.hpp"
 
-void RenderSystem::Render(World* world, sf::RenderWindow* window)
+void RenderSystem::Render(const std::unique_ptr<World>& world, sf::RenderWindow* window)
 {
     std::set<Entity> entities = world->Find(GetSignature());
 
