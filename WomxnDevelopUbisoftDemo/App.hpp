@@ -14,6 +14,7 @@ public:
 	App(const char* appName);
 	App& Build();
 	void Run();
+
 private:
 	void RegisterComponents();
 	void RegisterSystems();
