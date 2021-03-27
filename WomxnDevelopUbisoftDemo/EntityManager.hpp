@@ -7,25 +7,11 @@
 class EntityManager
 {
 public:
-	EntityManager()
-	{
-		for (int entity = 0; entity < MAX_ENTITIES; entity++) {
-			entitiesPool.push(entity);
-		}
-	}
-
 	Entity AddEntity()
 	{
-		if (entitiesPool.empty()) {
-			return NULL;
-		}
-
-		Entity entity = entitiesPool.front();
-		entitiesPool.pop();
-
-		return entity;
+		return entityIdsCounter++;
 	}
 
 private:
-	std::queue<Entity> entitiesPool;
+	Entity entityIdsCounter = 0;
 };
