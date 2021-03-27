@@ -66,14 +66,11 @@ public:
 	void AddComponentToEntity(Entity entity, T component)
 	{
 		componentManager.AddComponent(entity, component);
-		
-		// Signature entitySignature = componentManager->GetEntitySignature(entity);
-		// systemManager->AddEntity(entity, entitySignature);
 	}
 
-	std::set<Entity> Find(Signature systemSignature)
+	std::set<Entity> Find(Signature searchedSignature)
 	{
-		return systemManager.Find(componentManager.GetEntitiesSignature(), systemSignature);
+		return componentManager.Find(searchedSignature);
 	}
 
 private:

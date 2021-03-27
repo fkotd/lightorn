@@ -127,6 +127,25 @@ public:
 		return entitiesSignature;
 	}
 
+	std::set<Entity> Find(Signature searchedSignature)
+	{
+		std::set<Entity> entities{};
+
+		for (auto& it : entitiesSignature) {
+			if (AcceptEntity(it.second, searchedSignature)) {
+				entities.insert(it.first);
+			}
+		}
+
+		return entities;
+	}
+
+	bool AcceptEntity(Signature entitySignature, Signature searchedSignature)
+	{
+		// Each bit set to one in system signature must be set to one in entity signature
+		return (entitySignature & searchedSignature) == searchedSignature;
+	}
+
 private:
 	std::unordered_map<const char*, Component> componentIds;
 	Component componentIdsCounter = 0;

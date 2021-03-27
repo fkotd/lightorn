@@ -44,35 +44,6 @@ public:
 		return it->second->GetSignature();
 	}
 
-	/*void AddEntity(Entity entity, Signature entitySignature)
-	{
-		for (auto& system : systems) {
-			if (AcceptEntity(entitySignature, system.second->GetSignature())) {
-				system.second->AddEntity(entity);
-				std::cout << "Added !" << "\n";
-			}
-		}
-	}*/
-
-	std::set<Entity> Find(std::unordered_map<Entity, Signature> entitiesSignature, Signature systemSignature)
-	{
-		std::set<Entity> entities{};
-
-		for (auto& it : entitiesSignature) {
-			if (AcceptEntity(it.second, systemSignature)) {
-				entities.insert(it.first);
-			}
-		}
-
-		return entities;
-	}
-
-	bool AcceptEntity(Signature entitySignature, Signature systemSignature)
-	{
-		// Each bit set to one in system signature must be set to one in entity signature
-		return (entitySignature & systemSignature) == systemSignature;
-	}
-
 private:
 	std::unordered_map<const char*, std::shared_ptr<System>> systems;
 };
