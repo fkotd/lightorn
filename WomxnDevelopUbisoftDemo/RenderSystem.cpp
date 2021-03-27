@@ -16,21 +16,21 @@ void RenderSystem::Render(const std::unique_ptr<World>& world, sf::RenderWindow*
         CameraCenter* cameraCenter = world->GetComponentIfExists<CameraCenter>(entity);
         if (cameraCenter != nullptr) {
             // this is player
-            Transformable* transformable = world->GetComponent<Transformable>(entity);
+            Transformable& transformable = world->GetComponent<Transformable>(entity);
             // update the view
             sf::View view = window->getView();
-            view.setCenter(view.getCenter().x, transformable->transformable.getPosition().y);
+            view.setCenter(view.getCenter().x, transformable.transformable.getPosition().y);
             window->setView(view);
         }
 
-        Renderable* renderable = world->GetComponent<Renderable>(entity);
+        Renderable& renderable = world->GetComponent<Renderable>(entity);
 
         // if the current entity has a transformable component
         // update its shape
         Transformable* transformable = world->GetComponentIfExists<Transformable>(entity);
         if (transformable != nullptr) {
             // we should update the shape of the entity accordingly to its position
-            renderable->shape->setPosition(transformable->transformable.getPosition());
+            renderable.shape->setPosition(transformable->transformable.getPosition());
 
             // if the current entity has a bounding box
             // update its position
@@ -40,7 +40,7 @@ void RenderSystem::Render(const std::unique_ptr<World>& world, sf::RenderWindow*
             }
         }
        
-        window->draw(*renderable->shape);
+        window->draw(*renderable.shape);
     }
 
     window->display();

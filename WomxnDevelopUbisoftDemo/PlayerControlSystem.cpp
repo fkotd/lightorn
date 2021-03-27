@@ -13,20 +13,20 @@ void PlayerControlSystem::Update(const std::unique_ptr<World>& world, float delt
 	std::set<Entity> entities = world->Find(GetSignature());
 
 	for (auto entity : entities) {
-		Transformable* transformable = world->GetComponent<Transformable>(entity);
-		RigidBody* rigidBody = world->GetComponent<RigidBody>(entity);
-		Renderable* renderable = world->GetComponent<Renderable>(entity);
+		Transformable& transformable = world->GetComponent<Transformable>(entity);
+		RigidBody& rigidBody = world->GetComponent<RigidBody>(entity);
+		Renderable& renderable = world->GetComponent<Renderable>(entity);
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-			rigidBody->velocity.x = fmax(rigidBody->velocity.x - SPEED_INC, -SPEED_MAX);
+			rigidBody.velocity.x = fmax(rigidBody.velocity.x - SPEED_INC, -SPEED_MAX);
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-			rigidBody->velocity.x = fmin(rigidBody->velocity.x + SPEED_INC, SPEED_MAX);
+			rigidBody.velocity.x = fmin(rigidBody.velocity.x + SPEED_INC, SPEED_MAX);
 		}
 		else {
-			rigidBody->velocity.x *= SLOWDOWN_RATE;
+			rigidBody.velocity.x *= SLOWDOWN_RATE;
 		}
 		
-		transformable->transformable.move(rigidBody->velocity * deltaTime);
+		transformable.transformable.move(rigidBody.velocity * deltaTime);
 	}
 }

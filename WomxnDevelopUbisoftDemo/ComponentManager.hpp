@@ -38,7 +38,7 @@ public:
 	}
 
 	template <typename T>
-	T* GetComponent(Entity entity)
+	T& GetComponent(Entity entity)
 	{
 		Component componentType = GetComponent<T>();
 

@@ -17,11 +17,11 @@ public:
 		componentData.emplace(entity, component);
 	}
 
-	T* GetComponent(Entity entity)
+	T& GetComponent(Entity entity)
 	{
 		auto it = componentData.find(entity);
 
-		return &(it->second);
+		return it->second;
 	}
 
 	T* GetComponentIfExists(Entity entity)
