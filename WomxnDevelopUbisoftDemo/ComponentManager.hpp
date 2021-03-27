@@ -37,14 +37,6 @@ public:
 		return it->second;
 	}
 
-	/*
-	template <typename T>
-	std::shared_ptr<ComponentData<T>> GetComponentData(Component componentType)
-	{
-		return std::static_pointer_cast<ComponentData<T>>(componentsData[componentType]);
-	}
-	*/
-
 	template <typename T>
 	T* GetComponent(Entity entity)
 	{
@@ -66,17 +58,6 @@ public:
 		std::shared_ptr<ComponentData<T>> componentData = std::static_pointer_cast<ComponentData<T>>(componentsData[componentType]);
 
 		return componentData->GetComponentIfExists(entity);
-	}
-
-	template <typename T>
-	Signature GetComponentSignature()
-	{
-		Component component = GetComponent<T>();
-		
-		Signature signature{};
-		signature.set(component);
-
-		return signature;
 	}
 
 	template <typename T>
@@ -114,11 +95,6 @@ public:
 		componentData->AddComponent(entity, component);
 	}
 
-	std::unordered_map<Entity, Signature> GetEntitiesSignature()
-	{
-		return entitiesSignature;
-	}
-
 	std::set<Entity> Find(Signature searchedSignature) const
 	{
 		std::set<Entity> entities{};
@@ -132,18 +108,24 @@ public:
 		return entities;
 	}
 
+private:
 	bool AcceptEntity(Signature entitySignature, Signature searchedSignature) const
 	{
 		// Each bit set to one in system signature must be set to one in entity signature
 		return (entitySignature & searchedSignature) == searchedSignature;
 	}
 
-private:
-	std::unordered_map<const char*, Component> componentIds;
+	/*
+	template <typename T>
+	std::shared_ptr<ComponentData<T>> GetComponentData(Component componentType)
+	{
+		return std::static_pointer_cast<ComponentData<T>>(componentsData[componentType]);
+	}
+	*/
+
 	Component componentIdsCounter = 0;
-
+	std::unordered_map<const char*, Component> componentIds;
 	std::unordered_map<Entity, Signature> entitiesSignature;
-
 	std::unordered_map<Component, std::shared_ptr<IComponentData>> componentsData;
 };
 
