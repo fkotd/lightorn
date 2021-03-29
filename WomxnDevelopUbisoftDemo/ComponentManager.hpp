@@ -97,7 +97,7 @@ public:
 
 	std::set<Entity> Find(Signature searchedSignature) const
 	{
-		std::set<Entity> entities{};
+		std::set<Entity> entities;
 
 		for (auto& it : entitiesSignature) {
 			if (AcceptEntity(it.second, searchedSignature)) {
