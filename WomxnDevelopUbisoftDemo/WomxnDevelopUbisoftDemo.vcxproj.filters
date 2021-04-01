@@ -53,6 +53,9 @@
     <ClCompile Include="SpawnService.cpp">
       <Filter>Game\Service</Filter>
     </ClCompile>
+    <ClCompile Include="TransformSystem.cpp">
+      <Filter>Game\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -139,6 +142,15 @@
     </ClInclude>
     <ClInclude Include="SpawnService.hpp">
       <Filter>Game\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="EllipseShape.hpp">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicBody.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformSystem.hpp">
+      <Filter>Game\Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

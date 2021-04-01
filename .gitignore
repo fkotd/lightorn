@@ -1,11 +1,16 @@
+# CMake
+CMakeLists.txt
+
 # Directories
 /external
 /out
 /tmp
+cmake-build-debug/
 
 # Project Files
 *.sln
 .vs/
+.idea/
 
 # Prerequisites
 *.d

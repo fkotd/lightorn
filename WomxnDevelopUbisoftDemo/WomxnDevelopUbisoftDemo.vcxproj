@@ -219,6 +219,7 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="PlayerControlSystem.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="SpawnService.cpp" />
+    <ClCompile Include="TransformSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\external\imgui-master\imgui.h" />
@@ -231,6 +232,7 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Component.hpp" />
     <ClInclude Include="ComponentData.hpp" />
     <ClInclude Include="ComponentManager.hpp" />
+    <ClInclude Include="EllipseShape.hpp" />
     <ClInclude Include="Engine\Collision.h" />
     <ClInclude Include="Engine\Game.h" />
     <ClInclude Include="Entity.hpp" />
@@ -238,6 +240,7 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Game\Door.h" />
     <ClInclude Include="Game\GameDemo.h" />
     <ClInclude Include="Game\MainCharacter.h" />
+    <ClInclude Include="PhysicBody.hpp" />
     <ClInclude Include="PhysicSystem.hpp" />
     <ClInclude Include="PlayerControlSystem.hpp" />
     <ClInclude Include="Transformable.hpp" />
@@ -249,6 +252,7 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="System.hpp" />
     <ClInclude Include="SystemManager.hpp" />
+    <ClInclude Include="TransformSystem.hpp" />
     <ClInclude Include="World.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

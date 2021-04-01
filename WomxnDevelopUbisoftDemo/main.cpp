@@ -4,13 +4,9 @@
 
 int main()
 {
-	// GameDemo game{};
+    App app { "Lightorn" };
 
-	// game.RunGameLoop();
+    app.Build().Run();
 
-	App app{"Lightorn"};
-
-	app.Build().Run();
-
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }
