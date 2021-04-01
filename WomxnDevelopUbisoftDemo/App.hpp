@@ -1,12 +1,12 @@
 #pragma once
 
-#include "CollisionSystem.hpp"
-#include "PhysicSystem.hpp"
-#include "PlayerControlSystem.hpp"
-#include "RenderSystem.hpp"
-#include "SpawnService.hpp"
-#include "TransformSystem.hpp"
-#include "World.hpp"
+#include "Core/World.hpp"
+#include "Services/SpawnService.hpp"
+#include "Systems/CollisionSystem.hpp"
+#include "Systems/PhysicSystem.hpp"
+#include "Systems/PlayerControlSystem.hpp"
+#include "Systems/RenderSystem.hpp"
+#include "Systems/TransformSystem.hpp"
 #include <memory>
 
 class App {

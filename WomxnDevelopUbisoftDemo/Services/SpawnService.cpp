@@ -1,13 +1,14 @@
 #include "stdafx.h"
 
-#include "CameraCenter.hpp"
-#include "Collideable.hpp"
-#include "EllipseShape.hpp"
-#include "PhysicBody.hpp"
-#include "Renderable.hpp"
-#include "RigidBody.hpp"
 #include "SpawnService.hpp"
-#include "Transformable.hpp"
+
+#include "Components/CameraCenter.hpp"
+#include "Components/Collideable.hpp"
+#include "Components/PhysicBody.hpp"
+#include "Components/Renderable.hpp"
+#include "Components/RigidBody.hpp"
+#include "Components/Transformable.hpp"
+#include "Engine/EllipseShape.hpp"
 
 void SpawnService::Spawn(const std::unique_ptr<World>& world)
 {
@@ -77,7 +78,7 @@ void SpawnService::SpawnBackground(const std::unique_ptr<World>& world, int numb
         sf::Transformable transformable;
         transformable.setPosition(center);
 
-        sf::Color color = sf::Color::Green;
+        sf::Color color = sf::Color { 140, 130, 215, 100 };
 
         sf::Vector2f size = sf::Vector2f { 50, 50 };
 
@@ -88,7 +89,7 @@ void SpawnService::SpawnBackground(const std::unique_ptr<World>& world, int numb
         shape->setOutlineThickness(1);
         shape->setOutlineColor(color);
 
-        sf::Vector2f velocity = sf::Vector2f { 0, 0 };
+        sf::Vector2f velocity = sf::Vector2f { 0, 400 };
 
         world->AddComponentToEntity(backgroundElement, Transformable { transformable });
         world->AddComponentToEntity(backgroundElement, Renderable { shape, color, size });

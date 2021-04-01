@@ -1,8 +1,9 @@
 #include "stdafx.h"
 
-#include "Collideable.hpp"
 #include "CollisionSystem.hpp"
-#include "RigidBody.hpp"
+
+#include "Components/Collideable.hpp"
+#include "Components/RigidBody.hpp"
 
 void CollisionSystem::Update(const std::unique_ptr<World>& world)
 {

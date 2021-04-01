@@ -1,9 +1,11 @@
 #include "stdafx.h"
+
 #include "RenderSystem.hpp"
-#include "Renderable.hpp"
-#include "CameraCenter.hpp"
-#include "Transformable.hpp"
-#include "Collideable.hpp"
+
+#include "Components/CameraCenter.hpp"
+#include "Components/Collideable.hpp"
+#include "Components/Renderable.hpp"
+#include "Components/Transformable.hpp"
 
 void RenderSystem::Render(const std::unique_ptr<World>& world, sf::RenderWindow* window)
 {
@@ -39,7 +41,7 @@ void RenderSystem::Render(const std::unique_ptr<World>& world, sf::RenderWindow*
                 collideable->boxCollideable->SetCenter(transformable->transformable.getPosition());
             }
         }
-       
+
         window->draw(*renderable.shape);
     }
 

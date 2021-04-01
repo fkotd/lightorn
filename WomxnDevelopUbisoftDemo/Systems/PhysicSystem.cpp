@@ -1,8 +1,9 @@
 #include "stdafx.h"
 
 #include "PhysicSystem.hpp"
-#include "RigidBody.hpp"
-#include "Transformable.hpp"
+
+#include "Components/RigidBody.hpp"
+#include "Components/Transformable.hpp"
 
 void PhysicSystem::SetGravity(sf::Vector2f gravity)
 {

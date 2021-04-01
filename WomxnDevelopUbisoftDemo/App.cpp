@@ -1,12 +1,12 @@
 #include "stdafx.h"
 
 #include "App.hpp"
-#include "CameraCenter.hpp"
-#include "Collideable.hpp"
-#include "PhysicBody.hpp"
-#include "Renderable.hpp"
-#include "RigidBody.hpp"
-#include "Transformable.hpp"
+#include "Components/CameraCenter.hpp"
+#include "Components/Collideable.hpp"
+#include "Components/PhysicBody.hpp"
+#include "Components/Renderable.hpp"
+#include "Components/RigidBody.hpp"
+#include "Components/Transformable.hpp"
 
 static constexpr float APP_MAX_FRAMERATE { 60.0f };
 static const sf::Vector2u APP_WINDOW_SIZE { 1024, 1000 };

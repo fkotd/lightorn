@@ -35,26 +35,26 @@
     <ClCompile Include="Engine\Collision.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="RenderSystem.cpp">
-      <Filter>Game\Systems</Filter>
-    </ClCompile>
     <ClCompile Include="App.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerControlSystem.cpp">
+    <ClCompile Include="Systems\CollisionSystem.cpp">
       <Filter>Game\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="PhysicSystem.cpp">
+    <ClCompile Include="Systems\PhysicSystem.cpp">
       <Filter>Game\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionSystem.cpp">
+    <ClCompile Include="Systems\PlayerControlSystem.cpp">
       <Filter>Game\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="SpawnService.cpp">
-      <Filter>Game\Service</Filter>
-    </ClCompile>
-    <ClCompile Include="TransformSystem.cpp">
+    <ClCompile Include="Systems\RenderSystem.cpp">
       <Filter>Game\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\TransformSystem.cpp">
+      <Filter>Game\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Services\SpawnService.cpp">
+      <Filter>Game\Services</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -83,74 +83,74 @@
     <ClInclude Include="Engine\Collision.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.hpp">
-      <Filter>Game\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderable.hpp">
-      <Filter>Game\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Component.hpp">
-      <Filter>Game\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityManager.hpp">
-      <Filter>Game\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="ComponentManager.hpp">
-      <Filter>Game\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="World.hpp">
-      <Filter>Game\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Signature.hpp">
-      <Filter>Game\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="SystemManager.hpp">
-      <Filter>Game\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderSystem.hpp">
-      <Filter>Game\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="System.hpp">
-      <Filter>Game\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="ComponentData.hpp">
-      <Filter>Game\Core</Filter>
-    </ClInclude>
     <ClInclude Include="App.hpp">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerControlSystem.hpp">
+    <ClInclude Include="Components\CameraCenter.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Collideable.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\CollisionSystem.hpp">
       <Filter>Game\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="PhysicSystem.hpp">
-      <Filter>Game\Systems</Filter>
+    <ClInclude Include="Core\Component.hpp">
+      <Filter>Game\Core</Filter>
     </ClInclude>
-    <ClInclude Include="RigidBody.hpp">
-      <Filter>Game\Components</Filter>
+    <ClInclude Include="Core\ComponentData.hpp">
+      <Filter>Game\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Transformable.hpp">
-      <Filter>Game\Components</Filter>
+    <ClInclude Include="Core\ComponentManager.hpp">
+      <Filter>Game\Core</Filter>
     </ClInclude>
-    <ClInclude Include="CameraCenter.hpp">
-      <Filter>Game\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionSystem.hpp">
-      <Filter>Game\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="Collideable.hpp">
-      <Filter>Game\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="SpawnService.hpp">
-      <Filter>Game\Service</Filter>
-    </ClInclude>
-    <ClInclude Include="EllipseShape.hpp">
+    <ClInclude Include="Engine\EllipseShape.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="PhysicBody.hpp">
+    <ClInclude Include="Core\Entity.hpp">
+      <Filter>Game\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\EntityManager.hpp">
+      <Filter>Game\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\PhysicBody.hpp">
       <Filter>Game\Components</Filter>
     </ClInclude>
-    <ClInclude Include="TransformSystem.hpp">
+    <ClInclude Include="Core\System.hpp">
+      <Filter>Game\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\PhysicSystem.hpp">
       <Filter>Game\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\PlayerControlSystem.hpp">
+      <Filter>Game\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Renderable.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\RenderSystem.hpp">
+      <Filter>Game\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\RigidBody.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\World.hpp">
+      <Filter>Game\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Signature.hpp">
+      <Filter>Game\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\SystemManager.hpp">
+      <Filter>Game\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Transformable.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\TransformSystem.hpp">
+      <Filter>Game\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\SpawnService.hpp">
+      <Filter>Game\Services</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -172,8 +172,8 @@
     <Filter Include="Game\Systems">
       <UniqueIdentifier>{72b36ecf-0f0b-493b-bb18-e3f41c987d1d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Service">
-      <UniqueIdentifier>{06643c53-0483-485e-ae89-41e697136a73}</UniqueIdentifier>
+    <Filter Include="Game\Services">
+      <UniqueIdentifier>{d1cec9df-92e9-4e8c-b639-f695e51e5ced}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

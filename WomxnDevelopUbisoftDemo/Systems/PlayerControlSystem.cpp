@@ -1,8 +1,9 @@
 #include "stdafx.h"
 
-#include "PhysicBody.hpp"
 #include "PlayerControlSystem.hpp"
-#include "RigidBody.hpp"
+
+#include "Components/PhysicBody.hpp"
+#include "Components/RigidBody.hpp"
 
 void PlayerControlSystem::Update(const std::unique_ptr<World>& world, float deltaTime)
 {

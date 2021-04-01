@@ -1,8 +1,9 @@
 #include "stdafx.h"
 
-#include "RigidBody.hpp"
 #include "TransformSystem.hpp"
-#include "Transformable.hpp"
+
+#include "Components/RigidBody.hpp"
+#include "Components/Transformable.hpp"
 
 void TransformSystem::Update(const std::unique_ptr<World>& world, float deltaTime)
 {

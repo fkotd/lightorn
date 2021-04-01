@@ -1,7 +1,6 @@
 #pragma once
 
-#include "System.hpp"
-#include "World.hpp"
+#include "Core/World.hpp"
 
 class PhysicSystem : public System {
 public:
