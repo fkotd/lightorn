@@ -10,16 +10,16 @@
 #include "Components/Transformable.hpp"
 #include "Engine/EllipseShape.hpp"
 
-void SpawnService::Spawn(const std::unique_ptr<World>& world)
+void SpawnService::Spawn(World& world)
 {
     SpawnBackground(world, 10);
     SpawnPlayer(world);
     SpawnElement(world);
 }
 
-void SpawnService::SpawnPlayer(const std::unique_ptr<World>& world)
+void SpawnService::SpawnPlayer(World& world)
 {
-    Entity player = world->AddEntity();
+    Entity player = world.AddEntity();
 
     sf::Color color = sf::Color::Magenta;
     sf::Vector2f size = sf::Vector2f { 100, 100 };
@@ -36,17 +36,17 @@ void SpawnService::SpawnPlayer(const std::unique_ptr<World>& world)
     BoxCollideable* boxCollideable = new BoxCollideable {};
     boxCollideable->SetBoundingBox(center, size);
 
-    world->AddComponentToEntity<Transformable>(player, transformable);
-    world->AddComponentToEntity<Renderable>(player, shape, color, size);
-    world->AddComponentToEntity<RigidBody>(player, velocity);
-    world->AddComponentToEntity<PhysicBody>(player, 400.0f, 30.0f, 0.90f);
-    world->AddComponentToEntity<CameraCenter>(player);
-    world->AddComponentToEntity<Collideable>(player, boxCollideable);
+    world.AddComponentToEntity<Transformable>(player, transformable);
+    world.AddComponentToEntity<Renderable>(player, shape, color, size);
+    world.AddComponentToEntity<RigidBody>(player, velocity);
+    world.AddComponentToEntity<PhysicBody>(player, 400.0f, 30.0f, 0.90f);
+    world.AddComponentToEntity<CameraCenter>(player);
+    world.AddComponentToEntity<Collideable>(player, boxCollideable);
 }
 
-void SpawnService::SpawnElement(const std::unique_ptr<World>& world)
+void SpawnService::SpawnElement(World& world)
 {
-    Entity groundEntity = world->AddEntity();
+    Entity groundEntity = world.AddEntity();
 
     sf::Color color = sf::Color::Cyan;
     sf::Vector2f size = sf::Vector2f { 1024, 100 };
@@ -62,15 +62,15 @@ void SpawnService::SpawnElement(const std::unique_ptr<World>& world)
     boxCollideable->SetBoundingBox(center, size);
     sf::Vector2f velocity = sf::Vector2f { 0, 0 };
 
-    world->AddComponentToEntity<Renderable>(groundEntity, shape, color, size);
-    world->AddComponentToEntity<Collideable>(groundEntity, boxCollideable);
-    world->AddComponentToEntity<RigidBody>(groundEntity, velocity);
+    world.AddComponentToEntity<Renderable>(groundEntity, shape, color, size);
+    world.AddComponentToEntity<Collideable>(groundEntity, boxCollideable);
+    world.AddComponentToEntity<RigidBody>(groundEntity, velocity);
 }
 
-void SpawnService::SpawnBackground(const std::unique_ptr<World>& world, int numberOfElements)
+void SpawnService::SpawnBackground(World& world, int numberOfElements)
 {
     for (int i = 0; i < numberOfElements; i++) {
-        Entity backgroundElement = world->AddEntity();
+        Entity backgroundElement = world.AddEntity();
 
         sf::Vector2f center = sf::Vector2f { static_cast<float>(50 * i), 10 };
 
@@ -90,8 +90,8 @@ void SpawnService::SpawnBackground(const std::unique_ptr<World>& world, int numb
 
         sf::Vector2f velocity = sf::Vector2f { 0, 400 };
 
-        world->AddComponentToEntity<Transformable>(backgroundElement, transformable);
-        world->AddComponentToEntity<Renderable>(backgroundElement, shape, color, size);
-        world->AddComponentToEntity<RigidBody>(backgroundElement, velocity);
+        world.AddComponentToEntity<Transformable>(backgroundElement, transformable);
+        world.AddComponentToEntity<Renderable>(backgroundElement, shape, color, size);
+        world.AddComponentToEntity<RigidBody>(backgroundElement, velocity);
     }
 }

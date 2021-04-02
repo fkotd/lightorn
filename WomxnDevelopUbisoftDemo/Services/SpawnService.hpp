@@ -4,11 +4,11 @@
 
 class SpawnService {
 public:
-    void Spawn(const std::unique_ptr<World>& world);
+    void Spawn(World& world);
 
 private:
     // FIXME : maybe find another way to do that
-    void SpawnPlayer(const std::unique_ptr<World>& world);
-    void SpawnElement(const std::unique_ptr<World>& world);
-    void SpawnBackground(const std::unique_ptr<World>& world, int numberOfElements);
+    void SpawnPlayer(World& world);
+    void SpawnElement(World& world);
+    void SpawnBackground(World& world, int numberOfElements);
 };

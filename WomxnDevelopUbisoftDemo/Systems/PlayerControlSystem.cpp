@@ -5,13 +5,13 @@
 #include "Components/PhysicBody.hpp"
 #include "Components/RigidBody.hpp"
 
-void PlayerControlSystem::Update(const std::unique_ptr<World>& world, float deltaTime)
+void PlayerControlSystem::Update(World& world, float deltaTime)
 {
-    std::set<Entity> entities = world->Find(GetSignature());
+    std::set<Entity> entities = world.Find(GetSignature());
 
     for (auto entity : entities) {
-        RigidBody& rigidBody = world->GetComponent<RigidBody>(entity);
-        PhysicBody& physicBody = world->GetComponent<PhysicBody>(entity);
+        RigidBody& rigidBody = world.GetComponent<RigidBody>(entity);
+        PhysicBody& physicBody = world.GetComponent<PhysicBody>(entity);
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
             rigidBody.velocity.x = fmax(rigidBody.velocity.x - physicBody.speedInc, -physicBody.maxSpeed);

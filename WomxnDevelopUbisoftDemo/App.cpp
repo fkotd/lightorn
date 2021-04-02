@@ -29,7 +29,7 @@ App& App::Build()
 
 void App::Run()
 {
-    spawnService->Spawn(world);
+    spawnService->Spawn(*world);
 
     float deltaTime { 1.0f / APP_MAX_FRAMERATE };
     sf::Clock clock;
@@ -47,12 +47,12 @@ void App::Run()
             }
         }
 
-        playerControlSystem->Update(world, deltaTime);
-        transformSystem->Update(world, deltaTime);
-        physicSystem->Update(world, deltaTime);
-        collisionSystem->Update(world);
+        playerControlSystem->Update(*world, deltaTime);
+        transformSystem->Update(*world, deltaTime);
+        physicSystem->Update(*world, deltaTime);
+        collisionSystem->Update(*world);
 
-        renderSystem->Render(world, &window);
+        renderSystem->Render(*world, &window);
 
         deltaTime = clock.getElapsedTime().asSeconds();
     }
