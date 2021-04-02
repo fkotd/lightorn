@@ -38,10 +38,17 @@ public:
         return componentManager.GetComponentIfExists<T>(entity);
     }
 
-    template <typename T>
+    template <typename T, typename... Components>
     std::shared_ptr<T> RegisterSystem()
     {
-        return systemManager.RegisterSystem<T>();
+        auto system = systemManager.RegisterSystem<T>();
+
+        Signature systemSignature;
+        (systemSignature.set(GetComponent<Components>()), ...);
+
+        SetSystemSignature<T>(systemSignature);
+
+        return system;
     }
 
     template <typename T>

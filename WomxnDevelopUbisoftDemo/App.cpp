@@ -70,34 +70,14 @@ void App::RegisterComponents()
 
 void App::RegisterSystems()
 {
-    renderSystem = world->RegisterSystem<RenderSystem>();
-    Signature renderSystemSignature;
-    renderSystemSignature.set(world->GetComponent<Renderable>());
-    world->SetSystemSignature<RenderSystem>(renderSystemSignature);
+    renderSystem = world->RegisterSystem<RenderSystem, Renderable>();
 
-    playerControlSystem = world->RegisterSystem<PlayerControlSystem>();
-    Signature playerControlSystemSignature;
-    playerControlSystemSignature.set(world->GetComponent<RigidBody>());
-    playerControlSystemSignature.set(world->GetComponent<PhysicBody>());
-    world->SetSystemSignature<PlayerControlSystem>(playerControlSystemSignature);
+    playerControlSystem = world->RegisterSystem<PlayerControlSystem, RigidBody, PhysicBody>();
 
-    physicSystem = world->RegisterSystem<PhysicSystem>();
+    physicSystem = world->RegisterSystem<PhysicSystem, Transformable, RigidBody, PhysicBody>();
     physicSystem->SetGravity(sf::Vector2f({ 0.0f, 100.0f }));
-    Signature physicSystemSignature;
-    physicSystemSignature.set(world->GetComponent<Transformable>());
-    physicSystemSignature.set(world->GetComponent<RigidBody>());
-    physicSystemSignature.set(world->GetComponent<PhysicBody>()); // used to differentiate other elements
-    world->SetSystemSignature<PhysicSystem>(physicSystemSignature);
 
-    collisionSystem = world->RegisterSystem<CollisionSystem>();
-    Signature collisionSystemSignature;
-    collisionSystemSignature.set(world->GetComponent<Collideable>());
-    collisionSystemSignature.set(world->GetComponent<RigidBody>());
-    world->SetSystemSignature<CollisionSystem>(collisionSystemSignature);
+    collisionSystem = world->RegisterSystem<CollisionSystem, Collideable, RigidBody>();
 
-    transformSystem = world->RegisterSystem<TransformSystem>();
-    Signature transformSystemSignature;
-    transformSystemSignature.set(world->GetComponent<Transformable>());
-    transformSystemSignature.set(world->GetComponent<RigidBody>());
-    world->SetSystemSignature<TransformSystem>(transformSystemSignature);
+    transformSystem = world->RegisterSystem<TransformSystem, Transformable, RigidBody>();
 }
