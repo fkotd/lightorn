@@ -3,13 +3,8 @@
 #include "Entity.hpp"
 #include <unordered_map>
 
-class IComponentData {
-public:
-    virtual ~IComponentData() = default;
-};
-
 template <typename T>
-class ComponentData : public IComponentData {
+class ComponentData {
 public:
     void AddComponent(Entity entity, T component)
     {

@@ -4,6 +4,7 @@
 #include "ComponentData.hpp"
 #include "Entity.hpp"
 #include "Signature.hpp"
+#include <any>
 #include <memory>
 #include <unordered_map>
 
@@ -41,9 +42,7 @@ public:
     {
         Component componentType = GetComponent<T>();
 
-        std::shared_ptr<ComponentData<T>> componentData = std::static_pointer_cast<ComponentData<T>>(componentsData[componentType]);
-        // TODO: try to use this function again
-        // std::shared_ptr<ComponentData<T>> componentData = GetComponentData(componentType);
+        std::shared_ptr<ComponentData<T>> componentData = *std::any_cast<std::shared_ptr<ComponentData<T>>>(&componentsData[componentType]);
 
         return componentData->GetComponent(entity);
     }
@@ -53,8 +52,7 @@ public:
     {
         Component componentType = GetComponent<T>();
 
-        // TODO: try to use GetComponentData
-        std::shared_ptr<ComponentData<T>> componentData = std::static_pointer_cast<ComponentData<T>>(componentsData[componentType]);
+        std::shared_ptr<ComponentData<T>> componentData = *std::any_cast<std::shared_ptr<ComponentData<T>>>(&componentsData[componentType]);
 
         return componentData->GetComponentIfExists(entity);
     }
@@ -88,9 +86,8 @@ public:
         entitySignatureIterator->second.set(componentType);
 
         // Add the compoment to the component data
-        std::shared_ptr<ComponentData<T>> componentData = std::static_pointer_cast<ComponentData<T>>(componentsData[componentType]);
-        // TODO: use that function again
-        // std::shared_ptr<ComponentData<T>> componentData = GetComponentData(componentType);
+        std::shared_ptr<ComponentData<T>> componentData = *std::any_cast<std::shared_ptr<ComponentData<T>>>(&componentsData[componentType]);
+
         componentData->AddComponent(entity, component);
     }
 
@@ -120,10 +117,10 @@ private:
 	{
 		return std::static_pointer_cast<ComponentData<T>>(componentsData[componentType]);
 	}
-	*/
+    */
 
     Component componentIdsCounter = 0;
     std::unordered_map<const char*, Component> componentIds;
     std::unordered_map<Entity, Signature> entitiesSignature;
-    std::unordered_map<Component, std::shared_ptr<IComponentData>> componentsData;
+    std::unordered_map<Component, std::any> componentsData;
 };
