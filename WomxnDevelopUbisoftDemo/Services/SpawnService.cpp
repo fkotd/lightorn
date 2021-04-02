@@ -36,12 +36,12 @@ void SpawnService::SpawnPlayer(const std::unique_ptr<World>& world)
     BoxCollideable* boxCollideable = new BoxCollideable {};
     boxCollideable->SetBoundingBox(center, size);
 
-    world->AddComponentToEntity(player, Transformable { transformable });
-    world->AddComponentToEntity(player, Renderable { shape, color, size });
-    world->AddComponentToEntity(player, RigidBody { velocity });
-    world->AddComponentToEntity(player, PhysicBody { 400.0f, 30.0f, 0.90f });
-    world->AddComponentToEntity(player, CameraCenter {});
-    world->AddComponentToEntity(player, Collideable { boxCollideable });
+    world->AddComponentToEntity<Transformable>(player, transformable);
+    world->AddComponentToEntity<Renderable>(player, shape, color, size);
+    world->AddComponentToEntity<RigidBody>(player, velocity);
+    world->AddComponentToEntity<PhysicBody>(player, 400.0f, 30.0f, 0.90f);
+    world->AddComponentToEntity<CameraCenter>(player);
+    world->AddComponentToEntity<Collideable>(player, boxCollideable);
 }
 
 void SpawnService::SpawnElement(const std::unique_ptr<World>& world)
@@ -62,10 +62,9 @@ void SpawnService::SpawnElement(const std::unique_ptr<World>& world)
     boxCollideable->SetBoundingBox(center, size);
     sf::Vector2f velocity = sf::Vector2f { 0, 0 };
 
-    //world->AddComponent(groundEntity, Position{ center });
-    world->AddComponentToEntity(groundEntity, Renderable { shape, color, size });
-    world->AddComponentToEntity(groundEntity, Collideable { boxCollideable });
-    world->AddComponentToEntity(groundEntity, RigidBody { velocity });
+    world->AddComponentToEntity<Renderable>(groundEntity, shape, color, size);
+    world->AddComponentToEntity<Collideable>(groundEntity, boxCollideable);
+    world->AddComponentToEntity<RigidBody>(groundEntity, velocity);
 }
 
 void SpawnService::SpawnBackground(const std::unique_ptr<World>& world, int numberOfElements)
@@ -91,8 +90,8 @@ void SpawnService::SpawnBackground(const std::unique_ptr<World>& world, int numb
 
         sf::Vector2f velocity = sf::Vector2f { 0, 400 };
 
-        world->AddComponentToEntity(backgroundElement, Transformable { transformable });
-        world->AddComponentToEntity(backgroundElement, Renderable { shape, color, size });
-        world->AddComponentToEntity(backgroundElement, RigidBody { velocity });
+        world->AddComponentToEntity<Transformable>(backgroundElement, transformable);
+        world->AddComponentToEntity<Renderable>(backgroundElement, shape, color, size);
+        world->AddComponentToEntity<RigidBody>(backgroundElement, velocity);
     }
 }

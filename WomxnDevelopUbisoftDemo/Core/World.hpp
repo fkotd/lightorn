@@ -57,10 +57,10 @@ public:
         systemManager.SetSystemSignature<T>(signature);
     }
 
-    template <typename T>
-    void AddComponentToEntity(Entity entity, T component)
+    template <typename T, typename... Attributes>
+    void AddComponentToEntity(Entity entity, Attributes... attributes)
     {
-        componentManager.AddComponent(entity, component);
+        componentManager.AddComponent(entity, T { attributes... });
     }
 
     std::set<Entity> Find(Signature searchedSignature) const
