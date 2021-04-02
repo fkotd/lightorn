@@ -42,7 +42,7 @@ public:
     {
         Component componentType = GetComponent<T>();
 
-        std::shared_ptr<ComponentData<T>> componentData = *std::any_cast<std::shared_ptr<ComponentData<T>>>(&componentsData[componentType]);
+        auto componentData = GetComponentData<T>(componentType);
 
         return componentData->GetComponent(entity);
     }
@@ -52,7 +52,7 @@ public:
     {
         Component componentType = GetComponent<T>();
 
-        std::shared_ptr<ComponentData<T>> componentData = *std::any_cast<std::shared_ptr<ComponentData<T>>>(&componentsData[componentType]);
+        auto componentData = GetComponentData<T>(componentType);
 
         return componentData->GetComponentIfExists(entity);
     }
@@ -86,7 +86,7 @@ public:
         entitySignatureIterator->second.set(componentType);
 
         // Add the compoment to the component data
-        std::shared_ptr<ComponentData<T>> componentData = *std::any_cast<std::shared_ptr<ComponentData<T>>>(&componentsData[componentType]);
+        auto componentData = GetComponentData<T>(componentType);
 
         componentData->AddComponent(entity, component);
     }
@@ -111,13 +111,11 @@ private:
         return (entitySignature & searchedSignature) == searchedSignature;
     }
 
-    /*
-	template <typename T>
-	std::shared_ptr<ComponentData<T>> GetComponentData(Component componentType)
-	{
-		return std::static_pointer_cast<ComponentData<T>>(componentsData[componentType]);
-	}
-    */
+    template <typename T>
+    std::shared_ptr<ComponentData<T>> GetComponentData(Component componentType)
+    {
+        return *std::any_cast<std::shared_ptr<ComponentData<T>>>(&componentsData[componentType]);
+    }
 
     Component componentIdsCounter = 0;
     std::unordered_map<const char*, Component> componentIds;
