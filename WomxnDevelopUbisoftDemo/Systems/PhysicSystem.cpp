@@ -27,5 +27,11 @@ void PhysicSystem::Update(World& world, float deltaTime)
         // rigidBody.velocity += ((physicBody.mass * gravity) / physicBody.gamma) * (1 - exp((-physicBody.gamma * deltaTime) / physicBody.mass));
 
         rigidBody.velocity += gravity * deltaTime;
+
+        ImGui::Begin("Physic Menu");
+
+        ImGui::Text("Character velocity: %f", rigidBody.velocity);
+
+        ImGui::End();
     }
 }

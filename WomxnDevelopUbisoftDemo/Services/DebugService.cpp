@@ -8,8 +8,7 @@ void DebugService::RenderDebugService(sf::RenderTarget& target)
     ImGui::Text("Press F1 to close this debug menu");
     ImGui::NewLine();
 
-    ImGui::Text("X: %f", 1);
-    ImGui::Text("Y: %f", 2);
+    ImGui::Text("Hello");
 
     ImGui::End();
 }

@@ -11,6 +11,12 @@ void RenderSystem::Render(World& world, sf::RenderTarget& target)
 {
     std::set<Entity> entities = world.Find(GetSignature());
 
+    ImGui::Begin("Render Menu");
+
+    ImGui::Text("Number of entity: %d", entities.size());
+
+    ImGui::End();
+
     target.clear(sf::Color(0, 0, 0));
 
     for (auto entity : entities) {
