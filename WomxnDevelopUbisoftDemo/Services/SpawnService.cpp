@@ -32,7 +32,7 @@ void SpawnService::SpawnPlayer(World& world)
     world.AddComponentToEntity<Transformable>(player, transformable);
     world.AddComponentToEntity<Renderable>(player, shape, color, size);
     world.AddComponentToEntity<RigidBody>(player, velocity);
-    world.AddComponentToEntity<PhysicBody>(player, 400.0f, 30.0f, 0.90f, 100.f, 50.f);
+    world.AddComponentToEntity<PhysicBody>(player, 400.f, 30.f, 0.90f, 50.f, 10.f);
     world.AddComponentToEntity<CameraCenter>(player);
     world.AddComponentToEntity<Collideable>(player, boxCollideable);
 }

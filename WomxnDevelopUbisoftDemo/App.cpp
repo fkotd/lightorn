@@ -17,6 +17,13 @@ App::App(const char* appName)
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(static_cast<uint32_t>(APP_MAX_FRAMERATE));
     window.setActive();
+
+    ImGui::SFML::Init(window);
+}
+
+App::~App()
+{
+    ImGui::SFML::Shutdown();
 }
 
 App& App::Build()
@@ -47,9 +54,20 @@ void App::Run()
             case sf::Event::Closed:
                 window.close();
                 break;
+            case sf::Event::KeyPressed: {
+                if (event.key.code == sf::Keyboard::Escape) {
+                    window.close();
+                }
+                break;
             }
+            }
+
+            ImGui::SFML::ProcessEvent(event);
         }
 
+        ImGui::SFML::Update(window, clock.restart());
+
+        // TODO : move background element spawning in a function
         if (backgroundClock.getElapsedTime().asMilliseconds() >= backgroundSpawnInterval.asMilliseconds()) {
             spawnService->SpawnBackground(*world);
             backgroundClock.restart();
@@ -59,8 +77,14 @@ void App::Run()
         transformSystem->Update(*world, deltaTime);
         physicSystem->Update(*world, deltaTime);
         collisionSystem->Update(*world);
+        renderSystem->Render(*world, window);
 
-        renderSystem->Render(*world, &window);
+        debugService->RenderDebugService(window);
+
+        ImGui::EndFrame();
+        ImGui::SFML::Render(window);
+
+        window.display();
 
         deltaTime = clock.getElapsedTime().asSeconds();
     }

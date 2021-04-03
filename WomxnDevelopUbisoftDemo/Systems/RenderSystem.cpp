@@ -7,11 +7,11 @@
 #include "Components/Renderable.hpp"
 #include "Components/Transformable.hpp"
 
-void RenderSystem::Render(World& world, sf::RenderWindow* window)
+void RenderSystem::Render(World& world, sf::RenderTarget& target)
 {
     std::set<Entity> entities = world.Find(GetSignature());
 
-    window->clear(sf::Color(0, 0, 0));
+    target.clear(sf::Color(0, 0, 0));
 
     for (auto entity : entities) {
         // if the current entity has the camera component
@@ -20,9 +20,9 @@ void RenderSystem::Render(World& world, sf::RenderWindow* window)
             // this is player
             Transformable& transformable = world.GetComponent<Transformable>(entity);
             // update the view
-            sf::View view = window->getView();
+            sf::View view = target.getView();
             view.setCenter(view.getCenter().x, transformable.transformable.getPosition().y);
-            window->setView(view);
+            target.setView(view);
         }
 
         Renderable& renderable = world.GetComponent<Renderable>(entity);
@@ -42,8 +42,6 @@ void RenderSystem::Render(World& world, sf::RenderWindow* window)
             }
         }
 
-        window->draw(*renderable.shape);
+        target.draw(*renderable.shape);
     }
-
-    window->display();
 }

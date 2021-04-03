@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/World.hpp"
+#include "Services/DebugService.hpp"
 #include "Services/SpawnService.hpp"
 #include "Systems/CollisionSystem.hpp"
 #include "Systems/PhysicSystem.hpp"
@@ -12,6 +13,7 @@
 class App {
 public:
     App(const char* appName);
+    ~App();
     App& Build();
     void Run();
 
@@ -23,7 +25,8 @@ private:
 
     std::unique_ptr<World> world = std::make_unique<World>();
 
-    std::shared_ptr<SpawnService> spawnService;
+    std::unique_ptr<SpawnService> spawnService = std::make_unique<SpawnService>();
+    std::unique_ptr<DebugService> debugService = std::make_unique<DebugService>();
 
     std::shared_ptr<RenderSystem> renderSystem;
     std::shared_ptr<PlayerControlSystem> playerControlSystem;
