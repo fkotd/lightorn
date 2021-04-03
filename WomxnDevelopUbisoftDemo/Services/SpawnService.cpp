@@ -10,13 +10,6 @@
 #include "Components/Transformable.hpp"
 #include "Engine/EllipseShape.hpp"
 
-void SpawnService::Spawn(World& world)
-{
-    SpawnBackground(world, 10);
-    SpawnPlayer(world);
-    SpawnElement(world);
-}
-
 void SpawnService::SpawnPlayer(World& world)
 {
     Entity player = world.AddEntity();
@@ -39,7 +32,7 @@ void SpawnService::SpawnPlayer(World& world)
     world.AddComponentToEntity<Transformable>(player, transformable);
     world.AddComponentToEntity<Renderable>(player, shape, color, size);
     world.AddComponentToEntity<RigidBody>(player, velocity);
-    world.AddComponentToEntity<PhysicBody>(player, 400.0f, 30.0f, 0.90f);
+    world.AddComponentToEntity<PhysicBody>(player, 400.0f, 30.0f, 0.90f, 100.f, 50.f);
     world.AddComponentToEntity<CameraCenter>(player);
     world.AddComponentToEntity<Collideable>(player, boxCollideable);
 }
@@ -67,31 +60,40 @@ void SpawnService::SpawnElement(World& world)
     world.AddComponentToEntity<RigidBody>(groundEntity, velocity);
 }
 
-void SpawnService::SpawnBackground(World& world, int numberOfElements)
+void SpawnService::SpawnBackground(World& world)
 {
-    for (int i = 0; i < numberOfElements; i++) {
-        Entity backgroundElement = world.AddEntity();
+    Entity backgroundElement = world.AddEntity();
 
-        sf::Vector2f center = sf::Vector2f { static_cast<float>(50 * i), 10 };
+    int depth = GetRandomBetween(0, 5);
+    int width = 3;
+    int lenght = 20 * depth;
+    int x = GetRandomBetween(0, 1000);
+    int y = 0 - lenght;
+    float speedTweak = 1 + lenght / 5.0f;
+    float speed = 50 * speedTweak;
 
-        sf::Transformable transformable;
-        transformable.setPosition(center);
+    sf::Vector2f position = sf::Vector2f { static_cast<float>(x), static_cast<float>(y) };
+    sf::Vector2f size = sf::Vector2f { static_cast<float>(width), static_cast<float>(lenght) };
+    sf::Color color = sf::Color { 140, 130, 215, 100 };
+    sf::Vector2f velocity = sf::Vector2f { 0, speed };
 
-        sf::Color color = sf::Color { 140, 130, 215, 100 };
+    sf::Transformable transformable;
+    transformable.setPosition(position);
 
-        sf::Vector2f size = sf::Vector2f { 50, 50 };
+    EllipseShape* shape = new EllipseShape { size };
+    shape->setOrigin(size * 0.5f);
+    shape->setPosition(position);
 
-        EllipseShape* shape = new EllipseShape { sf::Vector2f { 3, 25 } };
-        shape->setOrigin(size * 0.5f);
-        shape->setPosition(center);
-        shape->setFillColor(color);
-        shape->setOutlineThickness(1);
-        shape->setOutlineColor(color);
+    shape->setFillColor(color);
+    shape->setOutlineThickness(1);
+    shape->setOutlineColor(color);
 
-        sf::Vector2f velocity = sf::Vector2f { 0, 400 };
+    world.AddComponentToEntity<Transformable>(backgroundElement, transformable);
+    world.AddComponentToEntity<Renderable>(backgroundElement, shape, color, size);
+    world.AddComponentToEntity<RigidBody>(backgroundElement, velocity);
+}
 
-        world.AddComponentToEntity<Transformable>(backgroundElement, transformable);
-        world.AddComponentToEntity<Renderable>(backgroundElement, shape, color, size);
-        world.AddComponentToEntity<RigidBody>(backgroundElement, velocity);
-    }
+int SpawnService::GetRandomBetween(int windowXMin, int windowXMax)
+{
+    return rand() % windowXMax + windowXMin;
 }

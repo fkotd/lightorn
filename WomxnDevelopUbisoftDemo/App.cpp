@@ -29,10 +29,13 @@ App& App::Build()
 
 void App::Run()
 {
-    spawnService->Spawn(*world);
+    spawnService->SpawnElement(*world);
+    spawnService->SpawnPlayer(*world);
 
     float deltaTime { 1.0f / APP_MAX_FRAMERATE };
     sf::Clock clock;
+    sf::Clock backgroundClock;
+    sf::Time backgroundSpawnInterval = sf::milliseconds(1);
 
     while (window.isOpen()) {
 
@@ -45,6 +48,11 @@ void App::Run()
                 window.close();
                 break;
             }
+        }
+
+        if (backgroundClock.getElapsedTime().asMilliseconds() >= backgroundSpawnInterval.asMilliseconds()) {
+            spawnService->SpawnBackground(*world);
+            backgroundClock.restart();
         }
 
         playerControlSystem->Update(*world, deltaTime);
@@ -75,7 +83,7 @@ void App::RegisterSystems()
     playerControlSystem = world->RegisterSystem<PlayerControlSystem, RigidBody, PhysicBody>();
 
     physicSystem = world->RegisterSystem<PhysicSystem, Transformable, RigidBody, PhysicBody>();
-    physicSystem->SetGravity(sf::Vector2f({ 0.0f, 100.0f }));
+    physicSystem->SetGravity(sf::Vector2f({ 0.0f, 9.81f }));
 
     collisionSystem = world->RegisterSystem<CollisionSystem, Collideable, RigidBody>();
 
