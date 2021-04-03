@@ -92,24 +92,24 @@ void App::Run()
 
 void App::RegisterComponents()
 {
-    world->RegisterComponent<Transformable>();
-    world->RegisterComponent<Renderable>();
-    world->RegisterComponent<RigidBody>();
     world->RegisterComponent<CameraCenter>();
     world->RegisterComponent<Collideable>();
     world->RegisterComponent<PhysicBody>();
+    world->RegisterComponent<Renderable>();
+    world->RegisterComponent<RigidBody>();
+    world->RegisterComponent<Transformable>();
 }
 
 void App::RegisterSystems()
 {
-    renderSystem = world->RegisterSystem<RenderSystem, Renderable>();
-
-    playerControlSystem = world->RegisterSystem<PlayerControlSystem, RigidBody, PhysicBody>();
+    collisionSystem = world->RegisterSystem<CollisionSystem, Collideable, RigidBody>();
 
     physicSystem = world->RegisterSystem<PhysicSystem, Transformable, RigidBody, PhysicBody>();
     physicSystem->SetGravity(sf::Vector2f({ 0.0f, 9.81f }));
 
-    collisionSystem = world->RegisterSystem<CollisionSystem, Collideable, RigidBody>();
+    playerControlSystem = world->RegisterSystem<PlayerControlSystem, RigidBody, PhysicBody>();
+
+    renderSystem = world->RegisterSystem<RenderSystem, Renderable>();
 
     transformSystem = world->RegisterSystem<TransformSystem, Transformable, RigidBody>();
 }

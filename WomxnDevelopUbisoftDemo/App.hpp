@@ -28,9 +28,9 @@ private:
     std::unique_ptr<SpawnService> spawnService = std::make_unique<SpawnService>();
     std::unique_ptr<DebugService> debugService = std::make_unique<DebugService>();
 
-    std::shared_ptr<RenderSystem> renderSystem;
-    std::shared_ptr<PlayerControlSystem> playerControlSystem;
-    std::shared_ptr<PhysicSystem> physicSystem;
     std::shared_ptr<CollisionSystem> collisionSystem;
+    std::shared_ptr<PhysicSystem> physicSystem;
+    std::shared_ptr<PlayerControlSystem> playerControlSystem;
+    std::shared_ptr<RenderSystem> renderSystem;
     std::shared_ptr<TransformSystem> transformSystem;
 };
