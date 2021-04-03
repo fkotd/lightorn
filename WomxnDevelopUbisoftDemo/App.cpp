@@ -36,13 +36,15 @@ App& App::Build()
 
 void App::Run()
 {
-    spawnService->SpawnElement(*world);
+    spawnService->SpawnLimit(*world);
+    spawnService->SpawnGround(*world);
+    spawnService->SpawnPlatform(*world);
     spawnService->SpawnPlayer(*world);
 
     float deltaTime { 1.0f / APP_MAX_FRAMERATE };
     sf::Clock clock;
     sf::Clock backgroundClock;
-    sf::Time backgroundSpawnInterval = sf::milliseconds(1);
+    sf::Time backgroundSpawnInterval = sf::milliseconds(50);
 
     while (window.isOpen()) {
 

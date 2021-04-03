@@ -5,7 +5,9 @@
 class SpawnService {
 public:
     void SpawnPlayer(World& world);
-    void SpawnElement(World& world);
+    void SpawnPlatform(World& world);
+    void SpawnGround(World& world);
+    void SpawnLimit(World& world);
     void SpawnBackground(World& world);
 
 private:

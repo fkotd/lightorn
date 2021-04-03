@@ -29,9 +29,7 @@ void PhysicSystem::Update(World& world, float deltaTime)
         rigidBody.velocity += gravity * deltaTime;
 
         ImGui::Begin("Physic Menu");
-
         ImGui::Text("Character velocity: %f", rigidBody.velocity);
-
         ImGui::End();
     }
 }

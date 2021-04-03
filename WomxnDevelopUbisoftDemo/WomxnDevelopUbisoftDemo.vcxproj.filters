@@ -152,10 +152,10 @@
     <ClInclude Include="Systems\TransformSystem.hpp">
       <Filter>Game\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="Services\SpawnService.hpp">
+    <ClInclude Include="Services\DebugService.hpp">
       <Filter>Game\Services</Filter>
     </ClInclude>
-    <ClInclude Include="Services\DebugService.hpp">
+    <ClInclude Include="Services\SpawnService.hpp">
       <Filter>Game\Services</Filter>
     </ClInclude>
   </ItemGroup>
