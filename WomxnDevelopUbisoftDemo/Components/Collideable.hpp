@@ -3,5 +3,5 @@
 #include "Engine/Collision.h"
 
 struct Collideable {
-    BoxCollideable* boxCollideable;
+    BoxCollideable boxCollideable;
 };

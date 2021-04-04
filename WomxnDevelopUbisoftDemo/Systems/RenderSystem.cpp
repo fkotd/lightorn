@@ -21,7 +21,7 @@ void RenderSystem::Render(World& world, sf::RenderTarget& target)
         // if the current entity has the camera component
         CameraCenter* cameraCenter = world.GetComponentIfExists<CameraCenter>(entity);
         if (cameraCenter != nullptr) {
-            // this is player
+            // it is the player
             Transformable& transformable = world.GetComponent<Transformable>(entity);
             // update the view
             sf::View view = target.getView();
@@ -31,18 +31,15 @@ void RenderSystem::Render(World& world, sf::RenderTarget& target)
 
         Renderable& renderable = world.GetComponent<Renderable>(entity);
 
-        // if the current entity has a transformable component
-        // update its shape
+        // if the current entity has a transformable component, update its shape
         Transformable* transformable = world.GetComponentIfExists<Transformable>(entity);
         if (transformable != nullptr) {
-            // we should update the shape of the entity accordingly to its position
             renderable.shape->setPosition(transformable->transformable.getPosition());
 
-            // if the current entity has a bounding box
-            // update its position
+            // if the current entity has a bounding box, update this position
             Collideable* collideable = world.GetComponentIfExists<Collideable>(entity);
             if (collideable != nullptr) {
-                collideable->boxCollideable->SetCenter(transformable->transformable.getPosition());
+                collideable->boxCollideable.SetCenter(transformable->transformable.getPosition());
             }
         }
 

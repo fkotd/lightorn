@@ -26,8 +26,8 @@ void SpawnService::SpawnPlayer(World& world)
     shape->setFillColor(color);
     shape->setOutlineThickness(1);
     shape->setOutlineColor(color);
-    BoxCollideable* boxCollideable = new BoxCollideable {};
-    boxCollideable->SetBoundingBox(center, size);
+    BoxCollideable boxCollideable = BoxCollideable {};
+    boxCollideable.SetBoundingBox(center, size);
 
     world.AddComponentToEntity<Transformable>(player, transformable);
     world.AddComponentToEntity<Renderable>(player, shape, color, size);
@@ -59,8 +59,8 @@ void SpawnService::SpawnPlatform(World& world)
     shape->setOutlineThickness(1);
     shape->setOutlineColor(color);
 
-    BoxCollideable* boxCollideable = new BoxCollideable {};
-    boxCollideable->SetBoundingBox(position, size);
+    BoxCollideable boxCollideable = BoxCollideable {};
+    boxCollideable.SetBoundingBox(position, size);
 
     sf::Vector2f velocity = sf::Vector2f { 0, 0 };
 
@@ -91,8 +91,8 @@ void SpawnService::SpawnGround(World& world)
     shape->setOutlineThickness(1);
     shape->setOutlineColor(color);
 
-    BoxCollideable* boxCollideable = new BoxCollideable {};
-    boxCollideable->SetBoundingBox(position, size);
+    BoxCollideable boxCollideable = BoxCollideable {};
+    boxCollideable.SetBoundingBox(position, size);
 
     sf::Vector2f velocity = sf::Vector2f { 0, 0 };
 
@@ -101,14 +101,14 @@ void SpawnService::SpawnGround(World& world)
     world.AddComponentToEntity<RigidBody>(groundEntity, velocity);
 }
 
-void SpawnService::SpawnLimit(World& world)
+void SpawnService::SpawnEdge(World& world)
 {
     float widthLimits[2] = { 200.f, 820.f };
 
     for (const auto x : widthLimits) {
         Entity limitEntity = world.AddEntity();
 
-        float width = 5.f;
+        float width = 10.f;
         float height = 2000.f;
         float y = 500;
 
@@ -125,8 +125,8 @@ void SpawnService::SpawnLimit(World& world)
         shape->setOutlineThickness(1);
         shape->setOutlineColor(color);
 
-        BoxCollideable* boxCollideable = new BoxCollideable {};
-        boxCollideable->SetBoundingBox(position, size);
+        BoxCollideable boxCollideable = BoxCollideable {};
+        boxCollideable.SetBoundingBox(position, size);
 
         sf::Vector2f velocity = sf::Vector2f { 0, 0 };
 

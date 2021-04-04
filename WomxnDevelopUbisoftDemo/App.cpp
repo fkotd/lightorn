@@ -36,7 +36,7 @@ App& App::Build()
 
 void App::Run()
 {
-    spawnService->SpawnLimit(*world);
+    spawnService->SpawnEdge(*world);
     spawnService->SpawnGround(*world);
     spawnService->SpawnPlatform(*world);
     spawnService->SpawnPlayer(*world);
@@ -107,7 +107,7 @@ void App::RegisterSystems()
     collisionSystem = world->RegisterSystem<CollisionSystem, Collideable, RigidBody>();
 
     physicSystem = world->RegisterSystem<PhysicSystem, Transformable, RigidBody, PhysicBody>();
-    physicSystem->SetGravity(sf::Vector2f({ 0.0f, 9.81f }));
+    physicSystem->SetGravity(sf::Vector2f({ 0.0f, 100.f }));
 
     playerControlSystem = world->RegisterSystem<PlayerControlSystem, RigidBody, PhysicBody>();
 

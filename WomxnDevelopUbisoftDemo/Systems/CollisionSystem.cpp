@@ -17,10 +17,10 @@ void CollisionSystem::Update(World& world)
             if (entity1 != entity2) {
                 Collideable& collideable2 = world.GetComponent<Collideable>(entity2);
 
-                if (collideable1.boxCollideable->IsColliding(*collideable2.boxCollideable)) {
+                if (collideable1.boxCollideable.IsColliding(collideable2.boxCollideable)) {
 
                     // Get the collision direction
-                    sf::Vector2f collisionNorm = collideable1.boxCollideable->GetNormalizedCollisionVetor(*collideable2.boxCollideable);
+                    sf::Vector2f collisionNorm = collideable1.boxCollideable.GetNormalizedCollisionVetor(collideable2.boxCollideable);
 
                     RigidBody& rigidBody1 = world.GetComponent<RigidBody>(entity1);
                     RigidBody& rigidBody2 = world.GetComponent<RigidBody>(entity2);
@@ -31,11 +31,6 @@ void CollisionSystem::Update(World& world)
                     if (speed < 0) {
                         break;
                     }
-
-                    //rigidBody1->velocity.x -= (speed * collisionNorm.x);
-                    //rigidBody1->velocity.y -= (speed * collisionNorm.y);
-                    //rigidBody2->velocity.x += (speed * collisionNorm.x);
-                    //rigidBody2->velocity.y += (speed * collisionNorm.y);
 
                     rigidBody1.velocity.x = 0;
                     rigidBody1.velocity.y = 0;

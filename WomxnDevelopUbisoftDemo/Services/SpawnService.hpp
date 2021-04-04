@@ -7,7 +7,7 @@ public:
     void SpawnPlayer(World& world);
     void SpawnPlatform(World& world);
     void SpawnGround(World& world);
-    void SpawnLimit(World& world);
+    void SpawnEdge(World& world);
     void SpawnBackground(World& world);
 
 private:
