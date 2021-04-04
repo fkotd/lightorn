@@ -56,9 +56,6 @@
     <ClCompile Include="Services\SpawnService.cpp">
       <Filter>Game\Services</Filter>
     </ClCompile>
-    <ClCompile Include="Services\DebugService.cpp">
-      <Filter>Game\Services</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -151,9 +148,6 @@
     </ClInclude>
     <ClInclude Include="Systems\TransformSystem.hpp">
       <Filter>Game\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="Services\DebugService.hpp">
-      <Filter>Game\Services</Filter>
     </ClInclude>
     <ClInclude Include="Services\SpawnService.hpp">
       <Filter>Game\Services</Filter>

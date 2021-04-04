@@ -114,7 +114,7 @@ void SpawnService::SpawnEdge(World& world)
 
         sf::Vector2f position = sf::Vector2f { x, y };
         sf::Vector2f size = sf::Vector2f { width, height };
-        sf::Color color = sf::Color::Yellow;
+        sf::Color color = sf::Color::Cyan;
 
         sf::RectangleShape* shape = new sf::RectangleShape();
         shape->setSize(size);
@@ -122,17 +122,10 @@ void SpawnService::SpawnEdge(World& world)
         shape->setPosition(position);
 
         shape->setFillColor(color);
-        shape->setOutlineThickness(1);
+        shape->setOutlineThickness(1.f);
         shape->setOutlineColor(color);
 
-        BoxCollideable boxCollideable = BoxCollideable {};
-        boxCollideable.SetBoundingBox(position, size);
-
-        sf::Vector2f velocity = sf::Vector2f { 0, 0 };
-
         world.AddComponentToEntity<Renderable>(limitEntity, shape, color, size);
-        world.AddComponentToEntity<Collideable>(limitEntity, boxCollideable);
-        world.AddComponentToEntity<RigidBody>(limitEntity, velocity);
     }
 }
 

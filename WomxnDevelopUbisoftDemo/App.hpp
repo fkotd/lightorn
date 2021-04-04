@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Core/World.hpp"
-#include "Services/DebugService.hpp"
 #include "Services/SpawnService.hpp"
 #include "Systems/CollisionSystem.hpp"
 #include "Systems/PhysicSystem.hpp"
@@ -26,7 +25,6 @@ private:
     std::unique_ptr<World> world = std::make_unique<World>();
 
     std::unique_ptr<SpawnService> spawnService = std::make_unique<SpawnService>();
-    std::unique_ptr<DebugService> debugService = std::make_unique<DebugService>();
 
     std::shared_ptr<CollisionSystem> collisionSystem;
     std::shared_ptr<PhysicSystem> physicSystem;

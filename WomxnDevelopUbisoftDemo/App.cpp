@@ -81,8 +81,6 @@ void App::Run()
         collisionSystem->Update(*world);
         renderSystem->Render(*world, window);
 
-        debugService->RenderDebugService(window);
-
         ImGui::EndFrame();
         ImGui::SFML::Render(window);
 
