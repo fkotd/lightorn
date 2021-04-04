@@ -10,13 +10,13 @@
 #include "Components/Transformable.hpp"
 #include "Engine/EllipseShape.hpp"
 
-void SpawnService::SpawnPlayer(World& world)
+void SpawnService::SpawnPlayer(World& world, const sf::FloatRect levelLimits)
 {
     Entity player = world.AddEntity();
 
     sf::Color color = sf::Color::Magenta;
     sf::Vector2f size = sf::Vector2f { 100, 100 };
-    sf::Vector2f center = sf::Vector2f { 1024 / 2.0f, 768 / 2.0f };
+    sf::Vector2f center = sf::Vector2f { ((2 * levelLimits.left) + levelLimits.width) / 2.0f, 100.f };
     sf::Vector2f velocity = sf::Vector2f { 0, 0 };
     sf::Transformable transformable;
     transformable.setPosition(center);
@@ -37,13 +37,13 @@ void SpawnService::SpawnPlayer(World& world)
     world.AddComponentToEntity<Collideable>(player, boxCollideable);
 }
 
-void SpawnService::SpawnPlatform(World& world)
+void SpawnService::SpawnPlatform(World& world, const sf::FloatRect levelLimits)
 {
     Entity platformEntity = world.AddEntity();
 
     float width = 200.f;
     float height = 50.f;
-    float x = 1024 / 2.0f;
+    float x = ((2 * levelLimits.left) + levelLimits.width) / 2.0f;
     float y = 700;
 
     sf::Vector2f position = sf::Vector2f { x, y };
@@ -69,14 +69,14 @@ void SpawnService::SpawnPlatform(World& world)
     world.AddComponentToEntity<RigidBody>(platformEntity, velocity);
 }
 
-void SpawnService::SpawnGround(World& world)
+void SpawnService::SpawnGround(World& world, const sf::FloatRect levelLimits)
 {
     Entity groundEntity = world.AddEntity();
 
     float width = 1500.f;
     float height = 5.f;
-    float x = 1024 / 2.0f;
-    float y = 1200;
+    float x = ((2 * levelLimits.left) + levelLimits.width) / 2.0f;
+    float y = levelLimits.height;
 
     sf::Vector2f position = sf::Vector2f { x, y };
     sf::Vector2f size = sf::Vector2f { width, height };
@@ -101,16 +101,16 @@ void SpawnService::SpawnGround(World& world)
     world.AddComponentToEntity<RigidBody>(groundEntity, velocity);
 }
 
-void SpawnService::SpawnEdge(World& world)
+void SpawnService::SpawnEdge(World& world, const sf::FloatRect levelLimits)
 {
-    float widthLimits[2] = { 200.f, 820.f };
+    float widthLimits[2] = { levelLimits.left, levelLimits.left + levelLimits.width };
 
     for (const auto x : widthLimits) {
         Entity limitEntity = world.AddEntity();
 
         float width = 10.f;
-        float height = 2000.f;
-        float y = 500;
+        float height = levelLimits.height;
+        float y = levelLimits.height / 2.f;
 
         sf::Vector2f position = sf::Vector2f { x, y };
         sf::Vector2f size = sf::Vector2f { width, height };
@@ -129,20 +129,20 @@ void SpawnService::SpawnEdge(World& world)
     }
 }
 
-void SpawnService::SpawnBackground(World& world)
+void SpawnService::SpawnBackground(World& world, const sf::FloatRect levelLimits)
 {
     Entity backgroundElement = world.AddEntity();
 
     int depth = GetRandomBetween(2, 5);
     int width = 3;
-    int lenght = 20 * depth;
-    int x = GetRandomBetween(0, 1000);
-    int y = 0 - lenght;
-    float speedTweak = 1 + lenght / 5.0f;
+    int length = 20 * depth;
+    int x = GetRandomBetween(levelLimits.left, levelLimits.width);
+    int y = 0 - length;
+    float speedTweak = 1 + length / 5.0f;
     float speed = 50 * speedTweak;
 
     sf::Vector2f position = sf::Vector2f { static_cast<float>(x), static_cast<float>(y) };
-    sf::Vector2f size = sf::Vector2f { static_cast<float>(width), static_cast<float>(lenght) };
+    sf::Vector2f size = sf::Vector2f { static_cast<float>(width), static_cast<float>(length) };
     sf::Color color = sf::Color { 140, 130, 215, 100 };
     sf::Color outlineColor = sf::Color { 140, 130, 215, 50 };
     sf::Vector2f velocity = sf::Vector2f { 0, speed };

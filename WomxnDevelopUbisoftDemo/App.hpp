@@ -19,8 +19,10 @@ public:
 private:
     void RegisterComponents();
     void RegisterSystems();
+    void SetLevelLimits(const sf::Vector2f& levelTopLeft, const sf::Vector2f& levelSize);
 
     sf::RenderWindow window;
+    sf::FloatRect levelLimits;
 
     std::unique_ptr<World> world = std::make_unique<World>();
 

@@ -8,8 +8,10 @@
 #include "Components/RigidBody.hpp"
 #include "Components/Transformable.hpp"
 
+static const int APP_WINDOW_WIDTH { 1620 };
+static const int APP_WINDOW_HEIGHT { 780 };
 static constexpr float APP_MAX_FRAMERATE { 60.0f };
-static const sf::Vector2u APP_WINDOW_SIZE { 1024, 1000 };
+static const sf::Vector2u APP_WINDOW_SIZE { APP_WINDOW_WIDTH, APP_WINDOW_HEIGHT };
 
 App::App(const char* appName)
     : window { sf::VideoMode(APP_WINDOW_SIZE.x, APP_WINDOW_SIZE.y), appName, sf::Style::Titlebar | sf::Style::Close }
@@ -17,6 +19,10 @@ App::App(const char* appName)
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(static_cast<uint32_t>(APP_MAX_FRAMERATE));
     window.setActive();
+
+    sf::Vector2f levelTopLeft { 20.f / 100.f * APP_WINDOW_WIDTH, 0.f };
+    sf::Vector2f levelSize { APP_WINDOW_WIDTH - (2.f * 20.f / 100.f * APP_WINDOW_WIDTH), 5.f * APP_WINDOW_HEIGHT };
+    SetLevelLimits(levelTopLeft, levelSize);
 
     ImGui::SFML::Init(window);
 }
@@ -36,10 +42,10 @@ App& App::Build()
 
 void App::Run()
 {
-    spawnService->SpawnEdge(*world);
-    spawnService->SpawnGround(*world);
-    spawnService->SpawnPlatform(*world);
-    spawnService->SpawnPlayer(*world);
+    spawnService->SpawnEdge(*world, levelLimits);
+    spawnService->SpawnGround(*world, levelLimits);
+    spawnService->SpawnPlatform(*world, levelLimits);
+    spawnService->SpawnPlayer(*world, levelLimits);
 
     float deltaTime { 1.0f / APP_MAX_FRAMERATE };
     sf::Clock clock;
@@ -71,7 +77,7 @@ void App::Run()
 
         // TODO : move background element spawning in a function
         if (backgroundClock.getElapsedTime().asMilliseconds() >= backgroundSpawnInterval.asMilliseconds()) {
-            spawnService->SpawnBackground(*world);
+            spawnService->SpawnBackground(*world, levelLimits);
             backgroundClock.restart();
         }
 
@@ -112,4 +118,12 @@ void App::RegisterSystems()
     renderSystem = world->RegisterSystem<RenderSystem, Renderable>();
 
     transformSystem = world->RegisterSystem<TransformSystem, Transformable, RigidBody>();
+}
+
+void App::SetLevelLimits(const sf::Vector2f& topLeft, const sf::Vector2f& size)
+{
+    levelLimits.left = topLeft.x;
+    levelLimits.top = topLeft.y;
+    levelLimits.width = size.x;
+    levelLimits.height = size.y;
 }
