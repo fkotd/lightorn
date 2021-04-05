@@ -42,10 +42,7 @@ App& App::Build()
 
 void App::Run()
 {
-    spawnService->SpawnEdge(*world, levelLimits);
-    spawnService->SpawnGround(*world, levelLimits);
-    spawnService->SpawnPlatform(*world, levelLimits);
-    spawnService->SpawnPlayer(*world, levelLimits);
+    spawnService->SpawnLevel(*world, levelLimits);
 
     float deltaTime { 1.0f / APP_MAX_FRAMERATE };
     sf::Clock clock;
@@ -77,7 +74,7 @@ void App::Run()
 
         // TODO : move background element spawning in a function
         if (backgroundClock.getElapsedTime().asMilliseconds() >= backgroundSpawnInterval.asMilliseconds()) {
-            spawnService->SpawnBackground(*world, levelLimits);
+            spawnService->SpawnLightDrop(*world, levelLimits);
             backgroundClock.restart();
         }
 

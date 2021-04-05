@@ -4,12 +4,11 @@
 
 class SpawnService {
 public:
-    void SpawnPlayer(World& world, const sf::FloatRect levelLimits);
-    void SpawnPlatform(World& world, const sf::FloatRect levelLimits);
-    void SpawnGround(World& world, const sf::FloatRect levelLimits);
-    void SpawnEdge(World& world, const sf::FloatRect levelLimits);
-    void SpawnBackground(World& world, const sf::FloatRect levelLimits);
+    void SpawnLevel(World&, const sf::FloatRect& levelLimits);
+    void SpawnLightDrop(World& world, const sf::FloatRect& levelLimits);
 
 private:
+    void SpawnPlayer(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color);
+    void SpawnElement(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color);
     int GetRandomBetween(int windowXMin, int windowXMax);
 };

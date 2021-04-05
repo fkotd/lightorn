@@ -10,24 +10,54 @@
 #include "Components/Transformable.hpp"
 #include "Engine/EllipseShape.hpp"
 
-void SpawnService::SpawnPlayer(World& world, const sf::FloatRect levelLimits)
+void SpawnService::SpawnLevel(World& world, const sf::FloatRect& levelLimits)
+{
+    SpawnElement( // Left Edge
+        world,
+        sf::Vector2f { levelLimits.left, levelLimits.height / 2.f },
+        sf::Vector2f { 10.f, levelLimits.height },
+        sf::Color::Cyan);
+    SpawnElement( // Right Edge
+        world,
+        sf::Vector2f { levelLimits.left + levelLimits.width, levelLimits.height / 2.f },
+        sf::Vector2f { 10.f, levelLimits.height },
+        sf::Color::Cyan);
+    SpawnElement( // Ground
+        world,
+        sf::Vector2f { ((2 * levelLimits.left) + levelLimits.width) / 2.0f, levelLimits.height },
+        sf::Vector2f { 1500.f, 5.f },
+        sf::Color::Yellow);
+    SpawnElement( // platform
+        world,
+        sf::Vector2f { ((2 * levelLimits.left) + levelLimits.width) / 2.0f, 700.f },
+        sf::Vector2f { 200.f, 50.f },
+        sf::Color::Cyan);
+    SpawnPlayer( // character
+        world,
+        sf::Vector2f { ((2 * levelLimits.left) + levelLimits.width) / 2.0f, 100.f },
+        sf::Vector2f { 100, 100 },
+        sf::Color::Magenta);
+}
+
+void SpawnService::SpawnPlayer(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color)
 {
     Entity player = world.AddEntity();
 
-    sf::Color color = sf::Color::Magenta;
-    sf::Vector2f size = sf::Vector2f { 100, 100 };
-    sf::Vector2f center = sf::Vector2f { ((2 * levelLimits.left) + levelLimits.width) / 2.0f, 100.f };
-    sf::Vector2f velocity = sf::Vector2f { 0, 0 };
     sf::Transformable transformable;
     transformable.setPosition(center);
+
     sf::CircleShape* shape = new sf::CircleShape { 50 };
-    shape->setOrigin(size * 0.5f);
     shape->setPosition(center);
+    shape->setOrigin(size * 0.5f);
+
     shape->setFillColor(color);
     shape->setOutlineThickness(1);
     shape->setOutlineColor(color);
+
     BoxCollideable boxCollideable = BoxCollideable {};
     boxCollideable.SetBoundingBox(center, size);
+
+    sf::Vector2f velocity = sf::Vector2f { 0, 0 };
 
     world.AddComponentToEntity<Transformable>(player, transformable);
     world.AddComponentToEntity<Renderable>(player, shape, color, size);
@@ -37,30 +67,21 @@ void SpawnService::SpawnPlayer(World& world, const sf::FloatRect levelLimits)
     world.AddComponentToEntity<Collideable>(player, boxCollideable);
 }
 
-void SpawnService::SpawnPlatform(World& world, const sf::FloatRect levelLimits)
+void SpawnService::SpawnElement(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color)
 {
     Entity platformEntity = world.AddEntity();
 
-    float width = 200.f;
-    float height = 50.f;
-    float x = ((2 * levelLimits.left) + levelLimits.width) / 2.0f;
-    float y = 700;
-
-    sf::Vector2f position = sf::Vector2f { x, y };
-    sf::Vector2f size = sf::Vector2f { width, height };
-    sf::Color color = sf::Color::Cyan;
-
     sf::RectangleShape* shape = new sf::RectangleShape();
-    shape->setSize(size);
+    shape->setPosition(center);
     shape->setOrigin(size * 0.5f);
-    shape->setPosition(position);
+    shape->setSize(size);
 
     shape->setFillColor(color);
     shape->setOutlineThickness(1);
     shape->setOutlineColor(color);
 
     BoxCollideable boxCollideable = BoxCollideable {};
-    boxCollideable.SetBoundingBox(position, size);
+    boxCollideable.SetBoundingBox(center, size);
 
     sf::Vector2f velocity = sf::Vector2f { 0, 0 };
 
@@ -69,67 +90,7 @@ void SpawnService::SpawnPlatform(World& world, const sf::FloatRect levelLimits)
     world.AddComponentToEntity<RigidBody>(platformEntity, velocity);
 }
 
-void SpawnService::SpawnGround(World& world, const sf::FloatRect levelLimits)
-{
-    Entity groundEntity = world.AddEntity();
-
-    float width = 1500.f;
-    float height = 5.f;
-    float x = ((2 * levelLimits.left) + levelLimits.width) / 2.0f;
-    float y = levelLimits.height;
-
-    sf::Vector2f position = sf::Vector2f { x, y };
-    sf::Vector2f size = sf::Vector2f { width, height };
-    sf::Color color = sf::Color::Yellow;
-
-    sf::RectangleShape* shape = new sf::RectangleShape();
-    shape->setSize(size);
-    shape->setOrigin(size * 0.5f);
-    shape->setPosition(position);
-
-    shape->setFillColor(color);
-    shape->setOutlineThickness(1);
-    shape->setOutlineColor(color);
-
-    BoxCollideable boxCollideable = BoxCollideable {};
-    boxCollideable.SetBoundingBox(position, size);
-
-    sf::Vector2f velocity = sf::Vector2f { 0, 0 };
-
-    world.AddComponentToEntity<Renderable>(groundEntity, shape, color, size);
-    world.AddComponentToEntity<Collideable>(groundEntity, boxCollideable);
-    world.AddComponentToEntity<RigidBody>(groundEntity, velocity);
-}
-
-void SpawnService::SpawnEdge(World& world, const sf::FloatRect levelLimits)
-{
-    float widthLimits[2] = { levelLimits.left, levelLimits.left + levelLimits.width };
-
-    for (const auto x : widthLimits) {
-        Entity limitEntity = world.AddEntity();
-
-        float width = 10.f;
-        float height = levelLimits.height;
-        float y = levelLimits.height / 2.f;
-
-        sf::Vector2f position = sf::Vector2f { x, y };
-        sf::Vector2f size = sf::Vector2f { width, height };
-        sf::Color color = sf::Color::Cyan;
-
-        sf::RectangleShape* shape = new sf::RectangleShape();
-        shape->setSize(size);
-        shape->setOrigin(size * 0.5f);
-        shape->setPosition(position);
-
-        shape->setFillColor(color);
-        shape->setOutlineThickness(1.f);
-        shape->setOutlineColor(color);
-
-        world.AddComponentToEntity<Renderable>(limitEntity, shape, color, size);
-    }
-}
-
-void SpawnService::SpawnBackground(World& world, const sf::FloatRect levelLimits)
+void SpawnService::SpawnLightDrop(World& world, const sf::FloatRect& levelLimits)
 {
     Entity backgroundElement = world.AddEntity();
 
