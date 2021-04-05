@@ -24,12 +24,16 @@ void PhysicSystem::Update(World& world, float deltaTime)
 
         transformable.transformable.move(rigidBody.velocity * deltaTime);
 
-        // rigidBody.velocity += ((physicBody.mass * gravity) / physicBody.gamma) * (1 - exp((-physicBody.gamma * deltaTime) / physicBody.mass));
+        //rigidBody.velocity += ((physicBody.mass * gravity) / physicBody.gamma) * (1 - exp((-physicBody.gamma * deltaTime) / physicBody.mass));
 
         rigidBody.velocity += gravity * deltaTime;
 
+        if (rigidBody.velocity.y > rigidBody.maxFallVelocity) {
+            rigidBody.velocity.y = rigidBody.maxFallVelocity;
+        }
+
         ImGui::Begin("Physic Menu");
-        ImGui::Text("Character velocity: %f", rigidBody.velocity);
+        ImGui::Text("Character velocity: %f, %f", rigidBody.velocity.x, rigidBody.velocity.y);
         ImGui::End();
     }
 }

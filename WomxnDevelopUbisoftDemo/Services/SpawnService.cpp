@@ -12,6 +12,11 @@
 
 void SpawnService::SpawnLevel(World& world, const sf::FloatRect& levelLimits)
 {
+    SpawnPlayer( // character
+        world,
+        sf::Vector2f { ((2 * levelLimits.left) + levelLimits.width) / 2.0f, 100.f },
+        sf::Vector2f { 100, 100 },
+        sf::Color::Magenta);
     SpawnElement( // Left Edge
         world,
         sf::Vector2f { levelLimits.left, levelLimits.height / 2.f },
@@ -32,11 +37,6 @@ void SpawnService::SpawnLevel(World& world, const sf::FloatRect& levelLimits)
         sf::Vector2f { ((2 * levelLimits.left) + levelLimits.width) / 2.0f, 700.f },
         sf::Vector2f { 200.f, 50.f },
         sf::Color::Cyan);
-    SpawnPlayer( // character
-        world,
-        sf::Vector2f { ((2 * levelLimits.left) + levelLimits.width) / 2.0f, 100.f },
-        sf::Vector2f { 100, 100 },
-        sf::Color::Magenta);
 }
 
 void SpawnService::SpawnPlayer(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color)
@@ -61,7 +61,7 @@ void SpawnService::SpawnPlayer(World& world, const sf::Vector2f center, const sf
 
     world.AddComponentToEntity<Transformable>(player, transformable);
     world.AddComponentToEntity<Renderable>(player, shape, color, size);
-    world.AddComponentToEntity<RigidBody>(player, velocity);
+    world.AddComponentToEntity<RigidBody>(player, velocity, 400.f);
     world.AddComponentToEntity<PhysicBody>(player, 400.f, 30.f, 0.90f, 50.f, 10.f);
     world.AddComponentToEntity<CameraCenter>(player);
     world.AddComponentToEntity<Collideable>(player, boxCollideable);
@@ -87,7 +87,7 @@ void SpawnService::SpawnElement(World& world, const sf::Vector2f center, const s
 
     world.AddComponentToEntity<Renderable>(platformEntity, shape, color, size);
     world.AddComponentToEntity<Collideable>(platformEntity, boxCollideable);
-    world.AddComponentToEntity<RigidBody>(platformEntity, velocity);
+    world.AddComponentToEntity<RigidBody>(platformEntity, velocity, 0.f);
 }
 
 void SpawnService::SpawnLightDrop(World& world, const sf::FloatRect& levelLimits)
@@ -121,7 +121,7 @@ void SpawnService::SpawnLightDrop(World& world, const sf::FloatRect& levelLimits
 
     world.AddComponentToEntity<Transformable>(backgroundElement, transformable);
     world.AddComponentToEntity<Renderable>(backgroundElement, shape, color, size);
-    world.AddComponentToEntity<RigidBody>(backgroundElement, velocity);
+    world.AddComponentToEntity<RigidBody>(backgroundElement, velocity, 400.f);
 }
 
 int SpawnService::GetRandomBetween(int windowXMin, int windowXMax)
