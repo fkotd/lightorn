@@ -60,7 +60,7 @@ void SpawnService::SpawnPlayer(World& world, const sf::Vector2f center, const sf
     sf::Vector2f velocity = sf::Vector2f { 0, 0 };
 
     world.AddComponentToEntity<Transformable>(player, transformable);
-    world.AddComponentToEntity<Renderable>(player, shape, color, size);
+    world.AddComponentToEntity<Renderable>(player, shape, color, size, 1);
     world.AddComponentToEntity<RigidBody>(player, velocity, 400.f);
     world.AddComponentToEntity<PhysicBody>(player, 400.f, 30.f, 0.90f, 50.f, 10.f);
     world.AddComponentToEntity<CameraCenter>(player);
@@ -85,7 +85,7 @@ void SpawnService::SpawnElement(World& world, const sf::Vector2f center, const s
 
     sf::Vector2f velocity = sf::Vector2f { 0, 0 };
 
-    world.AddComponentToEntity<Renderable>(platformEntity, shape, color, size);
+    world.AddComponentToEntity<Renderable>(platformEntity, shape, color, size, 1);
     world.AddComponentToEntity<Collideable>(platformEntity, boxCollideable);
     world.AddComponentToEntity<RigidBody>(platformEntity, velocity, 0.f);
 }
@@ -120,7 +120,7 @@ void SpawnService::SpawnLightDrop(World& world, const sf::FloatRect& levelLimits
     shape->setOutlineColor(outlineColor);
 
     world.AddComponentToEntity<Transformable>(backgroundElement, transformable);
-    world.AddComponentToEntity<Renderable>(backgroundElement, shape, color, size);
+    world.AddComponentToEntity<Renderable>(backgroundElement, shape, color, size, 2);
     world.AddComponentToEntity<RigidBody>(backgroundElement, velocity, 400.f);
 }
 

@@ -73,10 +73,10 @@ void App::Run()
         ImGui::SFML::Update(window, clock.restart());
 
         // TODO : move background element spawning in a function
-        //if (backgroundClock.getElapsedTime().asMilliseconds() >= backgroundSpawnInterval.asMilliseconds()) {
-        //    spawnService->SpawnLightDrop(*world, levelLimits);
-        //    backgroundClock.restart();
-        //}
+        if (backgroundClock.getElapsedTime().asMilliseconds() >= backgroundSpawnInterval.asMilliseconds()) {
+            spawnService->SpawnLightDrop(*world, levelLimits);
+            backgroundClock.restart();
+        }
 
         playerControlSystem->Update(*world, deltaTime);
         transformSystem->Update(*world, deltaTime);
