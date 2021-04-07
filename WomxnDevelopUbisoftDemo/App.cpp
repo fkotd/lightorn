@@ -79,9 +79,10 @@ void App::Run()
         }
 
         playerControlSystem->Update(*world, deltaTime);
-        transformSystem->Update(*world, deltaTime);
         physicSystem->Update(*world, deltaTime);
+        transformSystem->Update(*world, deltaTime);
         collisionSystem->Update(*world);
+        commitSystem->Commit(*world);
         renderSystem->Render(*world, window);
 
         ImGui::EndFrame();
@@ -105,16 +106,14 @@ void App::RegisterComponents()
 
 void App::RegisterSystems()
 {
-    collisionSystem = world->RegisterSystem<CollisionSystem, Collideable, RigidBody>();
-
-    physicSystem = world->RegisterSystem<PhysicSystem, Transformable, RigidBody, PhysicBody>();
-    physicSystem->SetGravity(sf::Vector2f({ 0.0f, 100.f }));
 
     playerControlSystem = world->RegisterSystem<PlayerControlSystem, RigidBody, PhysicBody>();
-
-    renderSystem = world->RegisterSystem<RenderSystem, Renderable>();
-
+    physicSystem = world->RegisterSystem<PhysicSystem, Transformable, RigidBody, PhysicBody>();
+    physicSystem->SetGravity(sf::Vector2f({ 0.0f, 100.f }));
     transformSystem = world->RegisterSystem<TransformSystem, Transformable, RigidBody>();
+    collisionSystem = world->RegisterSystem<CollisionSystem, Collideable, RigidBody>();
+    commitSystem = world->RegisterSystem<CommitSystem, Transformable>();
+    renderSystem = world->RegisterSystem<RenderSystem, Renderable>();
 }
 
 void App::SetLevelLimits(const sf::Vector2f& topLeft, const sf::Vector2f& size)

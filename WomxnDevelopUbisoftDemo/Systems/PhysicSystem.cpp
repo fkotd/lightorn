@@ -22,8 +22,6 @@ void PhysicSystem::Update(World& world, float deltaTime)
         RigidBody& rigidBody = world.GetComponent<RigidBody>(entity);
         PhysicBody& physicBody = world.GetComponent<PhysicBody>(entity);
 
-        transformable.transformable.move(rigidBody.velocity * deltaTime);
-
         //rigidBody.velocity += ((physicBody.mass * gravity) / physicBody.gamma) * (1 - exp((-physicBody.gamma * deltaTime) / physicBody.mass));
 
         rigidBody.velocity += gravity * deltaTime;

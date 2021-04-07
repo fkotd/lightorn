@@ -4,4 +4,5 @@
 
 struct Collideable {
     BoxCollideable boxCollideable;
+    BoxCollideable draftBoxCollideable;
 };

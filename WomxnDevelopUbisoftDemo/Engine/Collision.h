@@ -2,23 +2,27 @@
 
 #include <math.h>
 
-class BoxCollideable
-{
+class BoxCollideable {
 
 public:
     inline const sf::FloatRect& GetBoundingBox() const
-    { 
-        return m_BoundingBox; 
+    {
+        return m_BoundingBox;
     }
 
-    inline const bool IsColliding(const BoxCollideable& other) const 
-    { 
+    inline const bool IsColliding(const BoxCollideable& other) const
+    {
         return m_BoundingBox.intersects(other.GetBoundingBox());
     }
 
-    inline const bool Contains(float x, float y) const 
+    inline const bool IsColliding(const BoxCollideable& other, sf::FloatRect& intersection) const
     {
-        return m_BoundingBox.contains(x, y); 
+        return m_BoundingBox.intersects(other.GetBoundingBox(), intersection);
+    }
+
+    inline const bool Contains(float x, float y) const
+    {
+        return m_BoundingBox.contains(x, y);
     }
 
     inline const bool Contains(const sf::Vector2f& pos) const
@@ -37,7 +41,7 @@ public:
         return sf::Vector2f(m_BoundingBox.left + (m_BoundingBox.width / 2.0f), m_BoundingBox.top + (m_BoundingBox.height / 2.0f));
     }
 
-    sf::Vector2f const GetNormalizedCollisionVetor(const BoxCollideable& other) const
+    sf::Vector2f const GetNormalizedCollisionVector(const BoxCollideable& other) const
     {
         const sf::Vector2f center = GetCenter();
         const sf::Vector2f otherCenter = other.GetCenter();

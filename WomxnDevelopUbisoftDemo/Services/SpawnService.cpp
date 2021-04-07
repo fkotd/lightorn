@@ -43,8 +43,17 @@ void SpawnService::SpawnPlayer(World& world, const sf::Vector2f center, const sf
 {
     Entity player = world.AddEntity();
 
-    sf::Transformable transformable;
-    transformable.setPosition(center);
+    sf::Vector2f velocity = sf::Vector2f { 0, 0 };
+
+    sf::Transformable transform;
+    transform.setPosition(center);
+    sf::Transformable draftTransform;
+    draftTransform.setPosition(center);
+
+    BoxCollideable boxCollideable = BoxCollideable {};
+    boxCollideable.SetBoundingBox(center, size);
+    BoxCollideable draftBoxCollideable = BoxCollideable {};
+    draftBoxCollideable.SetBoundingBox(center, size);
 
     sf::CircleShape* shape = new sf::CircleShape { 50 };
     shape->setPosition(center);
@@ -54,22 +63,24 @@ void SpawnService::SpawnPlayer(World& world, const sf::Vector2f center, const sf
     shape->setOutlineThickness(1);
     shape->setOutlineColor(color);
 
-    BoxCollideable boxCollideable = BoxCollideable {};
-    boxCollideable.SetBoundingBox(center, size);
-
-    sf::Vector2f velocity = sf::Vector2f { 0, 0 };
-
-    world.AddComponentToEntity<Transformable>(player, transformable);
+    world.AddComponentToEntity<Transformable>(player, transform, draftTransform);
     world.AddComponentToEntity<Renderable>(player, shape, color, size, 1);
     world.AddComponentToEntity<RigidBody>(player, velocity, 400.f);
     world.AddComponentToEntity<PhysicBody>(player, 400.f, 30.f, 0.90f, 50.f, 10.f);
     world.AddComponentToEntity<CameraCenter>(player);
-    world.AddComponentToEntity<Collideable>(player, boxCollideable);
+    world.AddComponentToEntity<Collideable>(player, boxCollideable, draftBoxCollideable);
 }
 
 void SpawnService::SpawnElement(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color)
 {
     Entity platformEntity = world.AddEntity();
+
+    sf::Vector2f velocity = sf::Vector2f { 0, 0 };
+
+    BoxCollideable boxCollideable = BoxCollideable {};
+    boxCollideable.SetBoundingBox(center, size);
+    BoxCollideable draftBoxCollideable = BoxCollideable {};
+    draftBoxCollideable.SetBoundingBox(center, size);
 
     sf::RectangleShape* shape = new sf::RectangleShape();
     shape->setPosition(center);
@@ -80,13 +91,8 @@ void SpawnService::SpawnElement(World& world, const sf::Vector2f center, const s
     shape->setOutlineThickness(1);
     shape->setOutlineColor(color);
 
-    BoxCollideable boxCollideable = BoxCollideable {};
-    boxCollideable.SetBoundingBox(center, size);
-
-    sf::Vector2f velocity = sf::Vector2f { 0, 0 };
-
     world.AddComponentToEntity<Renderable>(platformEntity, shape, color, size, 1);
-    world.AddComponentToEntity<Collideable>(platformEntity, boxCollideable);
+    world.AddComponentToEntity<Collideable>(platformEntity, boxCollideable, draftBoxCollideable);
     world.AddComponentToEntity<RigidBody>(platformEntity, velocity, 0.f);
 }
 
@@ -107,6 +113,7 @@ void SpawnService::SpawnLightDrop(World& world, const sf::FloatRect& levelLimits
     sf::Color color = sf::Color { 140, 130, 215, 100 };
     sf::Color outlineColor = sf::Color { 140, 130, 215, 50 };
     sf::Vector2f velocity = sf::Vector2f { 0, speed };
+    sf::Vector2f draftPosition = sf::Vector2f { 0, 0 };
 
     sf::Transformable transformable;
     transformable.setPosition(position);
@@ -119,7 +126,7 @@ void SpawnService::SpawnLightDrop(World& world, const sf::FloatRect& levelLimits
     shape->setOutlineThickness(2);
     shape->setOutlineColor(outlineColor);
 
-    world.AddComponentToEntity<Transformable>(backgroundElement, transformable);
+    world.AddComponentToEntity<Transformable>(backgroundElement, transformable, transformable);
     world.AddComponentToEntity<Renderable>(backgroundElement, shape, color, size, 2);
     world.AddComponentToEntity<RigidBody>(backgroundElement, velocity, 400.f);
 }
