@@ -41,17 +41,6 @@ public:
         return sf::Vector2f(m_BoundingBox.left + (m_BoundingBox.width / 2.0f), m_BoundingBox.top + (m_BoundingBox.height / 2.0f));
     }
 
-    sf::Vector2f const GetNormalizedCollisionVector(const BoxCollideable& other) const
-    {
-        const sf::Vector2f center = GetCenter();
-        const sf::Vector2f otherCenter = other.GetCenter();
-
-        sf::Vector2f collisionVector = sf::Vector2f(otherCenter.x - center.x, otherCenter.y - center.y);
-        float distance = sqrt(pow((otherCenter.x - center.x), 2) + pow((otherCenter.y - center.y), 2));
-
-        return sf::Vector2f(collisionVector.x / distance, collisionVector.y / distance);
-    }
-
     inline void SetBoundingBox(float left, float top, float width, float height)
     {
         m_BoundingBox.left = left;

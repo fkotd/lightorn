@@ -24,18 +24,8 @@ void CollisionSystem::Update(World& world)
 
                 if (collideable1.draftBoxCollideable.IsColliding(collideable2.draftBoxCollideable, intersection)) {
 
-                    // Get the collision direction
-                    //sf::Vector2f collisionNorm = collideable1.draftBoxCollideable.GetNormalizedCollisionVector(collideable2.draftBoxCollideable);
-
                     RigidBody& rigidBody1 = world.GetComponent<RigidBody>(entity1);
                     RigidBody& rigidBody2 = world.GetComponent<RigidBody>(entity2);
-
-                    //sf::Vector2f relativeVelocity = sf::Vector2f(rigidBody1.velocity.x - rigidBody2.velocity.x, rigidBody1.velocity.y - rigidBody2.velocity.y);
-                    //float speed = relativeVelocity.x * collisionNorm.x + relativeVelocity.y * collisionNorm.y;
-
-                    //if (speed < 0) {
-                    //    break;
-                    //}
 
                     sf::Vector2f normal;
                     float collisionTime = SweptAABB(collideable1.draftBoxCollideable.GetBoundingBox(), collideable2.draftBoxCollideable.GetBoundingBox(), rigidBody1.velocity, rigidBody2.velocity, normal);
@@ -68,6 +58,7 @@ void CollisionSystem::Update(World& world)
 }
 
 // return the offset of time when the collision occured during the frame
+// TODO: add comments
 float CollisionSystem::SweptAABB(const sf::FloatRect& r1, const sf::FloatRect& r2, sf::Vector2f& v1, sf::Vector2f& v2, sf::Vector2f& normal)
 {
     sf::Vector2f inverseEntry;
