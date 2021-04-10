@@ -59,6 +59,9 @@
     <ClCompile Include="Systems\CommitSystem.cpp">
       <Filter>Game\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="Systems\GripSystem.cpp">
+      <Filter>Game\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -157,6 +160,18 @@
     </ClInclude>
     <ClInclude Include="Systems\CommitSystem.hpp">
       <Filter>Game\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Grippable.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Gripper.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\GripSystem.hpp">
+      <Filter>Game\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Responser.hpp">
+      <Filter>Game\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

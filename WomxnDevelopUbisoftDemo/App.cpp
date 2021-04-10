@@ -3,8 +3,11 @@
 #include "App.hpp"
 #include "Components/CameraCenter.hpp"
 #include "Components/Collideable.hpp"
+#include "Components/Grippable.hpp"
+#include "Components/Gripper.hpp"
 #include "Components/PhysicBody.hpp"
 #include "Components/Renderable.hpp"
+#include "Components/Responser.hpp"
 #include "Components/RigidBody.hpp"
 #include "Components/Transformable.hpp"
 
@@ -43,6 +46,7 @@ App& App::Build()
 void App::Run()
 {
     spawnService->SpawnLevel(*world, levelLimits);
+    spawnService->SpawnLightBall(*world, levelLimits);
 
     float deltaTime { 1.0f / APP_MAX_FRAMERATE };
     sf::Clock clock;
@@ -80,6 +84,7 @@ void App::Run()
 
         playerControlSystem->Update(*world, deltaTime);
         physicSystem->Update(*world, deltaTime);
+        gripSystem->Update(*world, deltaTime);
         transformSystem->Update(*world, deltaTime);
         collisionSystem->Update(*world);
         commitSystem->Commit(*world);
@@ -98,22 +103,25 @@ void App::RegisterComponents()
 {
     world->RegisterComponent<CameraCenter>();
     world->RegisterComponent<Collideable>();
+    world->RegisterComponent<Grippable>();
+    world->RegisterComponent<Gripper>();
     world->RegisterComponent<PhysicBody>();
     world->RegisterComponent<Renderable>();
+    world->RegisterComponent<Responser>();
     world->RegisterComponent<RigidBody>();
     world->RegisterComponent<Transformable>();
 }
 
 void App::RegisterSystems()
 {
-
     playerControlSystem = world->RegisterSystem<PlayerControlSystem, RigidBody, PhysicBody>();
     physicSystem = world->RegisterSystem<PhysicSystem, Transformable, RigidBody, PhysicBody>();
     physicSystem->SetGravity(sf::Vector2f({ 0.0f, 100.f }));
     transformSystem = world->RegisterSystem<TransformSystem, Transformable, RigidBody>();
-    collisionSystem = world->RegisterSystem<CollisionSystem, Collideable, RigidBody>();
+    collisionSystem = world->RegisterSystem<CollisionSystem, Collideable, RigidBody, Responser>();
     commitSystem = world->RegisterSystem<CommitSystem, Transformable>();
     renderSystem = world->RegisterSystem<RenderSystem, Renderable>();
+    gripSystem = world->RegisterSystem<GripSystem, Grippable, Collideable, Transformable>();
 }
 
 void App::SetLevelLimits(const sf::Vector2f& topLeft, const sf::Vector2f& size)

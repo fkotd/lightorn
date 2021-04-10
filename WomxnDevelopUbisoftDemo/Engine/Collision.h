@@ -15,11 +15,6 @@ public:
         return m_BoundingBox.intersects(other.GetBoundingBox());
     }
 
-    inline const bool IsColliding(const BoxCollideable& other, sf::FloatRect& intersection) const
-    {
-        return m_BoundingBox.intersects(other.GetBoundingBox(), intersection);
-    }
-
     inline const bool Contains(float x, float y) const
     {
         return m_BoundingBox.contains(x, y);

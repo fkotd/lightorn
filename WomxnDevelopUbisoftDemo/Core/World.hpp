@@ -68,6 +68,15 @@ public:
         return componentManager.Find(searchedSignature);
     }
 
+    template <typename... Components>
+    std::unique_ptr<Signature> GetSignature()
+    {
+        auto signature = std::make_unique<Signature>();
+        (signature->set(GetComponent<Components>()), ...);
+
+        return signature;
+    }
+
 private:
     EntityManager entityManager;
     ComponentManager componentManager;

@@ -20,9 +20,7 @@ void CollisionSystem::Update(World& world)
             if (entity1 != entity2) {
                 Collideable& collideable2 = world.GetComponent<Collideable>(entity2);
 
-                sf::FloatRect intersection;
-
-                if (collideable1.draftBoxCollideable.IsColliding(collideable2.draftBoxCollideable, intersection)) {
+                if (collideable1.draftBoxCollideable.IsColliding(collideable2.draftBoxCollideable)) {
 
                     RigidBody& rigidBody1 = world.GetComponent<RigidBody>(entity1);
                     RigidBody& rigidBody2 = world.GetComponent<RigidBody>(entity2);
