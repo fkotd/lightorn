@@ -2,6 +2,7 @@
 
 #include "Core/World.hpp"
 #include "Services/SpawnService.hpp"
+#include "Systems/CollisionResponseSystem.hpp"
 #include "Systems/CollisionSystem.hpp"
 #include "Systems/CommitSystem.hpp"
 #include "Systems/GripSystem.hpp"
@@ -30,6 +31,7 @@ private:
 
     std::unique_ptr<SpawnService> spawnService = std::make_unique<SpawnService>();
 
+    std::shared_ptr<CollisionResponseSystem> collisionResponseSystem;
     std::shared_ptr<CollisionSystem> collisionSystem;
     std::shared_ptr<PhysicSystem> physicSystem;
     std::shared_ptr<PlayerControlSystem> playerControlSystem;

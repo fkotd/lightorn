@@ -95,9 +95,10 @@ void App::Run()
 
         playerControlSystem->Update(*world, deltaTime);
         physicSystem->Update(*world, deltaTime);
+        collisionSystem->Update(*world);
         gripSystem->Update(*world, deltaTime);
         transformSystem->Update(*world, deltaTime);
-        collisionSystem->Update(*world);
+        collisionResponseSystem->Update(*world);
         commitSystem->Commit(*world);
         renderSystem->Render(*world, window);
 
@@ -107,6 +108,7 @@ void App::Run()
         window.display();
 
         deltaTime = clock.getElapsedTime().asSeconds();
+        world->ClearEvents();
     }
 }
 
@@ -129,7 +131,8 @@ void App::RegisterSystems()
     physicSystem = world->RegisterSystem<PhysicSystem, Transformable, RigidBody, PhysicBody>();
     physicSystem->SetGravity(sf::Vector2f({ 0.0f, 100.f }));
     transformSystem = world->RegisterSystem<TransformSystem, Transformable, RigidBody>();
-    collisionSystem = world->RegisterSystem<CollisionSystem, Collideable, RigidBody, Responser>();
+    collisionResponseSystem = world->RegisterSystem<CollisionResponseSystem, Collideable, RigidBody, Responser>();
+    collisionSystem = world->RegisterSystem<CollisionSystem, Collideable, RigidBody>();
     commitSystem = world->RegisterSystem<CommitSystem, Transformable>();
     renderSystem = world->RegisterSystem<RenderSystem, Renderable>();
     gripSystem = world->RegisterSystem<GripSystem, Grippable, Collideable, Transformable>();

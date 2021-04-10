@@ -38,9 +38,6 @@
     <ClCompile Include="App.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Systems\CollisionSystem.cpp">
-      <Filter>Game\Systems</Filter>
-    </ClCompile>
     <ClCompile Include="Systems\PhysicSystem.cpp">
       <Filter>Game\Systems</Filter>
     </ClCompile>
@@ -60,6 +57,15 @@
       <Filter>Game\Systems</Filter>
     </ClCompile>
     <ClCompile Include="Systems\GripSystem.cpp">
+      <Filter>Game\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\CollisionResponseSystem.cpp">
+      <Filter>Game\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\CollisionSystem.cpp">
+      <Filter>Game\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\EndGameSystem.cpp">
       <Filter>Game\Systems</Filter>
     </ClCompile>
   </ItemGroup>
@@ -97,9 +103,6 @@
     </ClInclude>
     <ClInclude Include="Components\Collideable.hpp">
       <Filter>Game\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Systems\CollisionSystem.hpp">
-      <Filter>Game\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Core\Component.hpp">
       <Filter>Game\Core</Filter>
@@ -178,6 +181,15 @@
     </ClInclude>
     <ClInclude Include="Core\EventManager.hpp">
       <Filter>Game\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\CollisionResponseSystem.hpp">
+      <Filter>Game\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\CollisionSystem.hpp">
+      <Filter>Game\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\EndGameSystem.hpp">
+      <Filter>Game\Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

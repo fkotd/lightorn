@@ -78,6 +78,17 @@ public:
         return signature;
     }
 
+    void AddCollisionEvent(Entity entity, Entity otherEntity)
+    {
+        eventManager.AddCollisionEvent(entity, otherEntity);
+    }
+
+    void ClearEvents()
+    {
+
+        eventManager.ClearEvents();
+    }
+
 private:
     EntityManager entityManager;
     ComponentManager componentManager;

@@ -208,9 +208,11 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="Systems\EndGameSystem.cpp" />
+    <ClCompile Include="Systems\CollisionSystem.cpp" />
     <ClCompile Include="Systems\GripSystem.cpp" />
     <ClCompile Include="Systems\CommitSystem.cpp" />
-    <ClCompile Include="Systems\CollisionSystem.cpp" />
+    <ClCompile Include="Systems\CollisionResponseSystem.cpp" />
     <ClCompile Include="Engine\Collision.cpp" />
     <ClCompile Include="Engine\Game.cpp" />
     <ClCompile Include="Game\Door.cpp" />
@@ -228,6 +230,8 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\external\imgui-master\imgui_internal.h" />
     <ClInclude Include="..\external\imgui-sfml-master\imgui-SFML.h" />
     <ClInclude Include="App.hpp" />
+    <ClInclude Include="Systems\EndGameSystem.hpp" />
+    <ClInclude Include="Systems\CollisionSystem.hpp" />
     <ClInclude Include="Components\Grippable.hpp" />
     <ClInclude Include="Components\Gripper.hpp" />
     <ClInclude Include="Components\Responser.hpp" />
@@ -237,7 +241,7 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Systems\CommitSystem.hpp" />
     <ClInclude Include="Components\CameraCenter.hpp" />
     <ClInclude Include="Components\Collideable.hpp" />
-    <ClInclude Include="Systems\CollisionSystem.hpp" />
+    <ClInclude Include="Systems\CollisionResponseSystem.hpp" />
     <ClInclude Include="Core\Component.hpp" />
     <ClInclude Include="Core\ComponentData.hpp" />
     <ClInclude Include="Core\ComponentManager.hpp" />
