@@ -3,6 +3,7 @@
 #include "ComponentManager.hpp"
 #include "Entity.hpp"
 #include "EntityManager.hpp"
+#include "EventManager.hpp"
 #include "Signature.hpp"
 #include "SystemManager.hpp"
 #include <memory>
@@ -81,4 +82,5 @@ private:
     EntityManager entityManager;
     ComponentManager componentManager;
     SystemManager systemManager;
+    EventManager eventManager;
 };

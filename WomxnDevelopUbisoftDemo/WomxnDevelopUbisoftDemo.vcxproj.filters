@@ -176,6 +176,9 @@
     <ClInclude Include="Tools\Random.hpp">
       <Filter>Game\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Core\EventManager.hpp">
+      <Filter>Game\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">

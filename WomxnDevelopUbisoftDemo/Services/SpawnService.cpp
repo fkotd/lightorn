@@ -147,7 +147,8 @@ void SpawnService::SpawnLightBall(World& world, const sf::FloatRect& levelLimits
     int x = GetRandomBetween(levelLimits.left, levelLimits.width);
     int y = levelLimits.height + 200;
     // TODO: speed tweak
-    float speed = -200;
+    float speedTeak = 1 + GetRandomBetween(1, 5) / 5.f;
+    float speed = -200 * speedTeak;
 
     sf::Vector2f center = sf::Vector2f { static_cast<float>(x), static_cast<float>(y) };
     sf::Vector2f size = sf::Vector2f { static_cast<float>(width), static_cast<float>(length) };
