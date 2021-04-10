@@ -12,6 +12,7 @@
 #include "Components/RigidBody.hpp"
 #include "Components/Transformable.hpp"
 #include "Engine/EllipseShape.hpp"
+#include "Tools/Random.hpp"
 
 void SpawnService::SpawnLevel(World& world, const sf::FloatRect& levelLimits)
 {
@@ -143,10 +144,10 @@ void SpawnService::SpawnLightBall(World& world, const sf::FloatRect& levelLimits
 
     int width = 100;
     int length = 100;
-    int x = 500;
-    int y = 1000;
+    int x = GetRandomBetween(levelLimits.left, levelLimits.width);
+    int y = levelLimits.height + 200;
     // TODO: speed tweak
-    float speed = -100;
+    float speed = -200;
 
     sf::Vector2f center = sf::Vector2f { static_cast<float>(x), static_cast<float>(y) };
     sf::Vector2f size = sf::Vector2f { static_cast<float>(width), static_cast<float>(length) };
@@ -174,9 +175,4 @@ void SpawnService::SpawnLightBall(World& world, const sf::FloatRect& levelLimits
     world.AddComponentToEntity<RigidBody>(lightBall, velocity, 400.f);
     world.AddComponentToEntity<Grippable>(lightBall);
     world.AddComponentToEntity<Collideable>(lightBall, boxCollideable, draftBoxCollideable);
-}
-
-int SpawnService::GetRandomBetween(int windowXMin, int windowXMax)
-{
-    return rand() % windowXMax + windowXMin;
 }

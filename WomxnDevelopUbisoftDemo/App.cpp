@@ -10,6 +10,7 @@
 #include "Components/Responser.hpp"
 #include "Components/RigidBody.hpp"
 #include "Components/Transformable.hpp"
+#include "Tools/Random.hpp"
 
 static const int APP_WINDOW_WIDTH { 1620 };
 static const int APP_WINDOW_HEIGHT { 780 };
@@ -50,8 +51,10 @@ void App::Run()
 
     float deltaTime { 1.0f / APP_MAX_FRAMERATE };
     sf::Clock clock;
-    sf::Clock backgroundClock;
-    sf::Time backgroundSpawnInterval = sf::milliseconds(50);
+    sf::Clock lightDropClock;
+    sf::Clock lightBallClock;
+    sf::Time lightDropSpawnInterval = sf::milliseconds(GetRandomBetween(50, 100));
+    sf::Time lightBallSpawnInterval = sf::seconds(GetRandomBetween(2, 5));
 
     while (window.isOpen()) {
 
@@ -76,10 +79,18 @@ void App::Run()
 
         ImGui::SFML::Update(window, clock.restart());
 
-        // TODO : move background element spawning in a function
-        if (backgroundClock.getElapsedTime().asMilliseconds() >= backgroundSpawnInterval.asMilliseconds()) {
+        // TODO : move in a function
+        if (lightDropClock.getElapsedTime().asMilliseconds() >= lightDropSpawnInterval.asMilliseconds()) {
             spawnService->SpawnLightDrop(*world, levelLimits);
-            backgroundClock.restart();
+            lightDropClock.restart();
+            lightDropSpawnInterval = sf::milliseconds(GetRandomBetween(50, 100));
+        }
+
+        // TODO : move in a function
+        if (lightBallClock.getElapsedTime().asSeconds() >= lightBallSpawnInterval.asSeconds()) {
+            spawnService->SpawnLightBall(*world, levelLimits);
+            lightBallClock.restart();
+            lightBallSpawnInterval = sf::seconds(GetRandomBetween(2, 5));
         }
 
         playerControlSystem->Update(*world, deltaTime);

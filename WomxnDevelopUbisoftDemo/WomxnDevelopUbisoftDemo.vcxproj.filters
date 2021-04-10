@@ -173,6 +173,9 @@
     <ClInclude Include="Components\Responser.hpp">
       <Filter>Game\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Tools\Random.hpp">
+      <Filter>Game\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -195,6 +198,9 @@
     </Filter>
     <Filter Include="Game\Services">
       <UniqueIdentifier>{d1cec9df-92e9-4e8c-b639-f695e51e5ced}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Tools">
+      <UniqueIdentifier>{f75a6927-95d8-4cdf-9090-30e209db18f1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
