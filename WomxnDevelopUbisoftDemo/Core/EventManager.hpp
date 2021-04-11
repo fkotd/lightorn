@@ -5,16 +5,26 @@
 
 class EventManager {
 public:
-    void AddCollisionEvent(Entity entity, Entity otherEntity)
+    void AddGameEvent(std::string name, std::any value)
     {
-        collidedEntities.emplace(entity, otherEntity);
+        gameEvents.emplace(name, value);
+    }
+
+    std::any GetGameEvent(std::string name)
+    {
+        auto it = gameEvents.find(name);
+        if (it == gameEvents.end()) {
+            return nullptr;
+        }
+
+        return it->second;
     }
 
     void ClearEvents()
     {
-        collidedEntities.clear();
+        gameEvents.clear();
     }
 
 private:
-    std::unordered_map<Entity, Entity> collidedEntities;
+    std::unordered_map<std::string, std::any> gameEvents;
 };

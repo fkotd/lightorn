@@ -59,13 +59,7 @@
     <ClCompile Include="Systems\GripSystem.cpp">
       <Filter>Game\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="Systems\CollisionResponseSystem.cpp">
-      <Filter>Game\Systems</Filter>
-    </ClCompile>
     <ClCompile Include="Systems\CollisionSystem.cpp">
-      <Filter>Game\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="Systems\EndGameSystem.cpp">
       <Filter>Game\Systems</Filter>
     </ClCompile>
   </ItemGroup>
@@ -173,23 +167,23 @@
     <ClInclude Include="Systems\GripSystem.hpp">
       <Filter>Game\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="Components\Responser.hpp">
-      <Filter>Game\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Tools\Random.hpp">
       <Filter>Game\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Core\EventManager.hpp">
       <Filter>Game\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Systems\CollisionResponseSystem.hpp">
-      <Filter>Game\Systems</Filter>
+    <ClInclude Include="Components\Fatal.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Mortal.hpp">
+      <Filter>Game\Components</Filter>
     </ClInclude>
     <ClInclude Include="Systems\CollisionSystem.hpp">
       <Filter>Game\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="Systems\EndGameSystem.hpp">
-      <Filter>Game\Systems</Filter>
+    <ClInclude Include="Components\Responser.hpp">
+      <Filter>Game\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

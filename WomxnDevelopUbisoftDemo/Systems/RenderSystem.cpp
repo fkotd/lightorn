@@ -45,15 +45,21 @@ void RenderSystem::RenderLayer(World& world, sf::RenderTarget& target, const std
         // if the current entity has a transformable component, update its shape
         Transformable* transformable = world.GetComponentIfExists<Transformable>(entity);
         if (transformable != nullptr) {
-            renderable.shape->setPosition(transformable->transform.getPosition());
+            if (renderable.shape != nullptr) {
+                renderable.shape->setPosition(transformable->transform.getPosition());
+            }
 
-            // if the current entity has a bounding box, update this position
-            //Collideable* collideable = world.GetComponentIfExists<Collideable>(entity);
-            //if (collideable != nullptr) {
-            //    collideable->boxCollideable.SetCenter(transformable->transform.getPosition());
-            //}
+            if (renderable.sprite != nullptr) {
+                renderable.sprite->setPosition(transformable->transform.getPosition());
+            }
         }
 
-        target.draw(*renderable.shape);
+        if (renderable.shape != nullptr) {
+            target.draw(*renderable.shape);
+        }
+
+        if (renderable.sprite != nullptr) {
+            target.draw(*renderable.sprite);
+        }
     }
 }

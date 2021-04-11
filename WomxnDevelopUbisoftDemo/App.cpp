@@ -3,8 +3,10 @@
 #include "App.hpp"
 #include "Components/CameraCenter.hpp"
 #include "Components/Collideable.hpp"
+#include "Components/Fatal.hpp"
 #include "Components/Grippable.hpp"
 #include "Components/Gripper.hpp"
+#include "Components/Mortal.hpp"
 #include "Components/PhysicBody.hpp"
 #include "Components/Renderable.hpp"
 #include "Components/Responser.hpp"
@@ -26,6 +28,7 @@ App::App(const char* appName)
 
     sf::Vector2f levelTopLeft { 20.f / 100.f * APP_WINDOW_WIDTH, 0.f };
     sf::Vector2f levelSize { APP_WINDOW_WIDTH - (2.f * 20.f / 100.f * APP_WINDOW_WIDTH), 5.f * APP_WINDOW_HEIGHT };
+    //sf::Vector2f levelSize { APP_WINDOW_WIDTH - (2.f * 20.f / 100.f * APP_WINDOW_WIDTH), 130 };
     SetLevelLimits(levelTopLeft, levelSize);
 
     ImGui::SFML::Init(window);
@@ -54,7 +57,7 @@ void App::Run()
     sf::Clock lightDropClock;
     sf::Clock lightBallClock;
     sf::Time lightDropSpawnInterval = sf::milliseconds(GetRandomBetween(50, 100));
-    sf::Time lightBallSpawnInterval = sf::seconds(GetRandomBetween(2, 5));
+    sf::Time lightBallSpawnInterval = sf::seconds(static_cast<float>(GetRandomBetween(2, 5)));
 
     while (window.isOpen()) {
 
@@ -90,17 +93,20 @@ void App::Run()
         if (lightBallClock.getElapsedTime().asSeconds() >= lightBallSpawnInterval.asSeconds()) {
             spawnService->SpawnLightBall(*world, levelLimits);
             lightBallClock.restart();
-            lightBallSpawnInterval = sf::seconds(GetRandomBetween(2, 5));
+            lightBallSpawnInterval = sf::seconds(static_cast<float>(GetRandomBetween(2, 5)));
         }
 
         playerControlSystem->Update(*world, deltaTime);
         physicSystem->Update(*world, deltaTime);
-        collisionSystem->Update(*world);
         gripSystem->Update(*world, deltaTime);
         transformSystem->Update(*world, deltaTime);
-        collisionResponseSystem->Update(*world);
+        collisionSystem->Update(*world);
         commitSystem->Commit(*world);
         renderSystem->Render(*world, window);
+
+        if (IsGameEnded()) {
+            ImGui::TextColored(ImVec4(255.f, 0.f, 0.f, 1.f), "GAME ENDED");
+        }
 
         ImGui::EndFrame();
         ImGui::SFML::Render(window);
@@ -116,8 +122,10 @@ void App::RegisterComponents()
 {
     world->RegisterComponent<CameraCenter>();
     world->RegisterComponent<Collideable>();
+    world->RegisterComponent<Fatal>();
     world->RegisterComponent<Grippable>();
     world->RegisterComponent<Gripper>();
+    world->RegisterComponent<Mortal>();
     world->RegisterComponent<PhysicBody>();
     world->RegisterComponent<Renderable>();
     world->RegisterComponent<Responser>();
@@ -131,8 +139,7 @@ void App::RegisterSystems()
     physicSystem = world->RegisterSystem<PhysicSystem, Transformable, RigidBody, PhysicBody>();
     physicSystem->SetGravity(sf::Vector2f({ 0.0f, 100.f }));
     transformSystem = world->RegisterSystem<TransformSystem, Transformable, RigidBody>();
-    collisionResponseSystem = world->RegisterSystem<CollisionResponseSystem, Collideable, RigidBody, Responser>();
-    collisionSystem = world->RegisterSystem<CollisionSystem, Collideable, RigidBody>();
+    collisionSystem = world->RegisterSystem<CollisionSystem, Collideable, RigidBody, Responser>();
     commitSystem = world->RegisterSystem<CommitSystem, Transformable>();
     renderSystem = world->RegisterSystem<RenderSystem, Renderable>();
     gripSystem = world->RegisterSystem<GripSystem, Grippable, Collideable, Transformable>();
@@ -144,4 +151,12 @@ void App::SetLevelLimits(const sf::Vector2f& topLeft, const sf::Vector2f& size)
     levelLimits.top = topLeft.y;
     levelLimits.width = size.x;
     levelLimits.height = size.y;
+}
+bool App::IsGameEnded()
+{
+    try {
+        return std::any_cast<bool>(world->GetGameEvent("endgame"));
+    } catch (const std::bad_any_cast& e) {
+    }
+    return false;
 }

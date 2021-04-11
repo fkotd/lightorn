@@ -10,5 +10,6 @@ public:
 
 private:
     void SpawnPlayer(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color);
+    void SpawnGround(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color);
     void SpawnElement(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color);
 };

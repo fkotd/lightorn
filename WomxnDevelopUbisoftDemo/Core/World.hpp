@@ -78,9 +78,14 @@ public:
         return signature;
     }
 
-    void AddCollisionEvent(Entity entity, Entity otherEntity)
+    void AddGameEvent(std::string name, std::any value)
     {
-        eventManager.AddCollisionEvent(entity, otherEntity);
+        eventManager.AddGameEvent(name, value);
+    }
+
+    std::any GetGameEvent(std::string name)
+    {
+        return eventManager.GetGameEvent(name);
     }
 
     void ClearEvents()
