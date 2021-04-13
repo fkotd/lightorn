@@ -185,6 +185,9 @@
     <ClInclude Include="Components\Responser.hpp">
       <Filter>Game\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Tools\Layer.hpp">
+      <Filter>Game\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">

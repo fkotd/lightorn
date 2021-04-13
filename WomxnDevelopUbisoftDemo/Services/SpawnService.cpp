@@ -14,6 +14,7 @@
 #include "Components/RigidBody.hpp"
 #include "Components/Transformable.hpp"
 #include "Engine/EllipseShape.hpp"
+#include "Tools/Layer.hpp"
 #include "Tools/Random.hpp"
 
 void SpawnService::SpawnLevel(World& world, const sf::FloatRect& levelLimits)
@@ -82,7 +83,7 @@ void SpawnService::SpawnPlayer(World& world, const sf::Vector2f center, const sf
     shape->setOutlineColor(color);
 
     world.AddComponentToEntity<Transformable>(player, transform, draftTransform);
-    world.AddComponentToEntity<Renderable>(player, shape, color, size, 1, sprite);
+    world.AddComponentToEntity<Renderable>(player, shape, color, size, Layer::Top, sprite);
     world.AddComponentToEntity<RigidBody>(player, velocity, 400.f);
     world.AddComponentToEntity<PhysicBody>(player, 400.f, 30.f, 0.90f, 50.f, 10.f);
     world.AddComponentToEntity<CameraCenter>(player);
@@ -112,7 +113,7 @@ void SpawnService::SpawnGround(World& world, const sf::Vector2f center, const sf
     shape->setOutlineThickness(1);
     shape->setOutlineColor(color);
 
-    world.AddComponentToEntity<Renderable>(ground, shape, color, size, 1, nullptr);
+    world.AddComponentToEntity<Renderable>(ground, shape, color, size, Layer::Middle, nullptr);
     world.AddComponentToEntity<Collideable>(ground, boxCollideable, draftBoxCollideable);
     world.AddComponentToEntity<RigidBody>(ground, velocity, 0.f);
     world.AddComponentToEntity<Fatal>(ground);
@@ -139,7 +140,7 @@ void SpawnService::SpawnElement(World& world, const sf::Vector2f center, const s
     shape->setOutlineThickness(1);
     shape->setOutlineColor(color);
 
-    world.AddComponentToEntity<Renderable>(element, shape, color, size, 1, nullptr);
+    world.AddComponentToEntity<Renderable>(element, shape, color, size, Layer::Middle, nullptr);
     world.AddComponentToEntity<Collideable>(element, boxCollideable, draftBoxCollideable);
     world.AddComponentToEntity<RigidBody>(element, velocity, 0.f);
     world.AddComponentToEntity<Responser>(element);
@@ -176,7 +177,7 @@ void SpawnService::SpawnLightDrop(World& world, const sf::FloatRect& levelLimits
 
     // TODO: keep the same transformable object?
     world.AddComponentToEntity<Transformable>(lightDrop, transformable, transformable);
-    world.AddComponentToEntity<Renderable>(lightDrop, shape, color, size, 2, nullptr);
+    world.AddComponentToEntity<Renderable>(lightDrop, shape, color, size, Layer::Back, nullptr);
     world.AddComponentToEntity<RigidBody>(lightDrop, velocity, 400.f);
 }
 
@@ -226,7 +227,7 @@ void SpawnService::SpawnLightBall(World& world, const sf::FloatRect& levelLimits
     shape->setOutlineColor(color);
 
     world.AddComponentToEntity<Transformable>(lightBall, transformable, transformable);
-    world.AddComponentToEntity<Renderable>(lightBall, shape, color, size, 1, sprite);
+    world.AddComponentToEntity<Renderable>(lightBall, shape, color, size, Layer::Middle, sprite);
     world.AddComponentToEntity<RigidBody>(lightBall, velocity, 400.f);
     world.AddComponentToEntity<Grippable>(lightBall);
     world.AddComponentToEntity<Collideable>(lightBall, boxCollideable, draftBoxCollideable);

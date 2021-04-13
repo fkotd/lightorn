@@ -234,6 +234,7 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Components\Grippable.hpp" />
     <ClInclude Include="Components\Gripper.hpp" />
     <ClInclude Include="Core\EventManager.hpp" />
+    <ClInclude Include="Tools\Layer.hpp" />
     <ClInclude Include="Tools\Random.hpp" />
     <ClInclude Include="Systems\GripSystem.hpp" />
     <ClInclude Include="Systems\CommitSystem.hpp" />

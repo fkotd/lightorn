@@ -6,12 +6,11 @@
 #include "Components/Collideable.hpp"
 #include "Components/Renderable.hpp"
 #include "Components/Transformable.hpp"
+#include "Tools/Layer.hpp"
 
 void RenderSystem::Render(World& world, sf::RenderTarget& target)
 {
     std::set<Entity> entities = world.Find(GetSignature());
-
-    std::set<Entity> topLayerEntities;
 
     ImGui::Begin("Render Menu");
     ImGui::Text("Number of entities: %d", entities.size());
@@ -19,11 +18,12 @@ void RenderSystem::Render(World& world, sf::RenderTarget& target)
 
     target.clear(sf::Color(0, 0, 0));
 
-    RenderLayer(world, target, entities, 2);
-    RenderLayer(world, target, entities, 1);
+    for (int layer = Layer::Top; layer < Layer::Back + 1; layer++) {
+        RenderLayer(world, target, entities, static_cast<Layer>(layer));
+    }
 }
 
-void RenderSystem::RenderLayer(World& world, sf::RenderTarget& target, const std::set<Entity>& entities, int layer)
+void RenderSystem::RenderLayer(World& world, sf::RenderTarget& target, const std::set<Entity>& entities, Layer layer)
 {
     for (auto entity : entities) {
         Renderable& renderable = world.GetComponent<Renderable>(entity);

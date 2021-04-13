@@ -28,7 +28,6 @@ App::App(const char* appName)
 
     sf::Vector2f levelTopLeft { 20.f / 100.f * APP_WINDOW_WIDTH, 0.f };
     sf::Vector2f levelSize { APP_WINDOW_WIDTH - (2.f * 20.f / 100.f * APP_WINDOW_WIDTH), 5.f * APP_WINDOW_HEIGHT };
-    //sf::Vector2f levelSize { APP_WINDOW_WIDTH - (2.f * 20.f / 100.f * APP_WINDOW_WIDTH), 130 };
     SetLevelLimits(levelTopLeft, levelSize);
 
     ImGui::SFML::Init(window);
