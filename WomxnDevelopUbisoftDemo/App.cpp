@@ -155,7 +155,7 @@ bool App::IsGameEnded()
 {
     try {
         return std::any_cast<bool>(world->GetGameEvent("endgame"));
-    } catch (const std::bad_any_cast& e) {
+    } catch (const std::bad_any_cast& _) {
     }
     return false;
 }

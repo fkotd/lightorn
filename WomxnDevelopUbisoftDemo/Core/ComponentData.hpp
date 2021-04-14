@@ -29,6 +29,11 @@ public:
         return &(it->second);
     }
 
+    void RemoveComponent(Entity entity)
+    {
+        componentData.erase(entity);
+    }
+
 private:
     std::unordered_map<Entity, T> componentData;
 };

@@ -104,6 +104,12 @@ public:
         return entities;
     }
 
+    void RemoveEntity(Entity entity)
+    {
+        RemoveComponents(entity);
+        RemoveSignature(entity);
+    }
+
 private:
     bool AcceptEntity(Signature entitySignature, Signature searchedSignature) const
     {
@@ -115,6 +121,40 @@ private:
     std::shared_ptr<ComponentData<T>> GetComponentData(Component componentType)
     {
         return *std::any_cast<std::shared_ptr<ComponentData<T>>>(&componentsData[componentType]);
+    }
+
+    void RemoveComponents(Entity entity)
+    {
+        // TODO: can we find a way to optimize ?
+
+        // Find all components of the entity
+
+        // Get the entity signature
+        Signature signature = entitiesSignature.at(entity);
+        // Iterate over all bit set to one
+        for (int i = 0; i < MAX_COMPONENTS; i++) {
+            if (signature[i] == 1) {
+                // Get the component name from the component id
+                for (auto& it : componentIds) {
+                    if (it.second == signature[i]) {
+                        // Remove the component data thanks to the component name
+                        // TODO: how to get the type of the component ?
+                        // RemoveComponentData(entity, it.second);
+                    }
+                }
+            }
+        }
+    }
+
+    template <typename T>
+    void RemoveComponentData(Entity entity, Component component)
+    {
+        componentsData.at(component)->RemoveComponent(entity);
+    }
+
+    void RemoveSignature(Entity entity)
+    {
+        entitiesSignature.erase(entity);
     }
 
     Component componentIdsCounter = 0;

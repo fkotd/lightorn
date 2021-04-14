@@ -68,22 +68,23 @@ void SpawnService::SpawnPlayer(World& world, const sf::Vector2f center, const sf
     }
 
     sf::Sprite* sprite = new sf::Sprite {};
-
+    sf::Vector2f spriteOrigin { size.x / 3.1f, size.y / 2.2f };
     sprite->setTexture(*texture);
-    sprite->setOrigin(size * 0.5f);
     sprite->setPosition(center);
-    sprite->scale(3.3f, 3.3f);
+    sprite->setOrigin(spriteOrigin);
+    sprite->scale(2.9f, 2.9f);
 
-    sf::CircleShape* shape = new sf::CircleShape { size.x / 2 };
+    sf::RectangleShape* shape = new sf::RectangleShape();
     shape->setPosition(center);
     shape->setOrigin(size * 0.5f);
+    shape->setSize(size);
 
     shape->setFillColor(color);
     shape->setOutlineThickness(1);
     shape->setOutlineColor(color);
 
     world.AddComponentToEntity<Transformable>(player, transform, draftTransform);
-    world.AddComponentToEntity<Renderable>(player, shape, color, size, Layer::Top, sprite);
+    world.AddComponentToEntity<Renderable>(player, nullptr, color, size, Layer::Top, sprite);
     world.AddComponentToEntity<RigidBody>(player, velocity, 400.f);
     world.AddComponentToEntity<PhysicBody>(player, 400.f, 30.f, 0.90f, 50.f, 10.f);
     world.AddComponentToEntity<CameraCenter>(player);
@@ -190,8 +191,8 @@ void SpawnService::SpawnLightBall(World& world, const sf::FloatRect& levelLimits
     int x = GetRandomBetween(static_cast<int>(levelLimits.left), static_cast<int>(levelLimits.width));
     int y = static_cast<int>(levelLimits.height) + 400;
     // TODO: speed tweak
-    //float speedTeak = 1 + GetRandomBetween(1, 5) / 5.f;
-    float speed = -200;
+    float speedTeak = 1 + GetRandomBetween(1, 5) / 5.f;
+    float speed = -200 * speedTeak;
 
     sf::Vector2f center = sf::Vector2f { static_cast<float>(x), static_cast<float>(y) };
     sf::Vector2f size = sf::Vector2f { static_cast<float>(width), static_cast<float>(length) };
@@ -212,22 +213,23 @@ void SpawnService::SpawnLightBall(World& world, const sf::FloatRect& levelLimits
     }
 
     sf::Sprite* sprite = new sf::Sprite {};
-
+    sf::Vector2f spriteOrigin { size.x / 7.f, size.y / 9.f };
     sprite->setTexture(*texture);
-    sprite->setOrigin(size * 0.5f);
+    sprite->setOrigin(spriteOrigin);
     sprite->setPosition(center);
     sprite->scale(3.3f, 5.0f);
 
-    sf::CircleShape* shape = new sf::CircleShape { size.x };
+    sf::RectangleShape* shape = new sf::RectangleShape();
     shape->setPosition(center);
     shape->setOrigin(size * 0.5f);
+    shape->setSize(size);
 
     shape->setFillColor(color);
     shape->setOutlineThickness(1);
     shape->setOutlineColor(color);
 
     world.AddComponentToEntity<Transformable>(lightBall, transformable, transformable);
-    world.AddComponentToEntity<Renderable>(lightBall, shape, color, size, Layer::Middle, sprite);
+    world.AddComponentToEntity<Renderable>(lightBall, nullptr, color, size, Layer::Middle, sprite);
     world.AddComponentToEntity<RigidBody>(lightBall, velocity, 400.f);
     world.AddComponentToEntity<Grippable>(lightBall);
     world.AddComponentToEntity<Collideable>(lightBall, boxCollideable, draftBoxCollideable);

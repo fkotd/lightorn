@@ -15,6 +15,11 @@ public:
         return entityManager.AddEntity();
     }
 
+    void RemoveEntity(Entity entity)
+    {
+        componentManager.RemoveEntity(entity);
+    }
+
     template <typename T>
     void RegisterComponent()
     {

@@ -18,7 +18,7 @@ void RenderSystem::Render(World& world, sf::RenderTarget& target)
 
     target.clear(sf::Color(0, 0, 0));
 
-    for (int layer = Layer::Top; layer < Layer::Back + 1; layer++) {
+    for (int layer = Layer::Back; layer < Layer::Top + 1; layer++) {
         RenderLayer(world, target, entities, static_cast<Layer>(layer));
     }
 }

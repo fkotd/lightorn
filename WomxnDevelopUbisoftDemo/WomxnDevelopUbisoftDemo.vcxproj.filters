@@ -214,5 +214,8 @@
     <Filter Include="Game\Tools">
       <UniqueIdentifier>{f75a6927-95d8-4cdf-9090-30e209db18f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\UI">
+      <UniqueIdentifier>{30a99847-f940-4220-9f42-7fd7b4da6c6e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
