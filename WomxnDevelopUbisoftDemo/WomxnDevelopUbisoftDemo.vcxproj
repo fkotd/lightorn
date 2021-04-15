@@ -207,6 +207,7 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Systems\AnimationSystem.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Systems\GripSystem.cpp" />
     <ClCompile Include="Systems\CommitSystem.cpp" />
@@ -227,6 +228,8 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\external\imgui-master\imgui.h" />
     <ClInclude Include="..\external\imgui-master\imgui_internal.h" />
     <ClInclude Include="..\external\imgui-sfml-master\imgui-SFML.h" />
+    <ClInclude Include="Systems\AnimationSystem.hpp" />
+    <ClInclude Include="Components\Animation.hpp" />
     <ClInclude Include="App.hpp" />
     <ClInclude Include="Components\Fatal.hpp" />
     <ClInclude Include="Components\Mortal.hpp" />
@@ -234,6 +237,7 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Components\Grippable.hpp" />
     <ClInclude Include="Components\Gripper.hpp" />
     <ClInclude Include="Core\EventManager.hpp" />
+    <ClInclude Include="Tools\LoopMode.hpp" />
     <ClInclude Include="Tools\Layer.hpp" />
     <ClInclude Include="Tools\Random.hpp" />
     <ClInclude Include="Systems\GripSystem.hpp" />

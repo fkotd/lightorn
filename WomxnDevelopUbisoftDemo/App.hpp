@@ -2,6 +2,7 @@
 
 #include "Core/World.hpp"
 #include "Services/SpawnService.hpp"
+#include "Systems/AnimationSystem.hpp"
 #include "Systems/CollisionSystem.hpp"
 #include "Systems/CommitSystem.hpp"
 #include "Systems/GripSystem.hpp"
@@ -38,4 +39,5 @@ private:
     std::shared_ptr<TransformSystem> transformSystem;
     std::shared_ptr<CommitSystem> commitSystem;
     std::shared_ptr<GripSystem> gripSystem;
+    std::shared_ptr<AnimationSystem> animationSystem;
 };

@@ -62,6 +62,9 @@
     <ClCompile Include="Systems\CollisionSystem.cpp">
       <Filter>Game\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="Systems\AnimationSystem.cpp">
+      <Filter>Game\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -187,6 +190,15 @@
     </ClInclude>
     <ClInclude Include="Tools\Layer.hpp">
       <Filter>Game\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools\LoopMode.hpp">
+      <Filter>Game\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Animation.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\AnimationSystem.hpp">
+      <Filter>Game\Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,7 @@
 
 #include "SpawnService.hpp"
 
+#include "Components/Animation.hpp"
 #include "Components/CameraCenter.hpp"
 #include "Components/Collideable.hpp"
 #include "Components/Fatal.hpp"
@@ -15,6 +16,7 @@
 #include "Components/Transformable.hpp"
 #include "Engine/EllipseShape.hpp"
 #include "Tools/Layer.hpp"
+#include "Tools/LoopMode.hpp"
 #include "Tools/Random.hpp"
 
 void SpawnService::SpawnLevel(World& world, const sf::FloatRect& levelLimits)
@@ -37,7 +39,7 @@ void SpawnService::SpawnLevel(World& world, const sf::FloatRect& levelLimits)
     SpawnGround( // Ground
         world,
         sf::Vector2f { ((2 * levelLimits.left) + levelLimits.width) / 2.0f, levelLimits.height },
-        sf::Vector2f { 1500.f, 5.f },
+        sf::Vector2f { (2 * levelLimits.left) + levelLimits.width, 5.f },
         sf::Color::Yellow);
     SpawnElement( // Platform
         world,
@@ -105,6 +107,26 @@ void SpawnService::SpawnGround(World& world, const sf::Vector2f center, const sf
     BoxCollideable draftBoxCollideable = BoxCollideable {};
     draftBoxCollideable.SetBoundingBox(center, size);
 
+    sf::Texture* texture = new sf::Texture {};
+    if (!texture->loadFromFile("Assets/ground_spritesheet.png")) {
+        std::cout << "Unable to load asset" << std::endl;
+    }
+    texture->setRepeated(true);
+
+    sf::Sprite* sprite = new sf::Sprite(*texture, sf::IntRect(0, 0, 64, 32));
+    sf::Vector2f spriteOrigin { size.x / 20.f, size.y / 2.5f };
+    sprite->setTextureRect(sf::IntRect(0, 0, 1000, 32));
+    sprite->setOrigin(spriteOrigin);
+    sprite->setPosition(center);
+    sprite->scale(10.0f, 10.0f);
+
+    std::map<int, sf::Vector2i> keyframes;
+    keyframes[0] = sf::Vector2i(0, 0);
+    keyframes[1] = sf::Vector2i(0, 32);
+    keyframes[2] = sf::Vector2i(0, 64);
+
+    sf::Vector2i texureSizeByFrame(1000, 32);
+
     sf::RectangleShape* shape = new sf::RectangleShape();
     shape->setPosition(center);
     shape->setOrigin(size * 0.5f);
@@ -114,11 +136,12 @@ void SpawnService::SpawnGround(World& world, const sf::Vector2f center, const sf
     shape->setOutlineThickness(1);
     shape->setOutlineColor(color);
 
-    world.AddComponentToEntity<Renderable>(ground, shape, color, size, Layer::Middle, nullptr);
+    world.AddComponentToEntity<Renderable>(ground, shape, color, size, Layer::Middle, sprite);
     world.AddComponentToEntity<Collideable>(ground, boxCollideable, draftBoxCollideable);
     world.AddComponentToEntity<RigidBody>(ground, velocity, 0.f);
     world.AddComponentToEntity<Fatal>(ground);
     world.AddComponentToEntity<Responser>(ground);
+    world.AddComponentToEntity<Animation>(ground, keyframes, LoopMode::LoopReverse, 0, true, texureSizeByFrame);
 }
 
 void SpawnService::SpawnElement(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color)
@@ -141,7 +164,7 @@ void SpawnService::SpawnElement(World& world, const sf::Vector2f center, const s
     shape->setOutlineThickness(1);
     shape->setOutlineColor(color);
 
-    world.AddComponentToEntity<Renderable>(element, shape, color, size, Layer::Middle, nullptr);
+    world.AddComponentToEntity<Renderable>(element, nullptr, color, size, Layer::Middle, nullptr);
     world.AddComponentToEntity<Collideable>(element, boxCollideable, draftBoxCollideable);
     world.AddComponentToEntity<RigidBody>(element, velocity, 0.f);
     world.AddComponentToEntity<Responser>(element);

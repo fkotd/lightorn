@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "App.hpp"
+#include "Components/Animation.hpp"
 #include "Components/CameraCenter.hpp"
 #include "Components/Collideable.hpp"
 #include "Components/Fatal.hpp"
@@ -27,7 +28,8 @@ App::App(const char* appName)
     window.setActive();
 
     sf::Vector2f levelTopLeft { 20.f / 100.f * APP_WINDOW_WIDTH, 0.f };
-    sf::Vector2f levelSize { APP_WINDOW_WIDTH - (2.f * 20.f / 100.f * APP_WINDOW_WIDTH), 5.f * APP_WINDOW_HEIGHT };
+    //sf::Vector2f levelSize { APP_WINDOW_WIDTH - (2.f * 20.f / 100.f * APP_WINDOW_WIDTH), 5.f * APP_WINDOW_HEIGHT };
+    sf::Vector2f levelSize { APP_WINDOW_WIDTH - (2.f * 20.f / 100.f * APP_WINDOW_WIDTH), 1.f * APP_WINDOW_HEIGHT };
     SetLevelLimits(levelTopLeft, levelSize);
 
     ImGui::SFML::Init(window);
@@ -55,8 +57,10 @@ void App::Run()
     sf::Clock clock;
     sf::Clock lightDropClock;
     sf::Clock lightBallClock;
+    sf::Clock animationClock;
     sf::Time lightDropSpawnInterval = sf::milliseconds(GetRandomBetween(50, 100));
     sf::Time lightBallSpawnInterval = sf::seconds(static_cast<float>(GetRandomBetween(2, 5)));
+    sf::Time animationInterval = sf::milliseconds(500);
 
     while (window.isOpen()) {
 
@@ -97,10 +101,16 @@ void App::Run()
 
         playerControlSystem->Update(*world, deltaTime);
         physicSystem->Update(*world, deltaTime);
-        gripSystem->Update(*world, deltaTime);
         transformSystem->Update(*world, deltaTime);
+        gripSystem->Update(*world, deltaTime);
         collisionSystem->Update(*world);
         commitSystem->Commit(*world);
+
+        if (animationClock.getElapsedTime().asMilliseconds() >= animationInterval.asMilliseconds()) {
+            animationSystem->Update(*world);
+            animationClock.restart();
+        }
+
         renderSystem->Render(*world, window);
 
         if (IsGameEnded()) {
@@ -130,6 +140,7 @@ void App::RegisterComponents()
     world->RegisterComponent<Responser>();
     world->RegisterComponent<RigidBody>();
     world->RegisterComponent<Transformable>();
+    world->RegisterComponent<Animation>();
 }
 
 void App::RegisterSystems()
@@ -142,6 +153,7 @@ void App::RegisterSystems()
     commitSystem = world->RegisterSystem<CommitSystem, Transformable>();
     renderSystem = world->RegisterSystem<RenderSystem, Renderable>();
     gripSystem = world->RegisterSystem<GripSystem, Grippable, Collideable, Transformable>();
+    animationSystem = world->RegisterSystem<AnimationSystem, Animation, Renderable>();
 }
 
 void App::SetLevelLimits(const sf::Vector2f& topLeft, const sf::Vector2f& size)
