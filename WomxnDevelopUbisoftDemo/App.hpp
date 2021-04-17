@@ -10,6 +10,7 @@
 #include "Systems/PlayerControlSystem.hpp"
 #include "Systems/RenderSystem.hpp"
 #include "Systems/TransformSystem.hpp"
+#include "UI/StartScreen.hpp"
 #include <memory>
 
 class App {
@@ -23,7 +24,10 @@ private:
     void RegisterComponents();
     void RegisterSystems();
     void SetLevelLimits(const sf::Vector2f& levelTopLeft, const sf::Vector2f& levelSize);
-    bool IsGameEnded();
+    void DisplayStartScreen();
+    void DisplayLevelScreen(sf::Clock& lightDropClock, sf::Clock& lightBallClock, sf::Clock& animationClock, sf::Time lightDropSpawnInterval, sf::Time lightBallSpawnInterval, sf::Time animationInterval, float deltaTime);
+    void DisplayEndScreen();
+    bool IsLevelEnded();
 
     sf::RenderWindow window;
     sf::FloatRect levelLimits;
@@ -40,4 +44,8 @@ private:
     std::shared_ptr<CommitSystem> commitSystem;
     std::shared_ptr<GripSystem> gripSystem;
     std::shared_ptr<AnimationSystem> animationSystem;
+
+    StartScreen startScreen;
+    bool isLevelStared;
+    bool isLevelEnded;
 };

@@ -146,10 +146,10 @@ private:
         }
     }
 
-    template <typename T>
+    //template <typename T>
     void RemoveComponentData(Entity entity, Component component)
     {
-        componentsData.at(component)->RemoveComponent(entity);
+        //componentsData.at(component).RemoveComponent(entity);
     }
 
     void RemoveSignature(Entity entity)

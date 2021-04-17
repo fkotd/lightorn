@@ -16,7 +16,7 @@ void RenderSystem::Render(World& world, sf::RenderTarget& target)
     ImGui::Text("Number of entities: %d", entities.size());
     ImGui::End();
 
-    target.clear(sf::Color(0, 0, 0));
+    //target.clear(sf::Color(0, 0, 0));
 
     for (int layer = Layer::Back; layer < Layer::Top + 1; layer++) {
         RenderLayer(world, target, entities, static_cast<Layer>(layer));

@@ -136,7 +136,7 @@ void SpawnService::SpawnGround(World& world, const sf::Vector2f center, const sf
     shape->setOutlineThickness(1);
     shape->setOutlineColor(color);
 
-    world.AddComponentToEntity<Renderable>(ground, shape, color, size, Layer::Middle, sprite);
+    world.AddComponentToEntity<Renderable>(ground, nullptr, color, size, Layer::Middle, sprite);
     world.AddComponentToEntity<Collideable>(ground, boxCollideable, draftBoxCollideable);
     world.AddComponentToEntity<RigidBody>(ground, velocity, 0.f);
     world.AddComponentToEntity<Fatal>(ground);
@@ -164,7 +164,7 @@ void SpawnService::SpawnElement(World& world, const sf::Vector2f center, const s
     shape->setOutlineThickness(1);
     shape->setOutlineColor(color);
 
-    world.AddComponentToEntity<Renderable>(element, nullptr, color, size, Layer::Middle, nullptr);
+    world.AddComponentToEntity<Renderable>(element, shape, color, size, Layer::Middle, nullptr);
     world.AddComponentToEntity<Collideable>(element, boxCollideable, draftBoxCollideable);
     world.AddComponentToEntity<RigidBody>(element, velocity, 0.f);
     world.AddComponentToEntity<Responser>(element);

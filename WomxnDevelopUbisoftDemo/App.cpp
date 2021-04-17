@@ -22,14 +22,16 @@ static const sf::Vector2u APP_WINDOW_SIZE { APP_WINDOW_WIDTH, APP_WINDOW_HEIGHT 
 
 App::App(const char* appName)
     : window { sf::VideoMode(APP_WINDOW_SIZE.x, APP_WINDOW_SIZE.y), appName, sf::Style::Titlebar | sf::Style::Close }
+    , startScreen { "Press X to start" }
+    , isLevelStared { false }
+    , isLevelEnded { false }
 {
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(static_cast<uint32_t>(APP_MAX_FRAMERATE));
     window.setActive();
 
     sf::Vector2f levelTopLeft { 20.f / 100.f * APP_WINDOW_WIDTH, 0.f };
-    //sf::Vector2f levelSize { APP_WINDOW_WIDTH - (2.f * 20.f / 100.f * APP_WINDOW_WIDTH), 5.f * APP_WINDOW_HEIGHT };
-    sf::Vector2f levelSize { APP_WINDOW_WIDTH - (2.f * 20.f / 100.f * APP_WINDOW_WIDTH), 1.f * APP_WINDOW_HEIGHT };
+    sf::Vector2f levelSize { APP_WINDOW_WIDTH - (2.f * 20.f / 100.f * APP_WINDOW_WIDTH), 2.f * APP_WINDOW_HEIGHT };
     SetLevelLimits(levelTopLeft, levelSize);
 
     ImGui::SFML::Init(window);
@@ -61,6 +63,13 @@ void App::Run()
     sf::Time lightDropSpawnInterval = sf::milliseconds(GetRandomBetween(50, 100));
     sf::Time lightBallSpawnInterval = sf::seconds(static_cast<float>(GetRandomBetween(2, 5)));
     sf::Time animationInterval = sf::milliseconds(500);
+    sf::Music music;
+
+    if (!music.openFromFile("Assets/main_theme.wav")) {
+        return;
+    }
+    music.setLoop(true);
+    music.play();
 
     while (window.isOpen()) {
 
@@ -83,47 +92,77 @@ void App::Run()
             ImGui::SFML::ProcessEvent(event);
         }
 
+        window.clear(sf::Color(0, 0, 0));
         ImGui::SFML::Update(window, clock.restart());
 
-        // TODO : move in a function
-        if (lightDropClock.getElapsedTime().asMilliseconds() >= lightDropSpawnInterval.asMilliseconds()) {
-            spawnService->SpawnLightDrop(*world, levelLimits);
-            lightDropClock.restart();
-            lightDropSpawnInterval = sf::milliseconds(GetRandomBetween(50, 100));
-        }
-
-        // TODO : move in a function
-        if (lightBallClock.getElapsedTime().asSeconds() >= lightBallSpawnInterval.asSeconds()) {
-            spawnService->SpawnLightBall(*world, levelLimits);
-            lightBallClock.restart();
-            lightBallSpawnInterval = sf::seconds(static_cast<float>(GetRandomBetween(2, 5)));
-        }
-
-        playerControlSystem->Update(*world, deltaTime);
-        physicSystem->Update(*world, deltaTime);
-        transformSystem->Update(*world, deltaTime);
-        gripSystem->Update(*world, deltaTime);
-        collisionSystem->Update(*world);
-        commitSystem->Commit(*world);
-
-        if (animationClock.getElapsedTime().asMilliseconds() >= animationInterval.asMilliseconds()) {
-            animationSystem->Update(*world);
-            animationClock.restart();
-        }
-
-        renderSystem->Render(*world, window);
-
-        if (IsGameEnded()) {
-            ImGui::TextColored(ImVec4(255.f, 0.f, 0.f, 1.f), "GAME ENDED");
+        if (!isLevelStared && !isLevelEnded) {
+            DisplayStartScreen();
+        } else if (isLevelStared && !isLevelEnded) {
+            DisplayLevelScreen(lightDropClock, lightBallClock, animationClock, lightDropSpawnInterval, lightBallSpawnInterval, animationInterval, deltaTime);
+        } else if (isLevelStared && isLevelEnded) {
+            DisplayEndScreen();
         }
 
         ImGui::EndFrame();
         ImGui::SFML::Render(window);
-
         window.display();
 
         deltaTime = clock.getElapsedTime().asSeconds();
         world->ClearEvents();
+    }
+
+    music.stop();
+}
+
+void App::DisplayStartScreen()
+{
+    startScreen.DrawScreen(window);
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
+        isLevelStared = true;
+    }
+}
+
+void App::DisplayLevelScreen(sf::Clock& lightDropClock, sf::Clock& lightBallClock, sf::Clock& animationClock, sf::Time lightDropSpawnInterval, sf::Time lightBallSpawnInterval, sf::Time animationInterval, float deltaTime)
+{
+    // TODO : move in a function
+    if (lightDropClock.getElapsedTime().asMilliseconds() >= lightDropSpawnInterval.asMilliseconds()) {
+        spawnService->SpawnLightDrop(*world, levelLimits);
+        lightDropClock.restart();
+        lightDropSpawnInterval = sf::milliseconds(GetRandomBetween(50, 100));
+    }
+
+    // TODO : move in a function
+    if (lightBallClock.getElapsedTime().asSeconds() >= lightBallSpawnInterval.asSeconds()) {
+        spawnService->SpawnLightBall(*world, levelLimits);
+        lightBallClock.restart();
+        lightBallSpawnInterval = sf::seconds(static_cast<float>(GetRandomBetween(2, 5)));
+    }
+
+    playerControlSystem->Update(*world, deltaTime);
+    physicSystem->Update(*world, deltaTime);
+    transformSystem->Update(*world, deltaTime);
+    gripSystem->Update(*world, deltaTime);
+    collisionSystem->Update(*world);
+    commitSystem->Commit(*world);
+
+    if (animationClock.getElapsedTime().asMilliseconds() >= animationInterval.asMilliseconds()) {
+        animationSystem->Update(*world);
+        animationClock.restart();
+    }
+
+    renderSystem->Render(*world, window);
+
+    if (IsLevelEnded()) {
+        isLevelEnded = true;
+        ImGui::TextColored(ImVec4(255.f, 0.f, 0.f, 1.f), "GAME ENDED");
+    }
+}
+
+void App::DisplayEndScreen()
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
+        isLevelStared = true;
     }
 }
 
@@ -163,7 +202,8 @@ void App::SetLevelLimits(const sf::Vector2f& topLeft, const sf::Vector2f& size)
     levelLimits.width = size.x;
     levelLimits.height = size.y;
 }
-bool App::IsGameEnded()
+
+bool App::IsLevelEnded()
 {
     try {
         return std::any_cast<bool>(world->GetGameEvent("endgame"));

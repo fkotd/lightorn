@@ -207,6 +207,7 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="UI\StartScreen.cpp" />
     <ClCompile Include="Systems\AnimationSystem.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Systems\GripSystem.cpp" />
@@ -228,6 +229,7 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\external\imgui-master\imgui.h" />
     <ClInclude Include="..\external\imgui-master\imgui_internal.h" />
     <ClInclude Include="..\external\imgui-sfml-master\imgui-SFML.h" />
+    <ClInclude Include="UI\StartScreen.hpp" />
     <ClInclude Include="Systems\AnimationSystem.hpp" />
     <ClInclude Include="Components\Animation.hpp" />
     <ClInclude Include="App.hpp" />

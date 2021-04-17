@@ -65,6 +65,9 @@
     <ClCompile Include="Systems\AnimationSystem.cpp">
       <Filter>Game\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="UI\StartScreen.cpp">
+      <Filter>Game\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -199,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="Systems\AnimationSystem.hpp">
       <Filter>Game\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\StartScreen.hpp">
+      <Filter>Game\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
