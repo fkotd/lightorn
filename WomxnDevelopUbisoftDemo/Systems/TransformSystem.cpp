@@ -14,8 +14,6 @@ void TransformSystem::Update(World& world, float deltaTime)
         Transformable& transformable = world.GetComponent<Transformable>(entity);
         RigidBody& rigidBody = world.GetComponent<RigidBody>(entity);
 
-        // transformable.transform.move(rigidBody.velocity * deltaTime);
-
         transformable.draftTransform.move(rigidBody.velocity * deltaTime);
 
         Collideable* collideable = world.GetComponentIfExists<Collideable>(entity);

@@ -2,6 +2,7 @@
 
 #include "Component.hpp"
 #include "ComponentData.hpp"
+#include "ComponentInfo.hpp"
 #include "Entity.hpp"
 #include "Signature.hpp"
 #include <any>
@@ -23,7 +24,13 @@ public:
         componentIds.emplace(componentName, componentId);
 
         // Create a map to hold component data
-        componentsData.emplace(componentId, std::make_shared<ComponentData<T>>());
+        std::shared_ptr<ComponentData<T>> componentData = std::make_shared<ComponentData<T>>();
+        componentsData.emplace(componentId, componentData);
+
+        // Initialize callback to remove entity data when needed
+        ComponentInfo componentInfo;
+        componentInfo.RemoveEntityCallBack = [componentData](Entity entity) { componentData->RemoveComponent(entity); };
+        componentsInfo.emplace(componentId, componentInfo);
     }
 
     template <typename T>
@@ -132,16 +139,9 @@ private:
         // Get the entity signature
         Signature signature = entitiesSignature.at(entity);
         // Iterate over all bit set to one
-        for (int i = 0; i < MAX_COMPONENTS; i++) {
-            if (signature[i] == 1) {
-                // Get the component name from the component id
-                for (auto& it : componentIds) {
-                    if (it.second == signature[i]) {
-                        // Remove the component data thanks to the component name
-                        // TODO: how to get the type of the component ?
-                        // RemoveComponentData(entity, it.second);
-                    }
-                }
+        for (int componentId = 0; componentId < MAX_COMPONENTS; componentId++) {
+            if (signature[componentId] == 1) {
+                componentsInfo.at(componentId).RemoveEntityCallBack(entity);
             }
         }
     }
@@ -161,4 +161,5 @@ private:
     std::unordered_map<const char*, Component> componentIds;
     std::unordered_map<Entity, Signature> entitiesSignature;
     std::unordered_map<Component, std::any> componentsData;
+    std::unordered_map<Component, ComponentInfo> componentsInfo;
 };

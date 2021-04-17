@@ -152,6 +152,7 @@ void App::DisplayLevelScreen(sf::Clock& lightDropClock, sf::Clock& lightBallCloc
     }
 
     renderSystem->Render(*world, window);
+    destroySystem->DestroyOffScreen(*world, levelLimits);
 
     if (IsLevelEnded()) {
         isLevelEnded = true;
@@ -193,6 +194,7 @@ void App::RegisterSystems()
     renderSystem = world->RegisterSystem<RenderSystem, Renderable>();
     gripSystem = world->RegisterSystem<GripSystem, Grippable, Collideable, Transformable>();
     animationSystem = world->RegisterSystem<AnimationSystem, Animation, Renderable>();
+    destroySystem = world->RegisterSystem<DestroySystem, Transformable>();
 }
 
 void App::SetLevelLimits(const sf::Vector2f& topLeft, const sf::Vector2f& size)

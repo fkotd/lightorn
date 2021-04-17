@@ -68,6 +68,9 @@
     <ClCompile Include="UI\StartScreen.cpp">
       <Filter>Game\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Systems\DestroySystem.cpp">
+      <Filter>Game\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -205,6 +208,12 @@
     </ClInclude>
     <ClInclude Include="UI\StartScreen.hpp">
       <Filter>Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ComponentInfo.hpp">
+      <Filter>Game\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\DestroySystem.hpp">
+      <Filter>Game\Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
