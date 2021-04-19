@@ -100,11 +100,15 @@ void App::Run()
 
         if (!isLevelStared && !isLevelEnded) {
             DisplayStartScreen();
-        } else if (isLevelStared && !isLevelEnded) {
+        } else {
             DisplayLevelScreen(lightDropClock, lightBallClock, animationClock, lightDropSpawnInterval, lightBallSpawnInterval, animationInterval, deltaTime);
-        } else if (isLevelStared && isLevelEnded) {
-            DisplayEndScreen();
         }
+        //else if (isLevelStared && !isLevelEnded) {
+        //    DisplayLevelScreen(lightDropClock, lightBallClock, animationClock, lightDropSpawnInterval, lightBallSpawnInterval, animationInterval, deltaTime);
+        //}
+        //else if (isLevelStared && isLevelEnded) {
+        //    DisplayEndScreen();
+        //}
 
         ImGui::EndFrame();
         ImGui::SFML::Render(window);
@@ -216,7 +220,9 @@ void App::SetLevelLimits(const sf::Vector2f& topLeft, const sf::Vector2f& size)
 bool App::IsLevelEndedByDeath()
 {
     try {
-        std::any_cast<bool>(world->GetGameEvent("dead"));
+        if (std::any_cast<bool>(world->GetGameEvent("dead"))) {
+            return true;
+        }
     } catch (const std::bad_any_cast& _) {
     }
     return false;
@@ -225,7 +231,9 @@ bool App::IsLevelEndedByDeath()
 bool App::IsLevelEndedByReborn()
 {
     try {
-        std::any_cast<bool>(world->GetGameEvent("reborn"));
+        if (std::any_cast<bool>(world->GetGameEvent("reborn"))) {
+            return true;
+        }
     } catch (const std::bad_any_cast& _) {
     }
     return false;
