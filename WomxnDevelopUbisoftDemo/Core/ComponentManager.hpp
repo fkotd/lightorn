@@ -132,8 +132,6 @@ private:
 
     void RemoveComponents(Entity entity)
     {
-        // TODO: can we find a way to optimize ?
-
         // Find all components of the entity
 
         // Get the entity signature
@@ -144,12 +142,6 @@ private:
                 componentsInfo.at(componentId).RemoveEntityCallBack(entity);
             }
         }
-    }
-
-    //template <typename T>
-    void RemoveComponentData(Entity entity, Component component)
-    {
-        //componentsData.at(component).RemoveComponent(entity);
     }
 
     void RemoveSignature(Entity entity)

@@ -231,6 +231,10 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\external\imgui-master\imgui_internal.h" />
     <ClInclude Include="..\external\imgui-sfml-master\imgui-SFML.h" />
     <ClInclude Include="Core\ComponentInfo.hpp" />
+    <ClInclude Include="Components\Reborner.hpp" />
+    <ClInclude Include="Components\Dynamic.hpp" />
+    <ClInclude Include="Components\Static.hpp" />
+    <ClInclude Include="Tools\Messages.hpp" />
     <ClInclude Include="Systems\DestroySystem.hpp" />
     <ClInclude Include="UI\StartScreen.hpp" />
     <ClInclude Include="Systems\AnimationSystem.hpp" />
@@ -238,7 +242,6 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="App.hpp" />
     <ClInclude Include="Components\Fatal.hpp" />
     <ClInclude Include="Components\Mortal.hpp" />
-    <ClInclude Include="Components\Responser.hpp" />
     <ClInclude Include="Components\Grippable.hpp" />
     <ClInclude Include="Components\Gripper.hpp" />
     <ClInclude Include="Core\EventManager.hpp" />

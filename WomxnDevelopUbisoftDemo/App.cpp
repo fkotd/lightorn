@@ -4,15 +4,18 @@
 #include "Components/Animation.hpp"
 #include "Components/CameraCenter.hpp"
 #include "Components/Collideable.hpp"
+#include "Components/Dynamic.hpp"
 #include "Components/Fatal.hpp"
 #include "Components/Grippable.hpp"
 #include "Components/Gripper.hpp"
 #include "Components/Mortal.hpp"
 #include "Components/PhysicBody.hpp"
+#include "Components/Reborner.hpp"
 #include "Components/Renderable.hpp"
-#include "Components/Responser.hpp"
 #include "Components/RigidBody.hpp"
+#include "Components/Static.hpp"
 #include "Components/Transformable.hpp"
+#include "Tools/Messages.hpp"
 #include "Tools/Random.hpp"
 
 static const int APP_WINDOW_WIDTH { 1620 };
@@ -143,7 +146,7 @@ void App::DisplayLevelScreen(sf::Clock& lightDropClock, sf::Clock& lightBallCloc
     physicSystem->Update(*world, deltaTime);
     transformSystem->Update(*world, deltaTime);
     gripSystem->Update(*world, deltaTime);
-    collisionSystem->Update(*world);
+    collisionSystem->Update(*world, deltaTime);
     commitSystem->Commit(*world);
 
     if (animationClock.getElapsedTime().asMilliseconds() >= animationInterval.asMilliseconds()) {
@@ -154,9 +157,12 @@ void App::DisplayLevelScreen(sf::Clock& lightDropClock, sf::Clock& lightBallCloc
     renderSystem->Render(*world, window);
     destroySystem->DestroyOffScreen(*world, levelLimits);
 
-    if (IsLevelEnded()) {
+    if (IsLevelEndedByDeath()) {
         isLevelEnded = true;
-        ImGui::TextColored(ImVec4(255.f, 0.f, 0.f, 1.f), "GAME ENDED");
+        ImGui::TextColored(ImVec4(255.f, 0.f, 0.f, 1.f), "Game Over");
+    } else if (IsLevelEndedByReborn()) {
+        isLevelEnded = true;
+        ImGui::TextColored(ImVec4(255.f, 0.f, 0.f, 1.f), "Reborn");
     }
 }
 
@@ -177,10 +183,12 @@ void App::RegisterComponents()
     world->RegisterComponent<Mortal>();
     world->RegisterComponent<PhysicBody>();
     world->RegisterComponent<Renderable>();
-    world->RegisterComponent<Responser>();
     world->RegisterComponent<RigidBody>();
+    world->RegisterComponent<Dynamic>();
+    world->RegisterComponent<Static>();
     world->RegisterComponent<Transformable>();
     world->RegisterComponent<Animation>();
+    world->RegisterComponent<Reborner>();
 }
 
 void App::RegisterSystems()
@@ -189,7 +197,7 @@ void App::RegisterSystems()
     physicSystem = world->RegisterSystem<PhysicSystem, Transformable, RigidBody, PhysicBody>();
     physicSystem->SetGravity(sf::Vector2f({ 0.0f, 100.f }));
     transformSystem = world->RegisterSystem<TransformSystem, Transformable, RigidBody>();
-    collisionSystem = world->RegisterSystem<CollisionSystem, Collideable, RigidBody, Responser>();
+    collisionSystem = world->RegisterSystem<CollisionSystem, Collideable, Static>();
     commitSystem = world->RegisterSystem<CommitSystem, Transformable>();
     renderSystem = world->RegisterSystem<RenderSystem, Renderable>();
     gripSystem = world->RegisterSystem<GripSystem, Grippable, Collideable, Transformable>();
@@ -205,10 +213,19 @@ void App::SetLevelLimits(const sf::Vector2f& topLeft, const sf::Vector2f& size)
     levelLimits.height = size.y;
 }
 
-bool App::IsLevelEnded()
+bool App::IsLevelEndedByDeath()
 {
     try {
-        return std::any_cast<bool>(world->GetGameEvent("endgame"));
+        std::any_cast<bool>(world->GetGameEvent("dead"));
+    } catch (const std::bad_any_cast& _) {
+    }
+    return false;
+}
+
+bool App::IsLevelEndedByReborn()
+{
+    try {
+        std::any_cast<bool>(world->GetGameEvent("reborn"));
     } catch (const std::bad_any_cast& _) {
     }
     return false;

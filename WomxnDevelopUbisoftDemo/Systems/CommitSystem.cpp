@@ -16,5 +16,8 @@ void CommitSystem::Commit(World& world)
         if (collideable != nullptr) {
             collideable->boxCollideable.SetCenter(collideable->draftBoxCollideable.GetCenter());
         }
+
+        // Reset draft
+        transformable.draftTransform.setPosition(0, 0);
     }
 }

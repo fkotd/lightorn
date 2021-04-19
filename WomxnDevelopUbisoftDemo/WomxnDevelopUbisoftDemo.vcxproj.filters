@@ -191,9 +191,6 @@
     <ClInclude Include="Systems\CollisionSystem.hpp">
       <Filter>Game\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="Components\Responser.hpp">
-      <Filter>Game\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Tools\Layer.hpp">
       <Filter>Game\Tools</Filter>
     </ClInclude>
@@ -214,6 +211,18 @@
     </ClInclude>
     <ClInclude Include="Systems\DestroySystem.hpp">
       <Filter>Game\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Reborner.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools\Messages.hpp">
+      <Filter>Game\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Dynamic.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Static.hpp">
+      <Filter>Game\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

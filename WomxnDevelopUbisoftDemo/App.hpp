@@ -28,7 +28,8 @@ private:
     void DisplayStartScreen();
     void DisplayLevelScreen(sf::Clock& lightDropClock, sf::Clock& lightBallClock, sf::Clock& animationClock, sf::Time lightDropSpawnInterval, sf::Time lightBallSpawnInterval, sf::Time animationInterval, float deltaTime);
     void DisplayEndScreen();
-    bool IsLevelEnded();
+    bool IsLevelEndedByDeath();
+    bool IsLevelEndedByReborn();
 
     sf::RenderWindow window;
     sf::FloatRect levelLimits;
