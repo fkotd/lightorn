@@ -13,6 +13,7 @@
 #include "Components/Reborner.hpp"
 #include "Components/Renderable.hpp"
 #include "Components/RigidBody.hpp"
+#include "Components/Sprite.hpp"
 #include "Components/Static.hpp"
 #include "Components/Transformable.hpp"
 #include "Tools/Messages.hpp"
@@ -193,6 +194,7 @@ void App::RegisterComponents()
     world->RegisterComponent<Transformable>();
     world->RegisterComponent<Animation>();
     world->RegisterComponent<Reborner>();
+    world->RegisterComponent<Sprite>();
 }
 
 void App::RegisterSystems()
@@ -205,7 +207,7 @@ void App::RegisterSystems()
     commitSystem = world->RegisterSystem<CommitSystem, Transformable>();
     renderSystem = world->RegisterSystem<RenderSystem, Renderable>();
     gripSystem = world->RegisterSystem<GripSystem, Grippable, Collideable, Transformable>();
-    animationSystem = world->RegisterSystem<AnimationSystem, Animation, Renderable>();
+    animationSystem = world->RegisterSystem<AnimationSystem, Animation, Sprite>();
     destroySystem = world->RegisterSystem<DestroySystem, Transformable>();
 }
 

@@ -2,7 +2,7 @@
 
 #include "AnimationSystem.hpp"
 
-#include "Components/Renderable.hpp"
+#include "Components/Sprite.hpp"
 
 void AnimationSystem::Update(World& world)
 {
@@ -10,7 +10,7 @@ void AnimationSystem::Update(World& world)
 
     for (auto entity : entities) {
         Animation& animation = world.GetComponent<Animation>(entity);
-        Renderable& renderable = world.GetComponent<Renderable>(entity);
+        Sprite& sprite = world.GetComponent<Sprite>(entity);
 
         int nextKeyframe = NextKeyframe(animation);
         if (nextKeyframe < 0) {
@@ -21,7 +21,7 @@ void AnimationSystem::Update(World& world)
         sf::Vector2i nextOffset = animation.keyframes[nextKeyframe];
         sf::IntRect spriteRect(nextOffset.x, nextOffset.y, animation.textureSize.x, animation.textureSize.y);
 
-        renderable.sprite->setTextureRect(spriteRect);
+        sprite.sprite->setTextureRect(spriteRect);
 
         animation.currentKeyframe = nextKeyframe;
     }

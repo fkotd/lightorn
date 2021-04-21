@@ -71,6 +71,9 @@
     <ClCompile Include="Systems\DestroySystem.cpp">
       <Filter>Game\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="Services\EntityBuilder.cpp">
+      <Filter>Game\Services</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -222,6 +225,12 @@
       <Filter>Game\Components</Filter>
     </ClInclude>
     <ClInclude Include="Components\Static.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\EntityBuilder.hpp">
+      <Filter>Game\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Sprite.hpp">
       <Filter>Game\Components</Filter>
     </ClInclude>
   </ItemGroup>

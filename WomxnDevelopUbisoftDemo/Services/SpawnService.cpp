@@ -14,163 +14,138 @@
 #include "Components/Reborner.hpp"
 #include "Components/Renderable.hpp"
 #include "Components/RigidBody.hpp"
+#include "Components/Sprite.hpp"
 #include "Components/Static.hpp"
 #include "Components/Transformable.hpp"
 #include "Engine/EllipseShape.hpp"
+#include "EntityBuilder.hpp"
 #include "Tools/Layer.hpp"
 #include "Tools/LoopMode.hpp"
 #include "Tools/Random.hpp"
 
 void SpawnService::SpawnLevel(World& world, const sf::FloatRect& levelLimits)
 {
-    Entity player = SpawnPlayer(
-        world,
-        sf::Vector2f { ((2 * levelLimits.left) + levelLimits.width) / 2.0f, 100.f },
-        sf::Vector2f { 50, 50 },
-        sf::Color::Magenta);
-    std::cout << "Player entity id = " << player << std::endl;
+    Entity character = SpawnCharacter(world, levelLimits);
+    std::cout << "Character entity id = " << character << std::endl;
 
-    Entity heart = SpawnHeart(
-        world,
-        sf::Vector2f { ((2 * levelLimits.left) + levelLimits.width) / 2.0f, -100.f },
-        sf::Vector2f { 100, 100 },
-        sf::Color::Magenta);
+    Entity heart = SpawnHeart(world, levelLimits);
     std::cout << "Heart entity id = " << heart << std::endl;
 
-    Entity ground = SpawnGround( // Ground
-        world,
-        sf::Vector2f { ((2 * levelLimits.left) + levelLimits.width) / 2.0f, levelLimits.height },
-        sf::Vector2f { (2 * levelLimits.left) + levelLimits.width, 5.f },
-        sf::Color::Yellow);
+    SpawnLimitElements(world, levelLimits);
+
+    SpawnLevelElements(world, levelLimits);
+}
+
+void SpawnService::SpawnLimitElements(World& world, const sf::FloatRect& levelLimits)
+{
+    Entity ground = SpawnGround(world, levelLimits);
     std::cout << "Ground entity id = " << ground << std::endl;
 
+    float levelLeft(levelLimits.left);
+    float levelHeight(levelLimits.height);
+    float leftEdgeX = levelLeft;
+    float leftEdgeY = levelHeight / 2.f;
+    float leftEdgeWidth = 10.f;
+    float leftEdgeHeight = levelHeight - 20.f;
     Entity leftEdge = SpawnElement( // Left Edge
         world,
-        sf::Vector2f { levelLimits.left, levelLimits.height / 2.f },
-        sf::Vector2f { 10.f, levelLimits.height - 20.f },
+        sf::Vector2f { leftEdgeX, leftEdgeY },
+        sf::Vector2f { leftEdgeWidth, leftEdgeHeight },
         sf::Color::Cyan);
     std::cout << "Left edge entity id = " << leftEdge << std::endl;
 
+    float levelRight(levelLimits.left + levelLimits.width);
+    float rightEdgeX = levelRight;
+    float rightEdgeY = levelHeight / 2.f;
+    float rightEdgeWidth = 10.f;
+    float rightEdgeHeight = levelHeight - 20.f;
     Entity rightEdge = SpawnElement(
         world,
-        sf::Vector2f { levelLimits.left + levelLimits.width, levelLimits.height / 2.f },
-        sf::Vector2f { 10.f, levelLimits.height - 20.f },
+        sf::Vector2f { rightEdgeX, rightEdgeY },
+        sf::Vector2f { rightEdgeWidth, rightEdgeHeight },
         sf::Color::Cyan);
     std::cout << "Right edge entity id = " << rightEdge << std::endl;
+}
 
+void SpawnService::SpawnLevelElements(World& world, const sf::FloatRect& levelLimits)
+{
+    float windowWidth = (2 * levelLimits.left) + levelLimits.width;
+
+    float platformX = windowWidth / 2.f;
+    float platformY = 700.f;
+    float platformWidth = 200.f;
+    float platformHeight = 50.f;
     Entity platform = SpawnElement(
         world,
-        sf::Vector2f { ((2 * levelLimits.left) + levelLimits.width) / 2.0f, 700.f },
-        sf::Vector2f { 200.f, 50.f },
+        sf::Vector2f { platformX, platformY },
+        sf::Vector2f { platformWidth, platformHeight },
         sf::Color::Cyan);
     std::cout << "Platform entity id = " << platform << std::endl;
 }
 
-Entity SpawnService::SpawnPlayer(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color)
+Entity SpawnService::SpawnCharacter(World& world, const sf::FloatRect& levelLimits)
 {
-    Entity player = world.AddEntity();
+    float windowWidth = (2 * levelLimits.left) + levelLimits.width;
 
-    sf::Vector2f velocity = sf::Vector2f { 0, 0 };
+    float x = windowWidth / 2.f;
+    float y = 100.f;
+    float width = 50.f;
+    float height = 50.f;
 
-    sf::Transformable transform;
-    transform.setPosition(center);
-    sf::Transformable draftTransform;
-    draftTransform.setPosition(center);
+    sf::Vector2f center { x, y };
+    sf::Vector2f size { width, height };
+    sf::Vector2f spriteOriginFactor { 3.1f, 2.2f };
+    sf::Vector2f spriteScaleFactor { 2.9f, 2.9f };
 
-    BoxCollideable boxCollideable = BoxCollideable {};
-    boxCollideable.SetBoundingBox(center, size);
-    BoxCollideable draftBoxCollideable = BoxCollideable {};
-    draftBoxCollideable.SetBoundingBox(center, size);
-
-    sf::Texture* texture = new sf::Texture {};
-    if (!texture->loadFromFile("Assets/eevy.png")) {
-        std::cout << "Unable to load asset" << std::endl;
-    }
-
-    sf::Sprite* sprite = new sf::Sprite {};
-    sf::Vector2f spriteOrigin { size.x / 3.1f, size.y / 2.2f };
-    sprite->setTexture(*texture);
-    sprite->setPosition(center);
-    sprite->setOrigin(spriteOrigin);
-    sprite->scale(2.9f, 2.9f);
-
-    sf::RectangleShape* shape = new sf::RectangleShape();
-    shape->setPosition(center);
-    shape->setOrigin(size * 0.5f);
-    shape->setSize(size);
-
-    shape->setFillColor(color);
-    shape->setOutlineThickness(1);
-    shape->setOutlineColor(color);
-
-    world.AddComponentToEntity<Transformable>(player, transform, draftTransform);
-    world.AddComponentToEntity<Renderable>(player, nullptr, color, size, Layer::Top, sprite);
-    world.AddComponentToEntity<RigidBody>(player, velocity, 400.f);
-    world.AddComponentToEntity<PhysicBody>(player, 400.f, 30.f, 0.90f, 50.f, 10.f);
-    world.AddComponentToEntity<CameraCenter>(player);
-    world.AddComponentToEntity<Collideable>(player, boxCollideable, draftBoxCollideable);
-    world.AddComponentToEntity<Gripper>(player);
-    world.AddComponentToEntity<Mortal>(player);
-    world.AddComponentToEntity<Dynamic>(player);
-
-    return player;
+    return EntityBuilder(world)
+        .AddCameraCenter(world)
+        .AddDynamic(world)
+        .AddGripper(world)
+        .AddMortal(world)
+        .AddTransformable(world, center)
+        .AddCollideable(world, center, size)
+        .AddPhysicBody(world, 400.f, 30.f, 0.90f, 50.f, 10.f)
+        .AddRigidBody(world, sf::Vector2f { 0, 0 }, 400.f) // FIXME: duplicate propriety
+        .AddRenderable(world, center, size, sf::Color::Magenta, Layer::Top)
+        .AddSprite(world, center, size, "Assets/eevy.png", spriteOriginFactor, spriteScaleFactor, false)
+        .Build();
 }
 
-Entity SpawnService::SpawnHeart(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color)
+Entity SpawnService::SpawnHeart(World& world, const sf::FloatRect& levelLimits)
 {
-    Entity heart = world.AddEntity();
+    float windowWidth = (2 * levelLimits.left) + levelLimits.width;
 
-    sf::Vector2f velocity = sf::Vector2f { 0, 0 };
+    float x = windowWidth / 2.f;
+    float y = -100.f;
+    float width = 100.f;
+    float height = 100.f;
 
-    sf::Transformable transform;
-    transform.setPosition(center);
-    sf::Transformable draftTransform;
-    draftTransform.setPosition(center);
+    sf::Vector2f center { x, y };
+    sf::Vector2f size { width, height };
 
-    BoxCollideable boxCollideable = BoxCollideable {};
-    boxCollideable.SetBoundingBox(center, size);
-    BoxCollideable draftBoxCollideable = BoxCollideable {};
-    draftBoxCollideable.SetBoundingBox(center, size);
-
-    sf::RectangleShape* shape = new sf::RectangleShape();
-    shape->setPosition(center);
-    shape->setOrigin(size * 0.5f);
-    shape->setSize(size);
-
-    shape->setFillColor(color);
-    shape->setOutlineThickness(1);
-    shape->setOutlineColor(color);
-
-    world.AddComponentToEntity<Renderable>(heart, shape, color, size, Layer::Middle, nullptr);
-    world.AddComponentToEntity<RigidBody>(heart, velocity, 400.f);
-    world.AddComponentToEntity<Collideable>(heart, boxCollideable, draftBoxCollideable);
-    world.AddComponentToEntity<Static>(heart);
-    world.AddComponentToEntity<Reborner>(heart);
-
-    return heart;
+    return EntityBuilder(world)
+        .AddRenderable(world, center, size, sf::Color::Magenta, Layer::Middle)
+        .AddRigidBody(world, sf::Vector2f { 0, 0 }, 0)
+        .AddCollideable(world, center, size)
+        .AddStatic(world)
+        .AddReborner(world)
+        .Build();
 }
 
-Entity SpawnService::SpawnGround(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color)
+Entity SpawnService::SpawnGround(World& world, const sf::FloatRect& levelLimits)
 {
-    Entity ground = world.AddEntity();
+    float levelHeight(levelLimits.height);
+    float windowWidth = (2 * levelLimits.left) + levelLimits.width;
 
-    BoxCollideable boxCollideable = BoxCollideable {};
-    boxCollideable.SetBoundingBox(center, size);
-    BoxCollideable draftBoxCollideable = BoxCollideable {};
-    draftBoxCollideable.SetBoundingBox(center, size);
+    float x = windowWidth / 2.f;
+    float y = levelHeight;
+    float width = windowWidth;
+    float height = 5.f; // TODO: change value
 
-    sf::Texture* texture = new sf::Texture {};
-    if (!texture->loadFromFile("Assets/ground_spritesheet.png")) {
-        std::cout << "Unable to load asset" << std::endl;
-    }
-    texture->setRepeated(true);
-
-    sf::Sprite* sprite = new sf::Sprite(*texture, sf::IntRect(0, 0, 64, 32));
-    sf::Vector2f spriteOrigin { size.x / 20.f, size.y / 2.5f };
-    sprite->setTextureRect(sf::IntRect(0, 0, 1000, 32));
-    sprite->setOrigin(spriteOrigin);
-    sprite->setPosition(center);
-    sprite->scale(10.0f, 10.0f);
+    sf::Vector2f center { x, y };
+    sf::Vector2f size { width, height };
+    sf::Vector2f spriteOriginFactor { 20.f, 2.5f };
+    sf::Vector2f spriteScaleFactor { 10.f, 10.f };
 
     std::map<int, sf::Vector2i> keyframes;
     keyframes[0] = sf::Vector2i(0, 0);
@@ -179,47 +154,23 @@ Entity SpawnService::SpawnGround(World& world, const sf::Vector2f center, const 
 
     sf::Vector2i texureSizeByFrame(1000, 32);
 
-    sf::RectangleShape* shape = new sf::RectangleShape();
-    shape->setPosition(center);
-    shape->setOrigin(size * 0.5f);
-    shape->setSize(size);
-
-    shape->setFillColor(color);
-    shape->setOutlineThickness(1);
-    shape->setOutlineColor(color);
-
-    world.AddComponentToEntity<Renderable>(ground, nullptr, color, size, Layer::Middle, sprite);
-    world.AddComponentToEntity<Collideable>(ground, boxCollideable, draftBoxCollideable);
-    world.AddComponentToEntity<Fatal>(ground);
-    world.AddComponentToEntity<Static>(ground);
-    world.AddComponentToEntity<Animation>(ground, keyframes, LoopMode::LoopReverse, 0, true, texureSizeByFrame);
-
-    return ground;
+    return EntityBuilder(world)
+        .AddRenderable(world, center, size, sf::Color::Yellow, Layer::Middle)
+        .AddSprite(world, center, size, "Assets/ground_spritesheet.png", spriteOriginFactor, spriteScaleFactor, true)
+        .AddCollideable(world, center, size)
+        .AddFatal(world)
+        .AddStatic(world)
+        .AddAnimation(world, keyframes, LoopMode::LoopReverse, 0, true, texureSizeByFrame)
+        .Build();
 }
 
 Entity SpawnService::SpawnElement(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color)
 {
-    Entity element = world.AddEntity();
-
-    BoxCollideable boxCollideable = BoxCollideable {};
-    boxCollideable.SetBoundingBox(center, size);
-    BoxCollideable draftBoxCollideable = BoxCollideable {};
-    draftBoxCollideable.SetBoundingBox(center, size);
-
-    sf::RectangleShape* shape = new sf::RectangleShape();
-    shape->setPosition(center);
-    shape->setOrigin(size * 0.5f);
-    shape->setSize(size);
-
-    shape->setFillColor(color);
-    shape->setOutlineThickness(1);
-    shape->setOutlineColor(color);
-
-    world.AddComponentToEntity<Renderable>(element, shape, color, size, Layer::Middle, nullptr);
-    world.AddComponentToEntity<Collideable>(element, boxCollideable, draftBoxCollideable);
-    world.AddComponentToEntity<Static>(element);
-
-    return element;
+    return EntityBuilder(world)
+        .AddRenderable(world, center, size, sf::Color::Cyan, Layer::Middle)
+        .AddCollideable(world, center, size)
+        .AddStatic(world)
+        .Build();
 }
 
 void SpawnService::SpawnLightDrop(World& world, const sf::FloatRect& levelLimits)
@@ -253,7 +204,7 @@ void SpawnService::SpawnLightDrop(World& world, const sf::FloatRect& levelLimits
 
     // TODO: keep the same transformable object?
     world.AddComponentToEntity<Transformable>(lightDrop, transformable, transformable);
-    world.AddComponentToEntity<Renderable>(lightDrop, shape, color, size, Layer::Back, nullptr);
+    world.AddComponentToEntity<Renderable>(lightDrop, shape, color, size, Layer::Back);
     world.AddComponentToEntity<RigidBody>(lightDrop, velocity, 400.f);
 }
 
@@ -304,7 +255,8 @@ void SpawnService::SpawnLightBall(World& world, const sf::FloatRect& levelLimits
     shape->setOutlineColor(color);
 
     world.AddComponentToEntity<Transformable>(lightBall, transformable, transformable);
-    world.AddComponentToEntity<Renderable>(lightBall, nullptr, color, size, Layer::Middle, sprite);
+    world.AddComponentToEntity<Renderable>(lightBall, nullptr, color, size, Layer::Middle);
+    world.AddComponentToEntity<Sprite>(lightBall, sprite);
     world.AddComponentToEntity<RigidBody>(lightBall, velocity, 400.f);
     world.AddComponentToEntity<Grippable>(lightBall);
     world.AddComponentToEntity<Collideable>(lightBall, boxCollideable, draftBoxCollideable);

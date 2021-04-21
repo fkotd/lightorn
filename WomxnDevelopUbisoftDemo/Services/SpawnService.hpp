@@ -9,8 +9,10 @@ public:
     void SpawnLightBall(World& world, const sf::FloatRect& levelLimits);
 
 private:
-    Entity SpawnPlayer(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color);
-    Entity SpawnHeart(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color);
-    Entity SpawnGround(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color);
+    void SpawnLimitElements(World& world, const sf::FloatRect& levelLimits);
+    void SpawnLevelElements(World& world, const sf::FloatRect& levelLimits);
+    Entity SpawnCharacter(World& world, const sf::FloatRect& levelLimits);
+    Entity SpawnHeart(World& world, const sf::FloatRect& levelLimits);
+    Entity SpawnGround(World& world, const sf::FloatRect& levelLimits);
     Entity SpawnElement(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color);
 };

@@ -5,6 +5,7 @@
 #include "Components/CameraCenter.hpp"
 #include "Components/Collideable.hpp"
 #include "Components/Renderable.hpp"
+#include "Components/Sprite.hpp"
 #include "Components/Transformable.hpp"
 #include "Tools/Layer.hpp"
 
@@ -15,8 +16,6 @@ void RenderSystem::Render(World& world, sf::RenderTarget& target)
     ImGui::Begin("Render Menu");
     ImGui::Text("Number of entities: %d", entities.size());
     ImGui::End();
-
-    //target.clear(sf::Color(0, 0, 0));
 
     for (int layer = Layer::Back; layer < Layer::Top + 1; layer++) {
         RenderLayer(world, target, entities, static_cast<Layer>(layer));
@@ -31,26 +30,27 @@ void RenderSystem::RenderLayer(World& world, sf::RenderTarget& target, const std
             continue;
         }
 
-        // if the current entity has the camera component
+        // If the current entity has the camera component
         CameraCenter* cameraCenter = world.GetComponentIfExists<CameraCenter>(entity);
         if (cameraCenter != nullptr) {
-            // it is the player
+            // It is the player
             Transformable& transformable = world.GetComponent<Transformable>(entity);
-            // update the view
+            // Update the view
             sf::View view = target.getView();
             view.setCenter(view.getCenter().x, transformable.transform.getPosition().y);
             target.setView(view);
         }
 
-        // if the current entity has a transformable component, update its shape
+        // If the current entity has a transformable component, update its shape
         Transformable* transformable = world.GetComponentIfExists<Transformable>(entity);
+        Sprite* sprite = world.GetComponentIfExists<Sprite>(entity);
         if (transformable != nullptr) {
             if (renderable.shape != nullptr) {
                 renderable.shape->setPosition(transformable->transform.getPosition());
             }
 
-            if (renderable.sprite != nullptr) {
-                renderable.sprite->setPosition(transformable->transform.getPosition());
+            if (sprite != nullptr) {
+                sprite->sprite->setPosition(transformable->transform.getPosition());
             }
         }
 
@@ -58,8 +58,8 @@ void RenderSystem::RenderLayer(World& world, sf::RenderTarget& target, const std
             target.draw(*renderable.shape);
         }
 
-        if (renderable.sprite != nullptr) {
-            target.draw(*renderable.sprite);
+        if (sprite != nullptr) {
+            target.draw(*sprite->sprite);
         }
     }
 }
