@@ -4,5 +4,5 @@
 
 class GripSystem : public System {
 public:
-    void Update(World& world, float deltaTime);
+    void Update(World& world, float deltaTime, sf::FloatRect levelLimits);
 };

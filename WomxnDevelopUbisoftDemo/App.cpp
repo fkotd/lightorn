@@ -150,7 +150,7 @@ void App::DisplayLevelScreen(sf::Clock& lightDropClock, sf::Clock& lightBallCloc
     playerControlSystem->Update(*world, deltaTime);
     physicSystem->Update(*world, deltaTime);
     transformSystem->Update(*world, deltaTime);
-    gripSystem->Update(*world, deltaTime);
+    gripSystem->Update(*world, deltaTime, levelLimits);
     collisionSystem->Update(*world, deltaTime);
     commitSystem->Commit(*world);
 

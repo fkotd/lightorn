@@ -6,7 +6,7 @@
 #include "Components/Gripper.hpp"
 #include "Components/Transformable.hpp"
 
-void GripSystem::Update(World& world, float deltaTime)
+void GripSystem::Update(World& world, float deltaTime, sf::FloatRect levelLimits)
 {
     std::set<Entity> grippableEntities = world.Find(GetSignature());
 
@@ -26,8 +26,16 @@ void GripSystem::Update(World& world, float deltaTime)
                     Transformable& grippableTransformable = world.GetComponent<Transformable>(grippableEntity);
                     Transformable& gripperTransformable = world.GetComponent<Transformable>(gripperEntity);
 
-                    gripperTransformable.draftTransform.setPosition(grippableTransformable.transform.getPosition());
-                    gripperCollideable.draftBoxCollideable.SetCenter(grippableCollideable.boxCollideable.GetCenter());
+                    sf::Vector2f grippablePosition = grippableTransformable.transform.getPosition();
+                    sf::Vector2f gripPosition;
+                    gripPosition.x = std::max(levelLimits.left, grippablePosition.x);
+                    gripPosition.x = std::min(levelLimits.left + levelLimits.width, gripPosition.x);
+                    gripPosition.y = std::min(levelLimits.height, grippablePosition.y);
+
+                    //gripperTransformable.draftTransform.setPosition(grippableTransformable.transform.getPosition());
+                    //gripperCollideable.draftBoxCollideable.SetCenter(grippableCollideable.boxCollideable.GetCenter());
+                    gripperTransformable.draftTransform.setPosition(gripPosition);
+                    gripperCollideable.draftBoxCollideable.SetCenter(gripPosition);
                 }
             }
         }
