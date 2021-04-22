@@ -9,7 +9,7 @@ public:
     EntityBuilder(World& world);
 
     EntityBuilder& AddTransformable(World& world, const sf::Vector2f& center);
-    EntityBuilder& AddRenderable(World& world, const sf::Vector2f& center, const sf::Vector2f& size, const sf::Color& color, const Layer layer);
+    EntityBuilder& AddRenderable(World& world, const sf::Vector2f& center, const sf::Vector2f& size, const sf::Color& color, const Layer layer, bool shapeVisible);
     EntityBuilder& AddSprite(World& world, const sf::Vector2f& center, const sf::Vector2f& size, std::string spritePath, const sf::Vector2f& spriteOriginFactor, const sf::Vector2f& spriteScaleFactor, bool repeat);
     EntityBuilder& AddAnimation(World& world, std::map<int, sf::Vector2i>& keyframes, LoopMode loopMode, int currentKeyframe, bool increase, sf::Vector2i& textureSize);
     EntityBuilder& AddRigidBody(World& world, const sf::Vector2f& veloctity, float maxVelocity);

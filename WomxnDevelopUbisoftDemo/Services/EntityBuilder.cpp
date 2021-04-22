@@ -22,7 +22,7 @@ EntityBuilder::EntityBuilder(World& world)
     entity = world.AddEntity();
 }
 
-EntityBuilder& EntityBuilder::AddRenderable(World& world, const sf::Vector2f& center, const sf::Vector2f& size, const sf::Color& color, const Layer layer)
+EntityBuilder& EntityBuilder::AddRenderable(World& world, const sf::Vector2f& center, const sf::Vector2f& size, const sf::Color& color, const Layer layer, bool shapeVisible)
 {
     // TODO: how to delete the new
     sf::RectangleShape* shape = new sf::RectangleShape();
@@ -34,6 +34,9 @@ EntityBuilder& EntityBuilder::AddRenderable(World& world, const sf::Vector2f& ce
     shape->setOutlineThickness(1);
     shape->setOutlineColor(color);
 
+    if (!shapeVisible) {
+        shape = nullptr;
+    }
     world.AddComponentToEntity<Renderable>(entity, shape, color, size, layer);
 
     return *this;

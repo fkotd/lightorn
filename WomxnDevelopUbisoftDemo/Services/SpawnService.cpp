@@ -106,7 +106,7 @@ Entity SpawnService::SpawnCharacter(World& world, const sf::FloatRect& levelLimi
         .AddCollideable(world, center, size)
         .AddPhysicBody(world, 400.f, 30.f, 0.90f, 50.f, 10.f)
         .AddRigidBody(world, sf::Vector2f { 0, 0 }, 400.f) // FIXME: duplicate propriety
-        .AddRenderable(world, center, size, sf::Color::Magenta, Layer::Top)
+        .AddRenderable(world, center, size, sf::Color::Magenta, Layer::Top, false)
         .AddSprite(world, center, size, "Assets/eevy.png", spriteOriginFactor, spriteScaleFactor, false)
         .Build();
 }
@@ -117,18 +117,35 @@ Entity SpawnService::SpawnHeart(World& world, const sf::FloatRect& levelLimits)
 
     float x = windowWidth / 2.f;
     float y = -100.f;
-    float width = 100.f;
-    float height = 100.f;
+    float width = 45.f;
+    float height = 95.f;
 
     sf::Vector2f center { x, y };
     sf::Vector2f size { width, height };
+    sf::Vector2f spriteOriginFactor { 3.f, 6.f };
+    sf::Vector2f spriteScaleFactor { 3.f, 3.f };
+
+    std::map<int, sf::Vector2i> keyframes;
+    keyframes[0] = sf::Vector2i(0, 0);
+    keyframes[1] = sf::Vector2i(0, 32);
+    keyframes[2] = sf::Vector2i(0, 32 * 2);
+    keyframes[3] = sf::Vector2i(0, 32 * 3);
+    keyframes[4] = sf::Vector2i(0, 32 * 4);
+    keyframes[5] = sf::Vector2i(0, 32 * 5);
+    keyframes[6] = sf::Vector2i(0, 32 * 6);
+    keyframes[7] = sf::Vector2i(0, 32 * 7);
+    keyframes[8] = sf::Vector2i(0, 32 * 8);
+
+    sf::Vector2i texureSizeByFrame(32, 32);
 
     return EntityBuilder(world)
-        .AddRenderable(world, center, size, sf::Color::Magenta, Layer::Middle)
+        .AddRenderable(world, center, size, sf::Color::Green, Layer::Middle, false)
         .AddRigidBody(world, sf::Vector2f { 0, 0 }, 0)
         .AddCollideable(world, center, size)
         .AddStatic(world)
         .AddReborner(world)
+        .AddSprite(world, center, size, "Assets/heart_spritesheet.png", spriteOriginFactor, spriteScaleFactor, false)
+        .AddAnimation(world, keyframes, LoopMode::LoopReverse, 0, true, texureSizeByFrame)
         .Build();
 }
 
@@ -155,7 +172,7 @@ Entity SpawnService::SpawnGround(World& world, const sf::FloatRect& levelLimits)
     sf::Vector2i texureSizeByFrame(1000, 32);
 
     return EntityBuilder(world)
-        .AddRenderable(world, center, size, sf::Color::Yellow, Layer::Middle)
+        .AddRenderable(world, center, size, sf::Color::Yellow, Layer::Middle, true)
         .AddSprite(world, center, size, "Assets/ground_spritesheet.png", spriteOriginFactor, spriteScaleFactor, true)
         .AddCollideable(world, center, size)
         .AddFatal(world)
@@ -167,7 +184,7 @@ Entity SpawnService::SpawnGround(World& world, const sf::FloatRect& levelLimits)
 Entity SpawnService::SpawnElement(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color)
 {
     return EntityBuilder(world)
-        .AddRenderable(world, center, size, sf::Color::Cyan, Layer::Middle)
+        .AddRenderable(world, center, size, sf::Color::Cyan, Layer::Middle, true)
         .AddCollideable(world, center, size)
         .AddStatic(world)
         .Build();
