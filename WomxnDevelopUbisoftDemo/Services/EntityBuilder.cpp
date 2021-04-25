@@ -7,6 +7,8 @@
 #include "Components/Collideable.hpp"
 #include "Components/Dynamic.hpp"
 #include "Components/Fatal.hpp"
+#include "Components/Feel.hpp"
+#include "Components/Grippable.hpp"
 #include "Components/Gripper.hpp"
 #include "Components/Mortal.hpp"
 #include "Components/PhysicBody.hpp"
@@ -110,6 +112,13 @@ EntityBuilder& EntityBuilder::AddPhysicBody(World& world, float maxSpeed, float 
     return *this;
 }
 
+EntityBuilder& EntityBuilder::AddFeel(World& world, Feeling feeling)
+{
+    world.AddComponentToEntity<Feel>(entity, feeling);
+
+    return *this;
+}
+
 EntityBuilder& EntityBuilder::AddCameraCenter(World& world)
 {
     world.AddComponentToEntity<CameraCenter>(entity);
@@ -120,6 +129,13 @@ EntityBuilder& EntityBuilder::AddCameraCenter(World& world)
 EntityBuilder& EntityBuilder::AddGripper(World& world)
 {
     world.AddComponentToEntity<Gripper>(entity);
+
+    return *this;
+}
+
+EntityBuilder& EntityBuilder::AddGrippable(World& world)
+{
+    world.AddComponentToEntity<Grippable>(entity);
 
     return *this;
 }

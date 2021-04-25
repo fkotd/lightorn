@@ -3,6 +3,7 @@
 #include "GripSystem.hpp"
 
 #include "Components/Collideable.hpp"
+#include "Components/Feel.hpp"
 #include "Components/Gripper.hpp"
 #include "Components/Transformable.hpp"
 
@@ -36,8 +37,25 @@ void GripSystem::Update(World& world, float deltaTime, sf::FloatRect levelLimits
                     //gripperCollideable.draftBoxCollideable.SetCenter(grippableCollideable.boxCollideable.GetCenter());
                     gripperTransformable.draftTransform.setPosition(gripPosition);
                     gripperCollideable.draftBoxCollideable.SetCenter(gripPosition);
+
+                    UpdateFeeling(world, gripperEntity, grippableEntity);
                 }
             }
         }
+    }
+}
+
+void GripSystem::UpdateFeeling(World& world, Entity gripperEntity, Entity grippableEntity)
+{
+    Feel* gripperFeel = world.GetComponentIfExists<Feel>(gripperEntity);
+    Feel* grippableFeel = world.GetComponentIfExists<Feel>(grippableEntity);
+
+    if (gripperFeel != nullptr && grippableFeel != nullptr) {
+        gripperFeel->feeling = grippableFeel->feeling;
+
+        ImGui::Begin("Feeling Infos");
+        ImGui::Text("Lightball feeling: %d", grippableFeel->feeling);
+        ImGui::Text("Character feeling: %d", gripperFeel->feeling);
+        ImGui::End();
     }
 }

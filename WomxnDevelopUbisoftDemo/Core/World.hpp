@@ -83,12 +83,12 @@ public:
         return signature;
     }
 
-    void AddGameEvent(std::string name, std::any value)
+    void AddGameEvent(std::string name, std::any value) // TODO: pass by const ref / std::string_view
     {
         eventManager.AddGameEvent(name, value);
     }
 
-    std::any GetGameEvent(std::string name)
+    std::any GetGameEvent(std::string name) // TODO
     {
         return eventManager.GetGameEvent(name);
     }

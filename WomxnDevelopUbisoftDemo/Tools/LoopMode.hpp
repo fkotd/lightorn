@@ -1,4 +1,6 @@
 #pragma once
 
-enum LoopMode { Loop,
-    LoopReverse };
+enum LoopMode {
+    Loop,
+    LoopReverse
+};

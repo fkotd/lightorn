@@ -6,6 +6,7 @@
 #include "Components/Collideable.hpp"
 #include "Components/Dynamic.hpp"
 #include "Components/Fatal.hpp"
+#include "Components/Feel.hpp"
 #include "Components/Grippable.hpp"
 #include "Components/Gripper.hpp"
 #include "Components/Mortal.hpp"
@@ -195,6 +196,7 @@ void App::RegisterComponents()
     world->RegisterComponent<Animation>();
     world->RegisterComponent<Reborner>();
     world->RegisterComponent<Sprite>();
+    world->RegisterComponent<Feel>();
 }
 
 void App::RegisterSystems()

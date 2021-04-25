@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/World.hpp"
+#include "Tools/Feeling.hpp"
 #include "Tools/Layer.hpp"
 #include "Tools/LoopMode.hpp"
 
@@ -16,7 +17,9 @@ public:
     EntityBuilder& AddPhysicBody(World& world, float maxSpeed, float speedInc, float slowdownRate, float mass, float gamma);
     EntityBuilder& AddCameraCenter(World& world);
     EntityBuilder& AddCollideable(World& world, const sf::Vector2f& center, const sf::Vector2f& size);
+    EntityBuilder& AddFeel(World& world, Feeling feeling);
     EntityBuilder& AddGripper(World& world);
+    EntityBuilder& AddGrippable(World& world);
     EntityBuilder& AddMortal(World& world);
     EntityBuilder& AddFatal(World& world);
     EntityBuilder& AddReborner(World& world);

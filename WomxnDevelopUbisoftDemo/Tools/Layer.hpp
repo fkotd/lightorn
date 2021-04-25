@@ -1,5 +1,7 @@
 #pragma once
 
-enum Layer { Back,
+enum Layer {
+    Back,
     Middle,
-    Top };
+    Top
+};

@@ -5,4 +5,7 @@
 class GripSystem : public System {
 public:
     void Update(World& world, float deltaTime, sf::FloatRect levelLimits);
+
+private:
+    void UpdateFeeling(World& world, Entity gripperEntity, Entity grippableEntity);
 };

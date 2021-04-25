@@ -96,6 +96,7 @@ Entity SpawnService::SpawnCharacter(World& world, const sf::FloatRect& levelLimi
     sf::Vector2f size { width, height };
     sf::Vector2f spriteOriginFactor { 3.1f, 2.2f };
     sf::Vector2f spriteScaleFactor { 2.9f, 2.9f };
+    Feeling feeling = Feeling::Neutral;
 
     return EntityBuilder(world)
         .AddCameraCenter(world)
@@ -108,6 +109,7 @@ Entity SpawnService::SpawnCharacter(World& world, const sf::FloatRect& levelLimi
         .AddRigidBody(world, sf::Vector2f { 0, 0 }, 400.f) // FIXME: duplicate propriety
         .AddRenderable(world, center, size, sf::Color::Magenta, Layer::Top, false)
         .AddSprite(world, center, size, "Assets/eevy.png", spriteOriginFactor, spriteScaleFactor, false)
+        .AddFeel(world, feeling)
         .Build();
 }
 
@@ -195,15 +197,15 @@ void SpawnService::SpawnLightDrop(World& world, const sf::FloatRect& levelLimits
     Entity lightDrop = world.AddEntity();
 
     int depth = GetRandomBetween(2, 5);
-    int width = 3;
-    int length = 20 * depth;
-    int x = GetRandomBetween(static_cast<int>(levelLimits.left), static_cast<int>(levelLimits.width));
-    int y = 0 - length;
+    float width = 3.f;
+    float length = 20.f * depth;
+    float x = GetRandomBetween(levelLimits.left, levelLimits.width);
+    float y = 0 - length;
     float speedTweak = 1 + length / 5.0f;
     float speed = 50 * speedTweak;
 
-    sf::Vector2f center = sf::Vector2f { static_cast<float>(x), static_cast<float>(y) };
-    sf::Vector2f size = sf::Vector2f { static_cast<float>(width), static_cast<float>(length) };
+    sf::Vector2f center = sf::Vector2f { x, y };
+    sf::Vector2f size = sf::Vector2f { width, length };
     sf::Color color = sf::Color { 140, 130, 215, 100 };
     sf::Color outlineColor = sf::Color { 140, 130, 215, 50 };
     sf::Vector2f velocity = sf::Vector2f { 0, speed };
@@ -227,54 +229,49 @@ void SpawnService::SpawnLightDrop(World& world, const sf::FloatRect& levelLimits
 
 void SpawnService::SpawnLightBall(World& world, const sf::FloatRect& levelLimits)
 {
-    Entity lightBall = world.AddEntity();
-
-    int width = 60;
-    int length = 70;
-    int x = GetRandomBetween(static_cast<int>(levelLimits.left), static_cast<int>(levelLimits.width));
-    int y = static_cast<int>(levelLimits.height) + 400;
-    // TODO: speed tweak
+    float width = 60.f;
+    float length = 70.f;
+    float x = GetRandomBetween(levelLimits.left, levelLimits.width);
+    float y = levelLimits.height + 400.f;
     float speedTeak = 1 + GetRandomBetween(1, 5) / 5.f;
     float speed = -200 * speedTeak;
+    int feelingId = GetRandomBetween(0, Feeling::FEELINGS_NUMBER - 1);
+    Feeling feeling = static_cast<Feeling>(feelingId);
 
-    sf::Vector2f center = sf::Vector2f { static_cast<float>(x), static_cast<float>(y) };
-    sf::Vector2f size = sf::Vector2f { static_cast<float>(width), static_cast<float>(length) };
-    sf::Color color = sf::Color { 172, 243, 249, 190 };
-    sf::Vector2f velocity = sf::Vector2f { 0, speed };
+    std::string spriteName;
 
-    sf::Transformable transformable;
-    transformable.setPosition(center);
-
-    BoxCollideable boxCollideable = BoxCollideable {};
-    boxCollideable.SetBoundingBox(center, size);
-    BoxCollideable draftBoxCollideable = BoxCollideable {};
-    draftBoxCollideable.SetBoundingBox(center, size);
-
-    sf::Texture* texture = new sf::Texture {};
-    if (!texture->loadFromFile("Assets/lightball_5.png")) {
-        std::cout << "Unable to load asset" << std::endl;
+    // TODO: maybe find a more generic solution
+    switch (feeling) {
+    case Neutral:
+        spriteName = "Assets/lightball_neutral.png";
+        break;
+    case Compassion:
+        spriteName = "Assets/lightball_compassion.png";
+        break;
+    case Fear:
+        spriteName = "Assets/lightball_fear.png";
+        break;
+    case Rage:
+        spriteName = "Assets/lightball_rage.png";
+        break;
+    default:
+        std::cout << "Unknow feeling, strange impression..." << std::endl;
+        break;
     }
 
-    sf::Sprite* sprite = new sf::Sprite {};
-    sf::Vector2f spriteOrigin { size.x / 7.f, size.y / 9.f };
-    sprite->setTexture(*texture);
-    sprite->setOrigin(spriteOrigin);
-    sprite->setPosition(center);
-    sprite->scale(3.3f, 5.0f);
-
-    sf::RectangleShape* shape = new sf::RectangleShape();
-    shape->setPosition(center);
-    shape->setOrigin(size * 0.5f);
-    shape->setSize(size);
-
-    shape->setFillColor(color);
-    shape->setOutlineThickness(1);
-    shape->setOutlineColor(color);
-
-    world.AddComponentToEntity<Transformable>(lightBall, transformable, transformable);
-    world.AddComponentToEntity<Renderable>(lightBall, nullptr, color, size, Layer::Middle);
-    world.AddComponentToEntity<Sprite>(lightBall, sprite);
-    world.AddComponentToEntity<RigidBody>(lightBall, velocity, 400.f);
-    world.AddComponentToEntity<Grippable>(lightBall);
-    world.AddComponentToEntity<Collideable>(lightBall, boxCollideable, draftBoxCollideable);
+    sf::Vector2f center = sf::Vector2f { x, y };
+    sf::Vector2f size = sf::Vector2f { width, length };
+    sf::Color color = sf::Color { 172, 243, 249, 190 };
+    sf::Vector2f velocity = sf::Vector2f { 0, speed };
+    sf::Vector2f spriteOriginFactor { 7.f, 9.f };
+    sf::Vector2f spriteScaleFactor { 3.3f, 5.0f };
+    EntityBuilder(world)
+        .AddRenderable(world, center, size, color, Layer::Middle, false)
+        .AddSprite(world, center, size, spriteName, spriteOriginFactor, spriteScaleFactor, true)
+        .AddTransformable(world, center)
+        .AddRigidBody(world, velocity, 400.f)
+        .AddCollideable(world, center, size)
+        .AddGrippable(world)
+        .AddFeel(world, feeling)
+        .Build();
 }

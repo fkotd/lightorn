@@ -209,6 +209,7 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     </ClCompile>
     <ClCompile Include="Services\EntityBuilder.cpp" />
     <ClCompile Include="Systems\DestroySystem.cpp" />
+    <ClCompile Include="Tools\Feeling.cpp" />
     <ClCompile Include="UI\StartScreen.cpp" />
     <ClCompile Include="Systems\AnimationSystem.cpp" />
     <ClCompile Include="App.cpp" />
@@ -231,12 +232,14 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\external\imgui-master\imgui.h" />
     <ClInclude Include="..\external\imgui-master\imgui_internal.h" />
     <ClInclude Include="..\external\imgui-sfml-master\imgui-SFML.h" />
+    <ClInclude Include="Components\Feel.hpp" />
     <ClInclude Include="Core\ComponentInfo.hpp" />
     <ClInclude Include="Components\Reborner.hpp" />
     <ClInclude Include="Components\Dynamic.hpp" />
     <ClInclude Include="Components\Static.hpp" />
     <ClInclude Include="Services\EntityBuilder.hpp" />
     <ClInclude Include="Components\Sprite.hpp" />
+    <ClInclude Include="Tools\Feeling.hpp" />
     <ClInclude Include="Tools\Messages.hpp" />
     <ClInclude Include="Systems\DestroySystem.hpp" />
     <ClInclude Include="UI\StartScreen.hpp" />

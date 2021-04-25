@@ -74,6 +74,9 @@
     <ClCompile Include="Services\EntityBuilder.cpp">
       <Filter>Game\Services</Filter>
     </ClCompile>
+    <ClCompile Include="Tools\Feeling.cpp">
+      <Filter>Game\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -231,6 +234,12 @@
       <Filter>Game\Services</Filter>
     </ClInclude>
     <ClInclude Include="Components\Sprite.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools\Feeling.hpp">
+      <Filter>Game\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Feel.hpp">
       <Filter>Game\Components</Filter>
     </ClInclude>
   </ItemGroup>
