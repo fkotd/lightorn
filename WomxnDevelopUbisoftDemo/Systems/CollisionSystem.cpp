@@ -28,11 +28,11 @@ void CollisionSystem::Update(World& world, float deltaTime)
                 if (dynamicCollideable.draftBoxCollideable.IsColliding(staticCollideable.draftBoxCollideable)) {
 
                     if (IsFatalCollision(world, dynamicEntity, staticEntity)) {
-                        world.AddGameEvent("dead", true);
+                        world.AddGameEvent(END_GAME_DEATH, true);
                     }
 
                     if (IsRebornCollision(world, dynamicEntity, staticEntity)) {
-                        world.AddGameEvent("reborn", true);
+                        world.AddGameEvent(END_GAME_REBORN, true);
                     }
 
                     CuteSweeptAABB(world, dynamicEntity, staticEntity, deltaTime);

@@ -224,7 +224,7 @@ void App::SetLevelLimits(const sf::Vector2f& topLeft, const sf::Vector2f& size)
 bool App::IsLevelEndedByDeath()
 {
     try {
-        if (std::any_cast<bool>(world->GetGameEvent("dead"))) {
+        if (std::any_cast<bool>(world->GetGameEvent(END_GAME_DEATH))) {
             return true;
         }
     } catch (const std::bad_any_cast& _) {
@@ -235,7 +235,7 @@ bool App::IsLevelEndedByDeath()
 bool App::IsLevelEndedByReborn()
 {
     try {
-        if (std::any_cast<bool>(world->GetGameEvent("reborn"))) {
+        if (std::any_cast<bool>(world->GetGameEvent(END_GAME_REBORN))) {
             return true;
         }
     } catch (const std::bad_any_cast& _) {

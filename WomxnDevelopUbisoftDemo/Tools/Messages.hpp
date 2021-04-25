@@ -2,5 +2,5 @@
 
 #include <string>
 
-//const std::string* END_GAME_DEATH = new std::string("dead");
-//const std::string* END_GAME_REBORN = new std::string("reborn");
+const std::string END_GAME_DEATH = std::string("death");
+const std::string END_GAME_REBORN = std::string("reborn");
