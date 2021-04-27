@@ -6,6 +6,7 @@
 #include "Components/Feel.hpp"
 #include "Components/Gripper.hpp"
 #include "Components/Transformable.hpp"
+#include "Tools/Messages.hpp"
 
 void GripSystem::Update(World& world, float deltaTime, sf::FloatRect levelLimits)
 {
@@ -14,15 +15,23 @@ void GripSystem::Update(World& world, float deltaTime, sf::FloatRect levelLimits
     Signature gripperSignature = *world.GetSignature<Gripper, Transformable, Collideable>();
     std::set<Entity> gripperEntities = world.Find(gripperSignature);
 
-    for (auto grippableEntity : grippableEntities) {
-        Collideable& grippableCollideable = world.GetComponent<Collideable>(grippableEntity);
+    bool hasCollided = false;
 
-        for (auto gripperEntity : gripperEntities) {
+    for (auto gripperEntity : gripperEntities) {
+        Collideable& gripperCollideable = world.GetComponent<Collideable>(gripperEntity);
+
+        for (auto grippableEntity : grippableEntities) {
+            Collideable& grippableCollideable = world.GetComponent<Collideable>(grippableEntity);
+
             if (grippableEntity != gripperEntity) {
-                Collideable& gripperCollideable = world.GetComponent<Collideable>(gripperEntity);
 
                 if (grippableCollideable.draftBoxCollideable.IsColliding(gripperCollideable.draftBoxCollideable)
                     && sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+
+                    hasCollided = true;
+
+                    UpdateFeeling(world, gripperEntity, grippableEntity);
+
                     // make the gripper follow the grippable
                     Transformable& grippableTransformable = world.GetComponent<Transformable>(grippableEntity);
                     Transformable& gripperTransformable = world.GetComponent<Transformable>(gripperEntity);
@@ -33,15 +42,15 @@ void GripSystem::Update(World& world, float deltaTime, sf::FloatRect levelLimits
                     gripPosition.x = std::min(levelLimits.left + levelLimits.width, gripPosition.x);
                     gripPosition.y = std::min(levelLimits.height, grippablePosition.y);
 
-                    //gripperTransformable.draftTransform.setPosition(grippableTransformable.transform.getPosition());
-                    //gripperCollideable.draftBoxCollideable.SetCenter(grippableCollideable.boxCollideable.GetCenter());
                     gripperTransformable.draftTransform.setPosition(gripPosition);
                     gripperCollideable.draftBoxCollideable.SetCenter(gripPosition);
-
-                    UpdateFeeling(world, gripperEntity, grippableEntity);
                 }
             }
         }
+    }
+
+    if (!hasCollided) {
+        world.RemoveGameEvent(FEELING_CHANGE);
     }
 }
 
@@ -51,8 +60,10 @@ void GripSystem::UpdateFeeling(World& world, Entity gripperEntity, Entity grippa
     Feel* grippableFeel = world.GetComponentIfExists<Feel>(grippableEntity);
 
     if (gripperFeel != nullptr && grippableFeel != nullptr) {
-        gripperFeel->feeling = grippableFeel->feeling;
-
+        if (gripperFeel->feeling != grippableFeel->feeling) {
+            gripperFeel->feeling = grippableFeel->feeling;
+            world.AddGameEvent(FEELING_CHANGE, Event(gripperFeel->feeling, true));
+        }
         ImGui::Begin("Feeling Infos");
         ImGui::Text("Lightball feeling: %d", grippableFeel->feeling);
         ImGui::Text("Character feeling: %d", gripperFeel->feeling);

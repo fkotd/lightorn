@@ -3,5 +3,5 @@
 #include "Tools/Feeling.hpp"
 
 struct Feel {
-    int feeling;
+    Feeling feeling;
 };

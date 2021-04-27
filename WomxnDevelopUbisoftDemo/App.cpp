@@ -66,7 +66,7 @@ void App::Run()
     sf::Clock lightBallClock;
     sf::Clock animationClock;
     sf::Time lightDropSpawnInterval = sf::milliseconds(GetRandomBetween(50, 100));
-    sf::Time lightBallSpawnInterval = sf::seconds(static_cast<float>(GetRandomBetween(2, 5)));
+    sf::Time lightBallSpawnInterval = sf::seconds(static_cast<float>(GetRandomBetween(1, 2)));
     sf::Time animationInterval = sf::milliseconds(500);
     sf::Music music;
 
@@ -120,6 +120,7 @@ void App::Run()
         world->ClearEvents();
     }
 
+    world->ClearAllEvents();
     music.stop();
 }
 
@@ -145,13 +146,14 @@ void App::DisplayLevelScreen(sf::Clock& lightDropClock, sf::Clock& lightBallCloc
     if (lightBallClock.getElapsedTime().asSeconds() >= lightBallSpawnInterval.asSeconds()) {
         spawnService->SpawnLightBall(*world, levelLimits);
         lightBallClock.restart();
-        lightBallSpawnInterval = sf::seconds(static_cast<float>(GetRandomBetween(2, 5)));
+        lightBallSpawnInterval = sf::seconds(static_cast<float>(GetRandomBetween(1, 2)));
     }
 
     playerControlSystem->Update(*world, deltaTime);
     physicSystem->Update(*world, deltaTime);
     transformSystem->Update(*world, deltaTime);
     gripSystem->Update(*world, deltaTime, levelLimits);
+    feelSystem->Update(*world, deltaTime);
     collisionSystem->Update(*world, deltaTime);
     commitSystem->Commit(*world);
 
@@ -211,6 +213,7 @@ void App::RegisterSystems()
     gripSystem = world->RegisterSystem<GripSystem, Grippable, Collideable, Transformable>();
     animationSystem = world->RegisterSystem<AnimationSystem, Animation, Sprite>();
     destroySystem = world->RegisterSystem<DestroySystem, Transformable>();
+    feelSystem = world->RegisterSystem<FeelSystem, Grippable, Feel, Sprite>();
 }
 
 void App::SetLevelLimits(const sf::Vector2f& topLeft, const sf::Vector2f& size)
@@ -223,22 +226,24 @@ void App::SetLevelLimits(const sf::Vector2f& topLeft, const sf::Vector2f& size)
 
 bool App::IsLevelEndedByDeath()
 {
-    try {
-        if (std::any_cast<bool>(world->GetGameEvent(END_GAME_DEATH))) {
-            return true;
+    Event* deathEvent = world->GetGameEvent(END_GAME_DEATH);
+    if (deathEvent != nullptr) {
+        try {
+            return std::any_cast<bool>(deathEvent->GetValue());
+        } catch (const std::bad_any_cast& _) {
         }
-    } catch (const std::bad_any_cast& _) {
     }
     return false;
 }
 
 bool App::IsLevelEndedByReborn()
 {
-    try {
-        if (std::any_cast<bool>(world->GetGameEvent(END_GAME_REBORN))) {
-            return true;
+    Event* rebornEvent = world->GetGameEvent(END_GAME_REBORN);
+    if (rebornEvent != nullptr) {
+        try {
+            return std::any_cast<bool>(rebornEvent->GetValue());
+        } catch (const std::bad_any_cast& _) {
         }
-    } catch (const std::bad_any_cast& _) {
     }
     return false;
 }

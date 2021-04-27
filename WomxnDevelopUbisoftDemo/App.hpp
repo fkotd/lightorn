@@ -6,6 +6,7 @@
 #include "Systems/CollisionSystem.hpp"
 #include "Systems/CommitSystem.hpp"
 #include "Systems/DestroySystem.hpp"
+#include "Systems/FeelSystem.hpp"
 #include "Systems/GripSystem.hpp"
 #include "Systems/PhysicSystem.hpp"
 #include "Systems/PlayerControlSystem.hpp"
@@ -47,6 +48,7 @@ private:
     std::shared_ptr<GripSystem> gripSystem;
     std::shared_ptr<AnimationSystem> animationSystem;
     std::shared_ptr<DestroySystem> destroySystem;
+    std::shared_ptr<FeelSystem> feelSystem;
 
     StartScreen startScreen;
     bool isLevelStared;

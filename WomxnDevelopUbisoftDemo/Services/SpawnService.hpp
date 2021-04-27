@@ -4,6 +4,7 @@
 
 class SpawnService {
 public:
+    SpawnService();
     void SpawnLevel(World&, const sf::FloatRect& levelLimits);
     void SpawnLightDrop(World& world, const sf::FloatRect& levelLimits);
     void SpawnLightBall(World& world, const sf::FloatRect& levelLimits);

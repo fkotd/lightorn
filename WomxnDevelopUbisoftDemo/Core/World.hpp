@@ -83,20 +83,29 @@ public:
         return signature;
     }
 
-    void AddGameEvent(std::string name, std::any value) // TODO: pass by const ref / std::string_view
+    void AddGameEvent(std::string name, Event event) // TODO: pass by const ref / std::string_view
     {
-        eventManager.AddGameEvent(name, value);
+        eventManager.AddGameEvent(name, event);
     }
 
-    std::any GetGameEvent(std::string name) // TODO
+    void RemoveGameEvent(std::string name)
+    {
+        eventManager.RemoveGameEvent(name);
+    }
+
+    Event* GetGameEvent(std::string name) // TODO
     {
         return eventManager.GetGameEvent(name);
     }
 
     void ClearEvents()
     {
-
         eventManager.ClearEvents();
+    }
+
+    void ClearAllEvents()
+    {
+        eventManager.ClearAllEvents();
     }
 
 private:

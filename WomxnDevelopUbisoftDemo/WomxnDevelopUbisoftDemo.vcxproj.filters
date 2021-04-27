@@ -77,6 +77,12 @@
     <ClCompile Include="Tools\Feeling.cpp">
       <Filter>Game\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Systems\FeelSystem.cpp">
+      <Filter>Game\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Event.cpp">
+      <Filter>Game\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -241,6 +247,12 @@
     </ClInclude>
     <ClInclude Include="Components\Feel.hpp">
       <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\FeelSystem.hpp">
+      <Filter>Game\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Event.hpp">
+      <Filter>Game\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

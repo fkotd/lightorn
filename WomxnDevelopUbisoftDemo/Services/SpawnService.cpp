@@ -23,6 +23,12 @@
 #include "Tools/LoopMode.hpp"
 #include "Tools/Random.hpp"
 
+SpawnService::SpawnService()
+{
+    // Init random, maybe make a random class that do it itself
+    srand((unsigned)time(0));
+}
+
 void SpawnService::SpawnLevel(World& world, const sf::FloatRect& levelLimits)
 {
     Entity character = SpawnCharacter(world, levelLimits);
@@ -235,7 +241,7 @@ void SpawnService::SpawnLightBall(World& world, const sf::FloatRect& levelLimits
     float y = levelLimits.height + 400.f;
     float speedTeak = 1 + GetRandomBetween(1, 5) / 5.f;
     float speed = -200 * speedTeak;
-    int feelingId = GetRandomBetween(0, Feeling::FEELINGS_NUMBER - 1);
+    int feelingId = GetRandomBetween(0, Feeling::FEELINGS_NUMBER);
     Feeling feeling = static_cast<Feeling>(feelingId);
 
     std::string spriteName;

@@ -207,6 +207,8 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Core\Event.cpp" />
+    <ClCompile Include="Systems\FeelSystem.cpp" />
     <ClCompile Include="Services\EntityBuilder.cpp" />
     <ClCompile Include="Systems\DestroySystem.cpp" />
     <ClCompile Include="Tools\Feeling.cpp" />
@@ -237,6 +239,8 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Components\Reborner.hpp" />
     <ClInclude Include="Components\Dynamic.hpp" />
     <ClInclude Include="Components\Static.hpp" />
+    <ClInclude Include="Core\Event.hpp" />
+    <ClInclude Include="Systems\FeelSystem.hpp" />
     <ClInclude Include="Services\EntityBuilder.hpp" />
     <ClInclude Include="Components\Sprite.hpp" />
     <ClInclude Include="Tools\Feeling.hpp" />
