@@ -8,7 +8,7 @@
 #include "Components/Transformable.hpp"
 #include "Tools/Messages.hpp"
 
-void GripSystem::Update(World& world, float deltaTime, sf::FloatRect levelLimits)
+void GripSystem::Update(World& world, sf::FloatRect levelLimits)
 {
     std::set<Entity> grippableEntities = world.Find(GetSignature());
 
@@ -50,7 +50,7 @@ void GripSystem::Update(World& world, float deltaTime, sf::FloatRect levelLimits
     }
 
     if (!hasCollided) {
-        world.RemoveGameEvent(FEELING_CHANGE);
+        world.RemoveGameEvent(GRIP_FEELING);
     }
 }
 
@@ -62,8 +62,15 @@ void GripSystem::UpdateFeeling(World& world, Entity gripperEntity, Entity grippa
     if (gripperFeel != nullptr && grippableFeel != nullptr) {
         if (gripperFeel->feeling != grippableFeel->feeling) {
             gripperFeel->feeling = grippableFeel->feeling;
-            world.AddGameEvent(FEELING_CHANGE, Event(gripperFeel->feeling, true));
+
+            Transformable& grippableTransformable = world.GetComponent<Transformable>(grippableEntity);
+            float gripY = grippableTransformable.transform.getPosition().y;
+
+            Feeling gripFeeling(gripperFeel->feeling);
+
+            world.AddGameEvent(GRIP_FEELING, Event(gripFeeling, true));
         }
+
         ImGui::Begin("Feeling Infos");
         ImGui::Text("Lightball feeling: %d", grippableFeel->feeling);
         ImGui::Text("Character feeling: %d", gripperFeel->feeling);

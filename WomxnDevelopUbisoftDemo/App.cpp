@@ -66,7 +66,7 @@ void App::Run()
     sf::Clock lightBallClock;
     sf::Clock animationClock;
     sf::Time lightDropSpawnInterval = sf::milliseconds(GetRandomBetween(50, 100));
-    sf::Time lightBallSpawnInterval = sf::seconds(static_cast<float>(GetRandomBetween(1, 2)));
+    sf::Time lightBallSpawnInterval = sf::seconds(static_cast<float>(GetRandomBetween(1, 1)));
     sf::Time animationInterval = sf::milliseconds(500);
     sf::Music music;
 
@@ -146,13 +146,13 @@ void App::DisplayLevelScreen(sf::Clock& lightDropClock, sf::Clock& lightBallCloc
     if (lightBallClock.getElapsedTime().asSeconds() >= lightBallSpawnInterval.asSeconds()) {
         spawnService->SpawnLightBall(*world, levelLimits);
         lightBallClock.restart();
-        lightBallSpawnInterval = sf::seconds(static_cast<float>(GetRandomBetween(1, 2)));
+        lightBallSpawnInterval = sf::seconds(static_cast<float>(GetRandomBetween(1, 1)));
     }
 
     playerControlSystem->Update(*world, deltaTime);
     physicSystem->Update(*world, deltaTime);
     transformSystem->Update(*world, deltaTime);
-    gripSystem->Update(*world, deltaTime, levelLimits);
+    gripSystem->Update(*world, levelLimits);
     feelSystem->Update(*world, deltaTime);
     collisionSystem->Update(*world, deltaTime);
     commitSystem->Commit(*world);
