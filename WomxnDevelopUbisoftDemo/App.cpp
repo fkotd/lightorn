@@ -65,8 +65,8 @@ void App::Run()
     sf::Clock lightDropClock;
     sf::Clock lightBallClock;
     sf::Clock animationClock;
-    sf::Time lightDropSpawnInterval = sf::milliseconds(GetRandomBetween(50, 100));
-    sf::Time lightBallSpawnInterval = sf::seconds(static_cast<float>(GetRandomBetween(1, 1)));
+    sf::Time lightDropSpawnInterval = sf::milliseconds(GetRandomIntBetween(50, 100));
+    sf::Time lightBallSpawnInterval = sf::seconds(static_cast<float>(GetRandomIntBetween(1, 1)));
     sf::Time animationInterval = sf::milliseconds(500);
     sf::Music music;
 
@@ -139,14 +139,14 @@ void App::DisplayLevelScreen(sf::Clock& lightDropClock, sf::Clock& lightBallCloc
     if (lightDropClock.getElapsedTime().asMilliseconds() >= lightDropSpawnInterval.asMilliseconds()) {
         spawnService->SpawnLightDrop(*world, levelLimits);
         lightDropClock.restart();
-        lightDropSpawnInterval = sf::milliseconds(GetRandomBetween(50, 100));
+        lightDropSpawnInterval = sf::milliseconds(GetRandomIntBetween(50, 100));
     }
 
     // TODO : move in a function
     if (lightBallClock.getElapsedTime().asSeconds() >= lightBallSpawnInterval.asSeconds()) {
         spawnService->SpawnLightBall(*world, levelLimits);
         lightBallClock.restart();
-        lightBallSpawnInterval = sf::seconds(static_cast<float>(GetRandomBetween(1, 1)));
+        lightBallSpawnInterval = sf::seconds(static_cast<float>(GetRandomIntBetween(1, 1)));
     }
 
     playerControlSystem->Update(*world, deltaTime);

@@ -39,7 +39,7 @@ void SpawnService::SpawnLevel(World& world, const sf::FloatRect& levelLimits)
 
     SpawnLimitElements(world, levelLimits);
 
-    SpawnLevelElements(world, levelLimits);
+    SpawnPlatforms(world, levelLimits);
 }
 
 void SpawnService::SpawnLimitElements(World& world, const sf::FloatRect& levelLimits)
@@ -73,20 +73,52 @@ void SpawnService::SpawnLimitElements(World& world, const sf::FloatRect& levelLi
     std::cout << "Right edge entity id = " << rightEdge << std::endl;
 }
 
-void SpawnService::SpawnLevelElements(World& world, const sf::FloatRect& levelLimits)
+void SpawnService::SpawnPlateform(World& world, const sf::FloatRect& levelLimits, float yMin, float yMax, float probability)
 {
-    float windowWidth = (2 * levelLimits.left) + levelLimits.width;
+    if (yMax - yMin < 200.f) {
+        return;
+    }
 
-    float platformX = windowWidth / 2.f;
-    float platformY = 700.f;
-    float platformWidth = 200.f;
-    float platformHeight = 50.f;
-    Entity platform = SpawnElement(
-        world,
-        sf::Vector2f { platformX, platformY },
-        sf::Vector2f { platformWidth, platformHeight },
-        sf::Color::Cyan);
-    std::cout << "Platform entity id = " << platform << std::endl;
+    // Get a virtual platform, it may be not created
+    float platformY = GetRandomFloatBetween(yMin, yMax);
+    float plateformHeight = 50.f;
+
+    // Get new y min and max for next elements
+    float aboveYMin = yMin;
+    float aboveYMax = platformY;
+    float belowYMin = platformY + plateformHeight;
+    float belowYMax = yMax;
+
+    // Create the element following probability
+    float p = GetRandomFloat();
+    if (p > probability) {
+        std::cout << "Make it!" << std::endl;
+        float leftLimit = levelLimits.left;
+        float rightLimit = levelLimits.left + levelLimits.width;
+        float plateformX = GetRandomFloatBetween(leftLimit, rightLimit);
+
+        float platformWidth = 200.f; // TODO: randomize
+
+        Entity plateform = SpawnElement(
+            world,
+            sf::Vector2f { plateformX, platformY },
+            sf::Vector2f { platformWidth, plateformHeight },
+            sf::Color::Cyan);
+        std::cout << "Platform entity id = " << plateform << std::endl;
+    } else {
+        std::cout << "Don't make it..." << std::endl;
+    }
+
+    SpawnPlateform(world, levelLimits, aboveYMin, aboveYMax, probability / 2);
+    SpawnPlateform(world, levelLimits, belowYMin, belowYMax, probability / 2);
+}
+
+void SpawnService::SpawnPlatforms(World& world, const sf::FloatRect& levelLimits)
+{
+    float yMin = levelLimits.top;
+    float yMax = levelLimits.top + levelLimits.height;
+
+    SpawnPlateform(world, levelLimits, yMin, yMax, 0.2);
 }
 
 Entity SpawnService::SpawnCharacter(World& world, const sf::FloatRect& levelLimits)
@@ -202,10 +234,10 @@ void SpawnService::SpawnLightDrop(World& world, const sf::FloatRect& levelLimits
 {
     Entity lightDrop = world.AddEntity();
 
-    int depth = GetRandomBetween(2, 5);
+    int depth = GetRandomIntBetween(2, 5);
     float width = 3.f;
     float length = 20.f * depth;
-    float x = GetRandomBetween(levelLimits.left, levelLimits.width);
+    float x = GetRandomIntBetween(levelLimits.left, levelLimits.width);
     float y = 0 - length;
     float speedTweak = 1 + length / 5.0f;
     float speed = 50 * speedTweak;
@@ -237,11 +269,11 @@ void SpawnService::SpawnLightBall(World& world, const sf::FloatRect& levelLimits
 {
     float width = 60.f;
     float length = 70.f;
-    float x = GetRandomBetween(levelLimits.left, levelLimits.width);
+    float x = GetRandomIntBetween(levelLimits.left, levelLimits.width);
     float y = levelLimits.height + 400.f;
-    float speedTeak = 1 + GetRandomBetween(1, 5) / 5.f;
+    float speedTeak = 1 + GetRandomIntBetween(1, 5) / 5.f;
     float speed = -200 * speedTeak;
-    int feelingId = GetRandomBetween(0, Feeling::FEELINGS_NUMBER);
+    int feelingId = GetRandomIntBetween(0, Feeling::FEELINGS_NUMBER);
     Feeling feeling = static_cast<Feeling>(feelingId);
 
     std::string spriteName;

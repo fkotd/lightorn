@@ -11,7 +11,8 @@ public:
 
 private:
     void SpawnLimitElements(World& world, const sf::FloatRect& levelLimits);
-    void SpawnLevelElements(World& world, const sf::FloatRect& levelLimits);
+    void SpawnPlatforms(World& world, const sf::FloatRect& levelLimits);
+    void SpawnPlateform(World& world, const sf::FloatRect& levelLimits, float yMin, float yMax, float probability);
     Entity SpawnCharacter(World& world, const sf::FloatRect& levelLimits);
     Entity SpawnHeart(World& world, const sf::FloatRect& levelLimits);
     Entity SpawnGround(World& world, const sf::FloatRect& levelLimits);
