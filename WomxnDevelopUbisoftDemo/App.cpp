@@ -151,8 +151,8 @@ void App::DisplayLevelScreen(sf::Clock& lightDropClock, sf::Clock& lightBallCloc
 
     playerControlSystem->Update(*world);
     physicSystem->Update(*world, deltaTime);
-    transformSystem->Update(*world, deltaTime);
     gripSystem->Update(*world, levelLimits);
+    transformSystem->Update(*world, deltaTime);
     feelSystem->Update(*world);
     collisionSystem->Update(*world, deltaTime);
     commitSystem->Commit(*world);
@@ -210,7 +210,7 @@ void App::RegisterSystems()
     collisionSystem = world->RegisterSystem<CollisionSystem, Collideable, Static>();
     commitSystem = world->RegisterSystem<CommitSystem, Transformable>();
     renderSystem = world->RegisterSystem<RenderSystem, Renderable>();
-    gripSystem = world->RegisterSystem<GripSystem, Grippable, Collideable, Transformable>();
+    gripSystem = world->RegisterSystem<GripSystem, Grippable, Collideable, RigidBody>();
     animationSystem = world->RegisterSystem<AnimationSystem, Animation, Sprite>();
     destroySystem = world->RegisterSystem<DestroySystem, Transformable>();
     feelSystem = world->RegisterSystem<FeelSystem, Grippable, Feel, Sprite>();

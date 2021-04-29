@@ -5,14 +5,17 @@
 #include "Components/Collideable.hpp"
 #include "Components/Feel.hpp"
 #include "Components/Gripper.hpp"
+#include "Components/RigidBody.hpp"
 #include "Components/Transformable.hpp"
 #include "Tools/Messages.hpp"
+
+const float Y_VELOCITY_AFTER_GRIP = 200.f;
 
 void GripSystem::Update(World& world, sf::FloatRect levelLimits)
 {
     std::set<Entity> grippableEntities = world.Find(GetSignature());
 
-    Signature gripperSignature = *world.GetSignature<Gripper, Transformable, Collideable>();
+    Signature gripperSignature = *world.GetSignature<Gripper, Transformable, Collideable, RigidBody>();
     std::set<Entity> gripperEntities = world.Find(gripperSignature);
 
     for (auto gripperEntity : gripperEntities) {
@@ -30,32 +33,36 @@ void GripSystem::Update(World& world, sf::FloatRect levelLimits)
 
                     hasCollided = true;
 
-                    UpdateFeeling(world, gripperEntity, grippableEntity);
-
-                    // make the gripper follow the grippable
-                    Transformable& grippableTransformable = world.GetComponent<Transformable>(grippableEntity);
-                    Transformable& gripperTransformable = world.GetComponent<Transformable>(gripperEntity);
-
-                    sf::Vector2f grippablePosition = grippableTransformable.transform.getPosition();
-                    sf::Vector2f gripPosition;
-                    gripPosition.x = std::max(levelLimits.left, grippablePosition.x);
-                    gripPosition.x = std::min(levelLimits.left + levelLimits.width, gripPosition.x);
-                    gripPosition.y = std::min(levelLimits.height, grippablePosition.y);
-
-                    gripperTransformable.draftTransform.setPosition(gripPosition);
-                    gripperCollideable.draftBoxCollideable.SetCenter(gripPosition);
+                    UpdateGripperFeeling(world, gripperEntity, grippableEntity);
+                    UpdateGripperVelocity(world, levelLimits, gripperEntity, grippableEntity);
                 }
             }
         }
 
         if (!hasCollided) {
             world.RemoveGameEvent(GRIP_FEELING);
-            ResetFeeling(world, gripperEntity);
+            ResetGripperFeeling(world, gripperEntity);
+            ResetGripperVelocity(world, gripperEntity);
         }
     }
 }
 
-void GripSystem::UpdateFeeling(World& world, Entity gripperEntity, Entity grippableEntity)
+void GripSystem::UpdateGripperVelocity(World& world, sf::FloatRect levelLimits, Entity gripperEntity, Entity grippableEntity)
+{
+    Transformable& gripperTransformable = world.GetComponent<Transformable>(gripperEntity);
+    RigidBody& grippableRigidBody = world.GetComponent<RigidBody>(grippableEntity);
+    RigidBody& gripperRigidBody = world.GetComponent<RigidBody>(gripperEntity);
+
+    gripperRigidBody.velocity = grippableRigidBody.velocity;
+
+    // TODO: set better top level limit because here it is a bit non sense
+    // Avoid the character entity to be removed
+    if (gripperTransformable.transform.getPosition().y < levelLimits.top - 450) {
+        ResetGripperVelocity(world, gripperEntity);
+    }
+}
+
+void GripSystem::UpdateGripperFeeling(World& world, Entity gripperEntity, Entity grippableEntity)
 {
     Feel* gripperFeel = world.GetComponentIfExists<Feel>(gripperEntity);
     Feel* grippableFeel = world.GetComponentIfExists<Feel>(grippableEntity);
@@ -76,8 +83,16 @@ void GripSystem::UpdateFeeling(World& world, Entity gripperEntity, Entity grippa
     }
 }
 
-void GripSystem::ResetFeeling(World& world, Entity gripperEntity)
+void GripSystem::ResetGripperFeeling(World& world, Entity gripperEntity)
 {
     Feel* gripperFeel = world.GetComponentIfExists<Feel>(gripperEntity);
     gripperFeel->feeling = Feeling::Neutral;
+}
+
+void GripSystem::ResetGripperVelocity(World& world, Entity gripperEntity)
+{
+    RigidBody& gripperRigidBody = world.GetComponent<RigidBody>(gripperEntity);
+    if (gripperRigidBody.velocity.y < 0) {
+        gripperRigidBody.velocity.y = Y_VELOCITY_AFTER_GRIP;
+    }
 }

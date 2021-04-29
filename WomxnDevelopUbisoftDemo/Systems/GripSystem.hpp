@@ -7,6 +7,8 @@ public:
     void Update(World& world, sf::FloatRect levelLimits);
 
 private:
-    void UpdateFeeling(World& world, Entity gripperEntity, Entity grippableEntity);
-    void ResetFeeling(World& world, Entity gripperEntity);
+    void UpdateGripperVelocity(World& world, sf::FloatRect levelLimits, Entity gripperEntity, Entity grippableEntity);
+    void UpdateGripperFeeling(World& world, Entity gripperEntity, Entity grippableEntity);
+    void ResetGripperFeeling(World& world, Entity gripperEntity);
+    void ResetGripperVelocity(World& world, Entity gripperEntity);
 };
