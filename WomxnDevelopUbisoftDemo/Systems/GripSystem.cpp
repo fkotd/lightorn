@@ -15,10 +15,10 @@ void GripSystem::Update(World& world, sf::FloatRect levelLimits)
     Signature gripperSignature = *world.GetSignature<Gripper, Transformable, Collideable>();
     std::set<Entity> gripperEntities = world.Find(gripperSignature);
 
-    bool hasCollided = false;
-
     for (auto gripperEntity : gripperEntities) {
         Collideable& gripperCollideable = world.GetComponent<Collideable>(gripperEntity);
+
+        bool hasCollided = false;
 
         for (auto grippableEntity : grippableEntities) {
             Collideable& grippableCollideable = world.GetComponent<Collideable>(grippableEntity);
@@ -47,10 +47,11 @@ void GripSystem::Update(World& world, sf::FloatRect levelLimits)
                 }
             }
         }
-    }
 
-    if (!hasCollided) {
-        world.RemoveGameEvent(GRIP_FEELING);
+        if (!hasCollided) {
+            world.RemoveGameEvent(GRIP_FEELING);
+            ResetFeeling(world, gripperEntity);
+        }
     }
 }
 
@@ -73,4 +74,10 @@ void GripSystem::UpdateFeeling(World& world, Entity gripperEntity, Entity grippa
         ImGui::Text("Character feeling: %d", gripperFeel->feeling);
         ImGui::End();
     }
+}
+
+void GripSystem::ResetFeeling(World& world, Entity gripperEntity)
+{
+    Feel* gripperFeel = world.GetComponentIfExists<Feel>(gripperEntity);
+    gripperFeel->feeling = Feeling::Neutral;
 }

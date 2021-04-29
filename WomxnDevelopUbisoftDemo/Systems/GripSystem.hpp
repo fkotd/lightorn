@@ -8,4 +8,5 @@ public:
 
 private:
     void UpdateFeeling(World& world, Entity gripperEntity, Entity grippableEntity);
+    void ResetFeeling(World& world, Entity gripperEntity);
 };
