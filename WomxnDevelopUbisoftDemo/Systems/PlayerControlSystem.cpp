@@ -5,7 +5,7 @@
 #include "Components/PhysicBody.hpp"
 #include "Components/RigidBody.hpp"
 
-void PlayerControlSystem::Update(World& world, float deltaTime)
+void PlayerControlSystem::Update(World& world)
 {
     std::set<Entity> entities = world.Find(GetSignature());
 

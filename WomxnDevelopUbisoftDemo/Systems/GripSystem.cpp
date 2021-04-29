@@ -63,9 +63,6 @@ void GripSystem::UpdateFeeling(World& world, Entity gripperEntity, Entity grippa
         if (gripperFeel->feeling != grippableFeel->feeling) {
             gripperFeel->feeling = grippableFeel->feeling;
 
-            Transformable& grippableTransformable = world.GetComponent<Transformable>(grippableEntity);
-            float gripY = grippableTransformable.transform.getPosition().y;
-
             Feeling gripFeeling(gripperFeel->feeling);
 
             world.AddGameEvent(GRIP_FEELING, Event(gripFeeling, true));

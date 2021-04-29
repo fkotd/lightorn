@@ -2,20 +2,8 @@
 
 #include "SpawnService.hpp"
 
-#include "Components/Animation.hpp"
-#include "Components/CameraCenter.hpp"
-#include "Components/Collideable.hpp"
-#include "Components/Dynamic.hpp"
-#include "Components/Fatal.hpp"
-#include "Components/Grippable.hpp"
-#include "Components/Gripper.hpp"
-#include "Components/Mortal.hpp"
-#include "Components/PhysicBody.hpp"
-#include "Components/Reborner.hpp"
 #include "Components/Renderable.hpp"
 #include "Components/RigidBody.hpp"
-#include "Components/Sprite.hpp"
-#include "Components/Static.hpp"
 #include "Components/Transformable.hpp"
 #include "Engine/EllipseShape.hpp"
 #include "EntityBuilder.hpp"
@@ -92,7 +80,8 @@ void SpawnService::SpawnPlateform(World& world, const sf::FloatRect& levelLimits
     // Create the element following probability
     float p = GetRandomFloat();
     if (p > probability) {
-        std::cout << "Make it!" << std::endl;
+        std::cout << "Make it!"
+                  << "p=" << p << " probablity=" << probability << std::endl;
         float leftLimit = levelLimits.left;
         float rightLimit = levelLimits.left + levelLimits.width;
         float plateformX = GetRandomFloatBetween(leftLimit, rightLimit);
@@ -106,7 +95,8 @@ void SpawnService::SpawnPlateform(World& world, const sf::FloatRect& levelLimits
             sf::Color::Cyan);
         std::cout << "Platform entity id = " << plateform << std::endl;
     } else {
-        std::cout << "Don't make it..." << std::endl;
+        std::cout << "Don't make it..."
+                  << "p=" << p << " probablity=" << probability << std::endl;
     }
 
     SpawnPlateform(world, levelLimits, aboveYMin, aboveYMax, probability / 2);
@@ -118,7 +108,7 @@ void SpawnService::SpawnPlatforms(World& world, const sf::FloatRect& levelLimits
     float yMin = levelLimits.top;
     float yMax = levelLimits.top + levelLimits.height;
 
-    SpawnPlateform(world, levelLimits, yMin, yMax, 0.2);
+    SpawnPlateform(world, levelLimits, yMin, yMax, 0.8);
 }
 
 Entity SpawnService::SpawnCharacter(World& world, const sf::FloatRect& levelLimits)
@@ -156,7 +146,7 @@ Entity SpawnService::SpawnHeart(World& world, const sf::FloatRect& levelLimits)
     float windowWidth = (2 * levelLimits.left) + levelLimits.width;
 
     float x = windowWidth / 2.f;
-    float y = -100.f;
+    float y = -350.f;
     float width = 45.f;
     float height = 95.f;
 

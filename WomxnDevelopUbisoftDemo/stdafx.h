@@ -4,8 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
-#include "imgui.h"
 #include "imgui-SFML.h"
+#include "imgui.h"
 
-#include <Engine/Game.h>
 #include <Engine/Collision.h>

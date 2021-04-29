@@ -11,7 +11,7 @@
 const uint8_t FADE_OUT = 4;
 const uint8_t FADE_IN = 20;
 
-void FeelSystem::Update(World& world, float deltaTime)
+void FeelSystem::Update(World& world)
 {
     std::set<Entity> entities = world.Find(GetSignature());
 

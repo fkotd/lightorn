@@ -149,11 +149,11 @@ void App::DisplayLevelScreen(sf::Clock& lightDropClock, sf::Clock& lightBallCloc
         lightBallSpawnInterval = sf::seconds(static_cast<float>(GetRandomIntBetween(1, 1)));
     }
 
-    playerControlSystem->Update(*world, deltaTime);
+    playerControlSystem->Update(*world);
     physicSystem->Update(*world, deltaTime);
     transformSystem->Update(*world, deltaTime);
     gripSystem->Update(*world, levelLimits);
-    feelSystem->Update(*world, deltaTime);
+    feelSystem->Update(*world);
     collisionSystem->Update(*world, deltaTime);
     commitSystem->Commit(*world);
 

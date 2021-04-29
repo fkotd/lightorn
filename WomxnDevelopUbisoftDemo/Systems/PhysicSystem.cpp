@@ -8,9 +8,9 @@
 
 #include <cmath>
 
-void PhysicSystem::SetGravity(sf::Vector2f gravity)
+void PhysicSystem::SetGravity(sf::Vector2f newGravity)
 {
-    this->gravity = gravity;
+    gravity = newGravity;
 }
 
 void PhysicSystem::Update(World& world, float deltaTime)
@@ -18,11 +18,10 @@ void PhysicSystem::Update(World& world, float deltaTime)
     std::set<Entity> entities = world.Find(GetSignature());
 
     for (auto entity : entities) {
-        Transformable& transformable = world.GetComponent<Transformable>(entity); // move it into the transformable system ?
         RigidBody& rigidBody = world.GetComponent<RigidBody>(entity);
-        PhysicBody& physicBody = world.GetComponent<PhysicBody>(entity);
+        // PhysicBody& physicBody = world.GetComponent<PhysicBody>(entity);
 
-        //rigidBody.velocity += ((physicBody.mass * gravity) / physicBody.gamma) * (1 - exp((-physicBody.gamma * deltaTime) / physicBody.mass));
+        // rigidBody.velocity += ((physicBody.mass * gravity) / physicBody.gamma) * (1 - exp((-physicBody.gamma * deltaTime) / physicBody.mass));
 
         rigidBody.velocity += gravity * deltaTime;
 

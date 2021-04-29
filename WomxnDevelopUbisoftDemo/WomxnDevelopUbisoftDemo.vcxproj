@@ -119,12 +119,13 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Create</PrecompiledHeader>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -219,10 +220,6 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Systems\CommitSystem.cpp" />
     <ClCompile Include="Systems\CollisionSystem.cpp" />
     <ClCompile Include="Engine\Collision.cpp" />
-    <ClCompile Include="Engine\Game.cpp" />
-    <ClCompile Include="Game\Door.cpp" />
-    <ClCompile Include="Game\GameDemo.cpp" />
-    <ClCompile Include="Game\MainCharacter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Systems\PhysicSystem.cpp" />
     <ClCompile Include="Systems\PlayerControlSystem.cpp" />
@@ -268,12 +265,8 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Core\ComponentManager.hpp" />
     <ClInclude Include="Engine\EllipseShape.hpp" />
     <ClInclude Include="Engine\Collision.h" />
-    <ClInclude Include="Engine\Game.h" />
     <ClInclude Include="Core\Entity.hpp" />
     <ClInclude Include="Core\EntityManager.hpp" />
-    <ClInclude Include="Game\Door.h" />
-    <ClInclude Include="Game\GameDemo.h" />
-    <ClInclude Include="Game\MainCharacter.h" />
     <ClInclude Include="Components\PhysicBody.hpp" />
     <ClInclude Include="Systems\PhysicSystem.hpp" />
     <ClInclude Include="Systems\PlayerControlSystem.hpp" />

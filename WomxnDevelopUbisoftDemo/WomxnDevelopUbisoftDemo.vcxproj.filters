@@ -20,18 +20,6 @@
     <ClCompile Include="..\external\imgui-master\imgui_tables.cpp">
       <Filter>Engine\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Game\MainCharacter.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Door.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Game.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\GameDemo.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Collision.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -94,18 +82,6 @@
     </ClInclude>
     <ClInclude Include="..\external\imgui-sfml-master\imgui-SFML.h">
       <Filter>Engine\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\MainCharacter.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Door.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Game.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\GameDemo.h">
-      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Collision.h">
       <Filter>Engine</Filter>

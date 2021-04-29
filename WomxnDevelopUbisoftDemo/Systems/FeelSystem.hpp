@@ -5,7 +5,7 @@
 
 class FeelSystem : public System {
 public:
-    void Update(World& world, float deltaTime);
+    void Update(World& world);
 
 private:
     Feeling GetFeelingChange(World& world);
