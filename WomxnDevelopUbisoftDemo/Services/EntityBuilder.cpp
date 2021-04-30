@@ -26,7 +26,7 @@ EntityBuilder::EntityBuilder(World& world)
 
 EntityBuilder& EntityBuilder::AddRenderable(World& world, const sf::Vector2f& center, const sf::Vector2f& size, const sf::Color& color, const Layer layer, bool shapeVisible)
 {
-    // TODO: how to delete the new
+    // TOD:O: how to delete the new
     sf::RectangleShape* shape = new sf::RectangleShape();
     shape->setPosition(center);
     shape->setOrigin(size * 0.5f);
@@ -70,6 +70,7 @@ EntityBuilder& EntityBuilder::AddTransformable(World& world, const sf::Vector2f&
     sf::Transformable transform;
     transform.setPosition(center);
 
+    // TODO : draft is mayebe not usefull anymore, remove it
     sf::Transformable draftTransform;
     draftTransform.setPosition(center);
 
