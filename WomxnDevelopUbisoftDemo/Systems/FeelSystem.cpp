@@ -10,6 +10,7 @@
 #include "Core/Event.hpp"
 #include "Tools/Messages.hpp"
 #include <SFML/Graphics/Color.hpp>
+#include <algorithm>
 #include <set>
 
 static const uint8_t FADE_OUT = 4;

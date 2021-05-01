@@ -11,6 +11,7 @@
 #include "Engine/Collision.h"
 #include "Tools/Messages.hpp"
 #include <SFML/Graphics/Rect.hpp>
+#include <algorithm>
 #include <cmath>
 #include <set>
 

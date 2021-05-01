@@ -8,6 +8,7 @@
 #include "DarknessSystem.hpp"
 #include "Tools/Messages.hpp"
 #include <SFML/System/Vector2.hpp>
+#include <algorithm>
 #include <set>
 
 const float MIN_CENTER_RADIUS = 40.f;
