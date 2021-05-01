@@ -8,11 +8,6 @@ Event::Event(std::any value, bool isPersistent)
 {
 }
 
-std::any Event::GetValue() const
-{
-    return value;
-}
-
 bool Event::IsPersistent() const
 {
     return isPersistent;

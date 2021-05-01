@@ -2,18 +2,21 @@
 
 #include "SpawnService.hpp"
 
-#include "Components/Renderable.hpp"
-#include "Components/RigidBody.hpp"
-#include "Components/Transformable.hpp"
+#include "Core/Entity.hpp"
 #include "Engine/EllipseShape.hpp"
 #include "EntityBuilder.hpp"
+#include "Tools/Feeling.hpp"
 #include "Tools/Layer.hpp"
 #include "Tools/LoopMode.hpp"
 #include "Tools/Random.hpp"
+#include <SFML/Graphics/Rect.hpp>
+#include <iostream>
+#include <map>
+#include <stdlib.h>
+#include <time.h>
 
 SpawnService::SpawnService()
 {
-    // Init random, maybe make a random class that do it itself
     srand((unsigned)time(0));
 }
 
@@ -35,29 +38,33 @@ void SpawnService::SpawnLimitElements(World& world, const sf::FloatRect& levelLi
     Entity ground = SpawnGround(world, levelLimits);
     std::cout << "Ground entity id = " << ground << std::endl;
 
-    float levelLeft(levelLimits.left);
-    float levelHeight(levelLimits.height);
+    float levelLeft = levelLimits.left;
+    float levelHeight = levelLimits.height;
     float leftEdgeX = levelLeft;
     float leftEdgeY = levelHeight / 2.f;
     float leftEdgeWidth = 10.f;
-    float leftEdgeHeight = levelHeight - 20.f;
-    Entity leftEdge = SpawnElement( // Left Edge
+    float leftEdgeHeight = levelHeight * 2;
+
+    Entity leftEdge = SpawnElement(
         world,
         sf::Vector2f { leftEdgeX, leftEdgeY },
         sf::Vector2f { leftEdgeWidth, leftEdgeHeight },
-        sf::Color::Cyan);
+        sf::Color::Cyan,
+        false);
     std::cout << "Left edge entity id = " << leftEdge << std::endl;
 
-    float levelRight(levelLimits.left + levelLimits.width);
+    float levelRight = levelLimits.left + levelLimits.width;
     float rightEdgeX = levelRight;
     float rightEdgeY = levelHeight / 2.f;
     float rightEdgeWidth = 10.f;
-    float rightEdgeHeight = levelHeight - 20.f;
+    float rightEdgeHeight = levelHeight * 2;
+
     Entity rightEdge = SpawnElement(
         world,
         sf::Vector2f { rightEdgeX, rightEdgeY },
         sf::Vector2f { rightEdgeWidth, rightEdgeHeight },
-        sf::Color::Cyan);
+        sf::Color::Cyan,
+        false);
     std::cout << "Right edge entity id = " << rightEdge << std::endl;
 }
 
@@ -92,7 +99,8 @@ void SpawnService::SpawnPlateform(World& world, const sf::FloatRect& levelLimits
             world,
             sf::Vector2f { plateformX, platformY },
             sf::Vector2f { platformWidth, plateformHeight },
-            sf::Color::Cyan);
+            sf::Color::Cyan,
+            true);
         std::cout << "Platform entity id = " << plateform << std::endl;
     } else {
         std::cout << "Don't make it..."
@@ -212,10 +220,10 @@ Entity SpawnService::SpawnGround(World& world, const sf::FloatRect& levelLimits)
         .Build();
 }
 
-Entity SpawnService::SpawnElement(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color)
+Entity SpawnService::SpawnElement(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color, bool isShapeVisible)
 {
     return EntityBuilder(world)
-        .AddRenderable(world, center, size, sf::Color::Cyan, Layer::Middle, true)
+        .AddRenderable(world, center, size, sf::Color::Cyan, Layer::Middle, isShapeVisible)
         .AddCollideable(world, center, size)
         .AddStatic(world)
         .Build();
@@ -223,7 +231,7 @@ Entity SpawnService::SpawnElement(World& world, const sf::Vector2f center, const
 
 void SpawnService::SpawnLightDrop(World& world, const sf::FloatRect& levelLimits)
 {
-    Entity lightDrop = world.AddEntity();
+    //Entity lightDrop = world.AddEntity();
 
     int depth = GetRandomIntBetween(2, 5);
     float width = 3.f;
@@ -239,21 +247,11 @@ void SpawnService::SpawnLightDrop(World& world, const sf::FloatRect& levelLimits
     sf::Color outlineColor = sf::Color { 140, 130, 215, 50 };
     sf::Vector2f velocity = sf::Vector2f { 0, speed };
 
-    sf::Transformable transformable;
-    transformable.setPosition(center);
-
-    EllipseShape* shape = new EllipseShape { size };
-    shape->setOrigin(size * 0.5f);
-    shape->setPosition(center);
-
-    shape->setFillColor(color);
-    shape->setOutlineThickness(2);
-    shape->setOutlineColor(outlineColor);
-
-    // TODO: keep the same transformable object?
-    world.AddComponentToEntity<Transformable>(lightDrop, transformable, transformable);
-    world.AddComponentToEntity<Renderable>(lightDrop, shape, color, size, Layer::Back);
-    world.AddComponentToEntity<RigidBody>(lightDrop, velocity, 400.f);
+    EntityBuilder(world)
+        .AddEllipseRenderable(world, center, size, color, outlineColor, Layer::Back)
+        .AddTransformable(world, center)
+        .AddRigidBody(world, velocity, 400.f)
+        .Build();
 }
 
 void SpawnService::SpawnLightBall(World& world, const sf::FloatRect& levelLimits)
@@ -269,7 +267,6 @@ void SpawnService::SpawnLightBall(World& world, const sf::FloatRect& levelLimits
 
     std::string spriteName;
 
-    // TODO: maybe find a more generic solution
     switch (feeling) {
     case Neutral:
         spriteName = "Assets/lightball_neutral.png";
@@ -294,6 +291,7 @@ void SpawnService::SpawnLightBall(World& world, const sf::FloatRect& levelLimits
     sf::Vector2f velocity = sf::Vector2f { 0, speed };
     sf::Vector2f spriteOriginFactor { 7.f, 9.f };
     sf::Vector2f spriteScaleFactor { 3.3f, 5.0f };
+
     EntityBuilder(world)
         .AddRenderable(world, center, size, color, Layer::Middle, false)
         .AddSprite(world, center, size, spriteName, spriteOriginFactor, spriteScaleFactor, true)

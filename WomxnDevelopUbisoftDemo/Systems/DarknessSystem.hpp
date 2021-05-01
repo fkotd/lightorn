@@ -10,4 +10,6 @@ public:
 private:
     bool IsDarknessLevelFatal(float darknessOuterRadius);
     void SendFatalDarknessEvent(World& world);
+
+    sf::Time timeBeforeDeath;
 };

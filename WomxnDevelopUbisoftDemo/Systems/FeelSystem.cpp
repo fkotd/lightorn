@@ -44,10 +44,7 @@ Feeling FeelSystem::GetFeelingChange(World& world)
     Feeling gripFeeling = Feeling::Neutral;
 
     if (gripFeelingEvent != nullptr) {
-        try {
-            gripFeeling = std::any_cast<Feeling>(gripFeelingEvent->GetValue());
-        } catch (const std::bad_any_cast& _) {
-        }
+        gripFeeling = gripFeelingEvent->GetValue<Feeling>();
     }
 
     return gripFeeling;

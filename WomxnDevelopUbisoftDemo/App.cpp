@@ -254,10 +254,7 @@ bool App::IsLevelEndedByDeath()
 {
     Event* deathEvent = world->GetGameEvent(END_GAME_DEATH);
     if (deathEvent != nullptr) {
-        try {
-            return std::any_cast<bool>(deathEvent->GetValue());
-        } catch (const std::bad_any_cast& _) {
-        }
+        return deathEvent->GetValue<bool>();
     }
     return false;
 }
@@ -266,10 +263,7 @@ bool App::IsLevelEndedByReborn()
 {
     Event* rebornEvent = world->GetGameEvent(END_GAME_REBORN);
     if (rebornEvent != nullptr) {
-        try {
-            return std::any_cast<bool>(rebornEvent->GetValue());
-        } catch (const std::bad_any_cast& _) {
-        }
+        return rebornEvent->GetValue<bool>();
     }
     return false;
 }

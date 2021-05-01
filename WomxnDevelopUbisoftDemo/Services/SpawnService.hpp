@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Core/World.hpp"
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/System/Vector2.hpp>
 
 class SpawnService {
 public:
@@ -16,5 +19,5 @@ private:
     Entity SpawnCharacter(World& world, const sf::FloatRect& levelLimits);
     Entity SpawnHeart(World& world, const sf::FloatRect& levelLimits);
     Entity SpawnGround(World& world, const sf::FloatRect& levelLimits);
-    Entity SpawnElement(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color);
+    Entity SpawnElement(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color, bool isShapeVisible);
 };

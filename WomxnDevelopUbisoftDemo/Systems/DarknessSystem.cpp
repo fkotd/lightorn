@@ -9,9 +9,9 @@
 #include <SFML/System/Vector2.hpp>
 #include <set>
 
-const float MIN_CENTER_RADIUS = 0;
-const float MIN_MIDDLE_RADIUS = 0;
-const float MIN_OUTER_RADIUS = 0;
+const float MIN_CENTER_RADIUS = 40.f;
+const float MIN_MIDDLE_RADIUS = 40.f;
+const float MIN_OUTER_RADIUS = 40.f;
 
 const float MAX_CENTER_RADIUS = 300.f;
 const float MAX_MIDDLE_RADIUS = 700.f;
@@ -25,6 +25,10 @@ void DarknessSystem::Update(World& world)
         Darkness& darkness = world.GetComponent<Darkness>(entity);
         Transformable& transformable = world.GetComponent<Transformable>(entity);
         RigidBody& rigidBody = world.GetComponent<RigidBody>(entity);
+
+        if (IsDarknessLevelFatal(darkness.outerRadius)) {
+            SendFatalDarknessEvent(world);
+        }
 
         darkness.shape->setPosition(transformable.transformable.getPosition());
         sf::Vector2f darknessShapePosition = darkness.shape->getPosition();
@@ -44,10 +48,6 @@ void DarknessSystem::Update(World& world)
         darkness.shader->setUniform("centerRadius", darkness.centerRadius);
         darkness.shader->setUniform("middleRadius", darkness.middleRadius);
         darkness.shader->setUniform("outerRadius", darkness.outerRadius);
-
-        if (IsDarknessLevelFatal(darkness.outerRadius)) {
-            SendFatalDarknessEvent(world);
-        }
     }
 }
 

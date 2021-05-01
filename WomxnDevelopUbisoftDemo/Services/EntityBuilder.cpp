@@ -19,6 +19,11 @@
 #include "Components/Sprite.hpp"
 #include "Components/Static.hpp"
 #include "Components/Transformable.hpp"
+#include "Engine/EllipseShape.hpp"
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Shader.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 EntityBuilder::EntityBuilder(World& world)
 {
@@ -40,6 +45,21 @@ EntityBuilder& EntityBuilder::AddRenderable(World& world, const sf::Vector2f& ce
     if (!shapeVisible) {
         shape = nullptr;
     }
+    world.AddComponentToEntity<Renderable>(entity, shape, color, size, layer);
+
+    return *this;
+}
+
+EntityBuilder& EntityBuilder::AddEllipseRenderable(World& world, const sf::Vector2f& center, const sf::Vector2f& size, const sf::Color& color, const sf::Color& outlineColor, const Layer layer)
+{
+    EllipseShape* shape = new EllipseShape { size };
+    shape->setOrigin(size * 0.5f);
+    shape->setPosition(center);
+
+    shape->setFillColor(color);
+    shape->setOutlineThickness(2);
+    shape->setOutlineColor(outlineColor);
+
     world.AddComponentToEntity<Renderable>(entity, shape, color, size, layer);
 
     return *this;
