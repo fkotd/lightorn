@@ -74,32 +74,6 @@ void RenderSystem::RenderLayer(World& world, sf::RenderTarget& target, const std
         }
 
         if (darkness != nullptr && transformable != nullptr) {
-            //Transformable* characterTransformable = world.GetComponentIfExists<Transformable>(characterEntity);
-            //sf::Vector2f characterPosition = characterTransformable->transformable.getPosition();
-
-            //darkness->shape->setPosition(characterPosition);
-            //sf::Vector2f obscurityShapePosition = darkness->shape->getPosition();
-            //ImGui::Text("Obscurity shape position %f, %f", obscurityShapePosition.x, obscurityShapePosition.y);
-
-            //RigidBody* characterRigidBody = world.GetComponentIfExists<RigidBody>(characterEntity);
-            //sf::Vector2f characterVelocity = characterRigidBody->velocity;
-
-            //if (abs(characterVelocity.y) <= 2.f) {
-            //    darkness->centerRadius = std::max(0.f, darkness->centerRadius - 2.f);
-            //    darkness->middleRadius = std::max(0.f, darkness->middleRadius - 1.5f);
-            //    darkness->outerRadius = std::max(0.f, darkness->outerRadius - 1.f);
-            //} else {
-            //    darkness->centerRadius = std::min(darkness->centerRadius + 1.f, 300.f);
-            //    darkness->middleRadius = std::min(darkness->middleRadius + 1.5f, 700.f);
-            //    darkness->outerRadius = std::min(darkness->outerRadius + 2.0f, 900.f);
-            //}
-
-            //darkness->shader->setUniform("obscurityColor", sf::Glsl::Vec4(darkness->shape->getFillColor()));
-            //darkness->shader->setUniform("center", obscurityShapePosition);
-            //darkness->shader->setUniform("centerRadius", darkness->centerRadius);
-            //darkness->shader->setUniform("middleRadius", darkness->middleRadius);
-            //darkness->shader->setUniform("outerRadius", darkness->outerRadius);
-
             target.draw(*darkness->shape, darkness->shader);
         }
     }

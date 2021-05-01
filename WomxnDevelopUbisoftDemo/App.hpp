@@ -13,7 +13,7 @@
 #include "Systems/PlayerControlSystem.hpp"
 #include "Systems/RenderSystem.hpp"
 #include "Systems/TransformSystem.hpp"
-#include "UI/StartScreen.hpp"
+#include "UI/Screen.hpp"
 #include <memory>
 
 class App {
@@ -52,7 +52,10 @@ private:
     std::shared_ptr<FeelSystem> feelSystem;
     std::shared_ptr<DarknessSystem> darknessSystem;
 
-    StartScreen startScreen;
+    sf::View initialView;
+    Screen startScreen;
+    Screen gameOverScreen;
+    Screen rebornScreen;
     bool isLevelStared;
     bool isLevelEnded;
 };

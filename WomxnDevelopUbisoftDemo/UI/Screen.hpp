@@ -10,14 +10,14 @@ namespace sf {
 class RenderTarget;
 }
 
-class StartScreen {
+class Screen {
 public:
-    StartScreen(std::string message);
-    void DrawScreen(sf::RenderTarget& target) const;
+    Screen(std::string string, std::string backgroundTexturePath);
+    void Draw(sf::RenderTarget& target) const;
 
 private:
-    sf::Font font; // faire un include par champs
-    sf::Text startText;
+    sf::Font font;
+    sf::Text message;
     sf::Sprite backgroundSprite;
-    sf::Texture texture;
+    sf::Texture backgroundTexture;
 };

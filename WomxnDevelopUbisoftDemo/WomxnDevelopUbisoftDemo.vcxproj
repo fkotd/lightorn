@@ -209,12 +209,12 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Core\Event.cpp" />
+    <ClCompile Include="UI\Screen.cpp" />
     <ClCompile Include="Systems\DarknessSystem.cpp" />
     <ClCompile Include="Systems\FeelSystem.cpp" />
     <ClCompile Include="Services\EntityBuilder.cpp" />
     <ClCompile Include="Systems\DestroySystem.cpp" />
     <ClCompile Include="Tools\Feeling.cpp" />
-    <ClCompile Include="UI\StartScreen.cpp" />
     <ClCompile Include="Systems\AnimationSystem.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Systems\GripSystem.cpp" />
@@ -239,6 +239,7 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Components\Static.hpp" />
     <ClInclude Include="Core\Event.hpp" />
     <ClInclude Include="Components\Darkness.hpp" />
+    <ClInclude Include="UI\Screen.hpp" />
     <ClInclude Include="Systems\DarknessSystem.hpp" />
     <ClInclude Include="Systems\FeelSystem.hpp" />
     <ClInclude Include="Services\EntityBuilder.hpp" />
@@ -246,7 +247,6 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Tools\Feeling.hpp" />
     <ClInclude Include="Tools\Messages.hpp" />
     <ClInclude Include="Systems\DestroySystem.hpp" />
-    <ClInclude Include="UI\StartScreen.hpp" />
     <ClInclude Include="Systems\AnimationSystem.hpp" />
     <ClInclude Include="Components\Animation.hpp" />
     <ClInclude Include="App.hpp" />

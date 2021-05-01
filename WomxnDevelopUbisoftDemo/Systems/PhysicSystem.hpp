@@ -4,6 +4,7 @@
 
 class PhysicSystem : public System {
 public:
+    PhysicSystem();
     void SetGravity(sf::Vector2f newGravity);
     void Update(World& world, float deltaTime);
 

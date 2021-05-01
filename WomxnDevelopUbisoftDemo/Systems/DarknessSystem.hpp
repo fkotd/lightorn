@@ -6,4 +6,8 @@
 class DarknessSystem : public System {
 public:
     void Update(World& world);
+
+private:
+    bool IsDarknessLevelFatal(float darknessOuterRadius);
+    void SendFatalDarknessEvent(World& world);
 };

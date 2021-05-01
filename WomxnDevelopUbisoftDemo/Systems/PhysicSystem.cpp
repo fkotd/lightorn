@@ -8,6 +8,11 @@
 
 #include <cmath>
 
+PhysicSystem::PhysicSystem()
+    : gravity { 0.f, 100.f }
+{
+}
+
 void PhysicSystem::SetGravity(sf::Vector2f newGravity)
 {
     gravity = newGravity;

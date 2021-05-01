@@ -27,9 +27,9 @@ void CollisionSystem::Update(World& world, float deltaTime)
 
                 if (dynamicCollideable.draftBoxCollideable.IsColliding(staticCollideable.draftBoxCollideable)) {
 
-                    if (IsFatalCollision(world, dynamicEntity, staticEntity)) {
-                        world.AddGameEvent(END_GAME_DEATH, Event(true, false));
-                    }
+                    //if (IsFatalCollision(world, dynamicEntity, staticEntity)) {
+                    //    world.AddGameEvent(END_GAME_DEATH, Event(true, false));
+                    //}
 
                     if (IsRebornCollision(world, dynamicEntity, staticEntity)) {
                         world.AddGameEvent(END_GAME_REBORN, Event(true, false));

@@ -53,9 +53,6 @@
     <ClCompile Include="Systems\AnimationSystem.cpp">
       <Filter>Game\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="UI\StartScreen.cpp">
-      <Filter>Game\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Systems\DestroySystem.cpp">
       <Filter>Game\Systems</Filter>
     </ClCompile>
@@ -73,6 +70,9 @@
     </ClCompile>
     <ClCompile Include="Systems\DarknessSystem.cpp">
       <Filter>Game\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Screen.cpp">
+      <Filter>Game\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -194,9 +194,6 @@
     <ClInclude Include="Systems\AnimationSystem.hpp">
       <Filter>Game\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="UI\StartScreen.hpp">
-      <Filter>Game\UI</Filter>
-    </ClInclude>
     <ClInclude Include="Core\ComponentInfo.hpp">
       <Filter>Game\Core</Filter>
     </ClInclude>
@@ -238,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="Components\Darkness.hpp">
       <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Screen.hpp">
+      <Filter>Game\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

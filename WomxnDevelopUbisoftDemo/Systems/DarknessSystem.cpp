@@ -5,8 +5,17 @@
 #include "Components/Transformable.hpp"
 #include "Core/Entity.hpp"
 #include "DarknessSystem.hpp"
+#include "Tools/Messages.hpp"
 #include <SFML/System/Vector2.hpp>
 #include <set>
+
+const float MIN_CENTER_RADIUS = 0;
+const float MIN_MIDDLE_RADIUS = 0;
+const float MIN_OUTER_RADIUS = 0;
+
+const float MAX_CENTER_RADIUS = 300.f;
+const float MAX_MIDDLE_RADIUS = 700.f;
+const float MAX_OUTER_RADIUS = 900.f;
 
 void DarknessSystem::Update(World& world)
 {
@@ -21,13 +30,13 @@ void DarknessSystem::Update(World& world)
         sf::Vector2f darknessShapePosition = darkness.shape->getPosition();
 
         if (abs(rigidBody.velocity.y) <= 2.f) {
-            darkness.centerRadius = std::max(0.f, darkness.centerRadius - 2.f);
-            darkness.middleRadius = std::max(0.f, darkness.middleRadius - 1.5f);
-            darkness.outerRadius = std::max(0.f, darkness.outerRadius - 1.f);
+            darkness.centerRadius = std::max(MIN_CENTER_RADIUS, darkness.centerRadius - 5.f);
+            darkness.middleRadius = std::max(MIN_MIDDLE_RADIUS, darkness.middleRadius - 4.f);
+            darkness.outerRadius = std::max(MIN_OUTER_RADIUS, darkness.outerRadius - 3.f);
         } else {
-            darkness.centerRadius = std::min(darkness.centerRadius + 1.f, 300.f);
-            darkness.middleRadius = std::min(darkness.middleRadius + 1.5f, 700.f);
-            darkness.outerRadius = std::min(darkness.outerRadius + 2.0f, 900.f);
+            darkness.centerRadius = std::min(darkness.centerRadius + 1.f, MAX_CENTER_RADIUS);
+            darkness.middleRadius = std::min(darkness.middleRadius + 1.5f, MAX_MIDDLE_RADIUS);
+            darkness.outerRadius = std::min(darkness.outerRadius + 2.0f, MAX_OUTER_RADIUS);
         }
 
         darkness.shader->setUniform("obscurityColor", sf::Glsl::Vec4(darkness.shape->getFillColor()));
@@ -35,5 +44,19 @@ void DarknessSystem::Update(World& world)
         darkness.shader->setUniform("centerRadius", darkness.centerRadius);
         darkness.shader->setUniform("middleRadius", darkness.middleRadius);
         darkness.shader->setUniform("outerRadius", darkness.outerRadius);
+
+        if (IsDarknessLevelFatal(darkness.outerRadius)) {
+            SendFatalDarknessEvent(world);
+        }
     }
+}
+
+bool DarknessSystem::IsDarknessLevelFatal(float darknessOuterRadius)
+{
+    return darknessOuterRadius <= MIN_OUTER_RADIUS;
+}
+
+void DarknessSystem::SendFatalDarknessEvent(World& world)
+{
+    world.AddGameEvent(END_GAME_DEATH, Event(true, false));
 }

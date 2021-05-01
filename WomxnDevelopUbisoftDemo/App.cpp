@@ -28,13 +28,17 @@ static const sf::Vector2u APP_WINDOW_SIZE { APP_WINDOW_WIDTH, APP_WINDOW_HEIGHT 
 
 App::App(const char* appName)
     : window { sf::VideoMode(APP_WINDOW_SIZE.x, APP_WINDOW_SIZE.y), appName, sf::Style::Titlebar | sf::Style::Close }
-    , startScreen { "Press X to start" }
+    , startScreen { "Press X to start", "Assets/start_screen.png" }
+    , gameOverScreen { "Game over...", "Assets/end_screen.png" }
+    , rebornScreen { "Thank you for playing", "Assets/end_screen.png" }
     , isLevelStared { false }
     , isLevelEnded { false }
 {
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(static_cast<uint32_t>(APP_MAX_FRAMERATE));
     window.setActive();
+
+    initialView = window.getView();
 
     sf::Vector2f levelTopLeft { 20.f / 100.f * APP_WINDOW_WIDTH, 0.f };
     sf::Vector2f levelSize { APP_WINDOW_WIDTH - (2.f * 20.f / 100.f * APP_WINDOW_WIDTH), 2.f * APP_WINDOW_HEIGHT };
@@ -103,15 +107,15 @@ void App::Run()
 
         if (!isLevelStared && !isLevelEnded) {
             DisplayStartScreen();
-        } else {
-            DisplayLevelScreen(lightDropClock, lightBallClock, animationClock, lightDropSpawnInterval, lightBallSpawnInterval, animationInterval, deltaTime);
         }
-        //else if (isLevelStared && !isLevelEnded) {
+        //else {
         //    DisplayLevelScreen(lightDropClock, lightBallClock, animationClock, lightDropSpawnInterval, lightBallSpawnInterval, animationInterval, deltaTime);
         //}
-        //else if (isLevelStared && isLevelEnded) {
-        //    DisplayEndScreen();
-        //}
+        else if (isLevelStared && !isLevelEnded) {
+            DisplayLevelScreen(lightDropClock, lightBallClock, animationClock, lightDropSpawnInterval, lightBallSpawnInterval, animationInterval, deltaTime);
+        } else if (isLevelStared && isLevelEnded) {
+            DisplayEndScreen();
+        }
 
         ImGui::EndFrame();
         ImGui::SFML::Render(window);
@@ -127,7 +131,7 @@ void App::Run()
 
 void App::DisplayStartScreen()
 {
-    startScreen.DrawScreen(window);
+    startScreen.Draw(window);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
         isLevelStared = true;
@@ -178,6 +182,9 @@ void App::DisplayLevelScreen(sf::Clock& lightDropClock, sf::Clock& lightBallCloc
 
 void App::DisplayEndScreen()
 {
+    window.setView(initialView);
+    gameOverScreen.Draw(window);
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
         isLevelStared = true;
     }
@@ -185,39 +192,38 @@ void App::DisplayEndScreen()
 
 void App::RegisterComponents()
 {
-    world->RegisterComponent<CameraCenter>();
-    world->RegisterComponent<Collideable>();
-    world->RegisterComponent<Fatal>();
-    world->RegisterComponent<Grippable>();
-    world->RegisterComponent<Gripper>();
-    world->RegisterComponent<Mortal>();
-    world->RegisterComponent<PhysicBody>();
-    world->RegisterComponent<Renderable>();
-    world->RegisterComponent<RigidBody>();
-    world->RegisterComponent<Dynamic>();
-    world->RegisterComponent<Static>();
-    world->RegisterComponent<Transformable>();
-    world->RegisterComponent<Animation>();
-    world->RegisterComponent<Reborner>();
-    world->RegisterComponent<Sprite>();
     world->RegisterComponent<Feel>();
+    world->RegisterComponent<Fatal>();
+    world->RegisterComponent<Sprite>();
+    world->RegisterComponent<Mortal>();
+    world->RegisterComponent<Static>();
+    world->RegisterComponent<Dynamic>();
+    world->RegisterComponent<Gripper>();
+    world->RegisterComponent<Reborner>();
     world->RegisterComponent<Darkness>();
+    world->RegisterComponent<Grippable>();
+    world->RegisterComponent<RigidBody>();
+    world->RegisterComponent<Animation>();
+    world->RegisterComponent<Renderable>();
+    world->RegisterComponent<PhysicBody>();
+    world->RegisterComponent<Collideable>();
+    world->RegisterComponent<CameraCenter>();
+    world->RegisterComponent<Transformable>();
 }
 
 void App::RegisterSystems()
 {
-    playerControlSystem = world->RegisterSystem<PlayerControlSystem, RigidBody, PhysicBody>();
-    physicSystem = world->RegisterSystem<PhysicSystem, Transformable, RigidBody, PhysicBody>();
-    physicSystem->SetGravity(sf::Vector2f({ 0.0f, 100.f }));
-    transformSystem = world->RegisterSystem<TransformSystem, Transformable, RigidBody>();
-    collisionSystem = world->RegisterSystem<CollisionSystem, Collideable, Static>();
-    commitSystem = world->RegisterSystem<CommitSystem, Transformable>();
-    renderSystem = world->RegisterSystem<RenderSystem, Renderable>();
-    gripSystem = world->RegisterSystem<GripSystem, Grippable, Collideable, RigidBody>();
-    animationSystem = world->RegisterSystem<AnimationSystem, Animation, Sprite>();
-    destroySystem = world->RegisterSystem<DestroySystem, Transformable>();
     feelSystem = world->RegisterSystem<FeelSystem, Grippable, Feel, Sprite>();
+    gripSystem = world->RegisterSystem<GripSystem, Grippable, Collideable, RigidBody>();
+    renderSystem = world->RegisterSystem<RenderSystem, Renderable>();
+    commitSystem = world->RegisterSystem<CommitSystem, Transformable>();
+    physicSystem = world->RegisterSystem<PhysicSystem, Transformable, RigidBody, PhysicBody>();
+    destroySystem = world->RegisterSystem<DestroySystem, Transformable>();
     darknessSystem = world->RegisterSystem<DarknessSystem, Darkness, Transformable, RigidBody>();
+    animationSystem = world->RegisterSystem<AnimationSystem, Animation, Sprite>();
+    collisionSystem = world->RegisterSystem<CollisionSystem, Collideable, Static>();
+    transformSystem = world->RegisterSystem<TransformSystem, Transformable, RigidBody>();
+    playerControlSystem = world->RegisterSystem<PlayerControlSystem, RigidBody, PhysicBody>();
 }
 
 void App::SetLevelLimits(const sf::Vector2f& topLeft, const sf::Vector2f& size)
