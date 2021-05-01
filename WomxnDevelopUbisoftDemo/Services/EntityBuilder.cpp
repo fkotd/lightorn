@@ -197,7 +197,7 @@ EntityBuilder& EntityBuilder::AddObscurity(World& world)
         std::cout << "Unable to load shader" << std::endl;
     }
 
-    world.AddComponentToEntity<Obscurity>(entity, shape, shader);
+    world.AddComponentToEntity<Obscurity>(entity, shape, shader, 100.f, 300.f);
 
     return *this;
 }

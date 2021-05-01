@@ -6,4 +6,6 @@
 struct Obscurity {
     sf::Shape* shape;
     sf::Shader* shader;
+    float centerRadius;
+    float middleRadius;
 };

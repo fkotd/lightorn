@@ -6,6 +6,7 @@
 #include "Components/Collideable.hpp"
 #include "Components/Obscurity.hpp"
 #include "Components/Renderable.hpp"
+#include "Components/RigidBody.hpp"
 #include "Components/Sprite.hpp"
 #include "Components/Transformable.hpp"
 #include "Tools/Layer.hpp"
@@ -18,19 +19,19 @@ void RenderSystem::Render(World& world, sf::RenderTarget& target)
     Signature cameraCenterSignature = *world.GetSignature<CameraCenter>();
     std::set<Entity> cameraCenterEntities = world.Find(cameraCenterSignature);
     auto it = cameraCenterEntities.begin();
-    Entity cameraCenterEntity = *it;
+    Entity characterEntity = *it;
 
     ImGui::Begin("Render Menu");
     ImGui::Text("Number of entities: %d", entities.size());
 
     for (int layer = Layer::Back; layer < Layer::Top + 1; layer++) {
-        RenderLayer(world, target, entities, static_cast<Layer>(layer), cameraCenterEntity);
+        RenderLayer(world, target, entities, static_cast<Layer>(layer), characterEntity);
     }
 
     ImGui::End();
 }
 
-void RenderSystem::RenderLayer(World& world, sf::RenderTarget& target, const std::set<Entity>& entities, Layer layer, Entity cameraCenterEntity)
+void RenderSystem::RenderLayer(World& world, sf::RenderTarget& target, const std::set<Entity>& entities, Layer layer, Entity characterEntity)
 {
     for (auto entity : entities) {
         Renderable& renderable = world.GetComponent<Renderable>(entity);
@@ -73,15 +74,28 @@ void RenderSystem::RenderLayer(World& world, sf::RenderTarget& target, const std
         }
 
         if (obscurity != nullptr && transformable != nullptr) {
-            Transformable* cameraCenterTransformable = world.GetComponentIfExists<Transformable>(cameraCenterEntity);
-            sf::Vector2f cameraCenterPosition = cameraCenterTransformable->transform.getPosition();
+            Transformable* characterTransformable = world.GetComponentIfExists<Transformable>(characterEntity);
+            sf::Vector2f characterPosition = characterTransformable->transform.getPosition();
 
-            obscurity->shape->setPosition(cameraCenterPosition);
+            obscurity->shape->setPosition(characterPosition);
             sf::Vector2f obscurityShapePosition = obscurity->shape->getPosition();
             ImGui::Text("Obscurity shape position %f, %f", obscurityShapePosition.x, obscurityShapePosition.y);
 
+            RigidBody* characterRigidBody = world.GetComponentIfExists<RigidBody>(characterEntity);
+            sf::Vector2f characterVelocity = characterRigidBody->velocity;
+
+            if (abs(characterVelocity.y) <= 2.f) {
+                obscurity->centerRadius -= 1.f;
+                obscurity->middleRadius -= 1.f;
+            } else {
+                obscurity->centerRadius += 1.f;
+                obscurity->middleRadius += 1.f;
+            }
+
             obscurity->shader->setUniform("obscurityColor", sf::Glsl::Vec4(obscurity->shape->getFillColor()));
             obscurity->shader->setUniform("center", obscurityShapePosition);
+            obscurity->shader->setUniform("centerRadius", obscurity->centerRadius);
+            obscurity->shader->setUniform("middleRadius", obscurity->middleRadius);
 
             target.draw(*obscurity->shape, obscurity->shader);
         }
