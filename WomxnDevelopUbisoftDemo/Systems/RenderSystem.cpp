@@ -85,17 +85,20 @@ void RenderSystem::RenderLayer(World& world, sf::RenderTarget& target, const std
             sf::Vector2f characterVelocity = characterRigidBody->velocity;
 
             if (abs(characterVelocity.y) <= 2.f) {
-                obscurity->centerRadius -= 1.f;
-                obscurity->middleRadius -= 1.f;
+                obscurity->centerRadius = std::max(0.f, obscurity->centerRadius - 2.f);
+                obscurity->middleRadius = std::max(0.f, obscurity->middleRadius - 1.5f);
+                obscurity->outerRadius = std::max(0.f, obscurity->outerRadius - 1.f);
             } else {
-                obscurity->centerRadius += 1.f;
-                obscurity->middleRadius += 1.f;
+                obscurity->centerRadius = std::min(obscurity->centerRadius + 1.f, 300.f);
+                obscurity->middleRadius = std::min(obscurity->middleRadius + 1.5f, 700.f);
+                obscurity->outerRadius = std::min(obscurity->outerRadius + 2.0f, 900.f);
             }
 
             obscurity->shader->setUniform("obscurityColor", sf::Glsl::Vec4(obscurity->shape->getFillColor()));
             obscurity->shader->setUniform("center", obscurityShapePosition);
             obscurity->shader->setUniform("centerRadius", obscurity->centerRadius);
             obscurity->shader->setUniform("middleRadius", obscurity->middleRadius);
+            obscurity->shader->setUniform("outerRadius", obscurity->outerRadius);
 
             target.draw(*obscurity->shape, obscurity->shader);
         }

@@ -8,4 +8,5 @@ struct Obscurity {
     sf::Shader* shader;
     float centerRadius;
     float middleRadius;
+    float outerRadius;
 };
