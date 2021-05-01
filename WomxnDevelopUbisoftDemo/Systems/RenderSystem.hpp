@@ -16,4 +16,6 @@ public:
 
 private:
     void RenderLayer(World& world, sf::RenderTarget& target, const std::set<Entity>& entities, Layer layer);
+    void UpdateView(World& world, sf::RenderTarget& target, Entity entity);
+    void Draw(World& world, sf::RenderTarget& target, Entity entity);
 };

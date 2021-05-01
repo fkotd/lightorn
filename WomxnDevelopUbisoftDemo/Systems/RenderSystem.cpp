@@ -34,42 +34,50 @@ void RenderSystem::RenderLayer(World& world, sf::RenderTarget& target, const std
             continue;
         }
 
-        // If the current entity has the camera component
-        CameraCenter* cameraCenter = world.GetComponentIfExists<CameraCenter>(entity);
-        if (cameraCenter != nullptr) {
-            // It is the player
-            Transformable& transformable = world.GetComponent<Transformable>(entity);
-            // Update the view
-            sf::View view = target.getView();
-            view.setCenter(view.getCenter().x, transformable.transformable.getPosition().y);
-            target.setView(view);
-        }
+        UpdateView(world, target, entity);
 
-        // If the current entity has a transformable component, update its shape
-        Transformable* transformable = world.GetComponentIfExists<Transformable>(entity);
-        Sprite* sprite = world.GetComponentIfExists<Sprite>(entity);
-        Darkness* darkness = world.GetComponentIfExists<Darkness>(entity);
+        Draw(world, target, entity);
+    }
+}
 
-        if (transformable != nullptr) {
-            if (renderable.shape != nullptr) {
-                renderable.shape->setPosition(transformable->transformable.getPosition());
-            }
+void RenderSystem::UpdateView(World& world, sf::RenderTarget& target, Entity entity)
+{
+    CameraCenter* cameraCenter = world.GetComponentIfExists<CameraCenter>(entity);
+    if (cameraCenter != nullptr) {
+        Transformable& transformable = world.GetComponent<Transformable>(entity);
+        sf::View view = target.getView();
 
-            if (sprite != nullptr) {
-                sprite->sprite->setPosition(transformable->transformable.getPosition());
-            }
-        }
+        view.setCenter(view.getCenter().x, transformable.transformable.getPosition().y);
+        target.setView(view);
+    }
+}
 
+void RenderSystem::Draw(World& world, sf::RenderTarget& target, Entity entity)
+{
+    Renderable& renderable = world.GetComponent<Renderable>(entity);
+    Transformable* transformable = world.GetComponentIfExists<Transformable>(entity);
+    Sprite* sprite = world.GetComponentIfExists<Sprite>(entity);
+    Darkness* darkness = world.GetComponentIfExists<Darkness>(entity);
+
+    if (transformable != nullptr) {
         if (renderable.shape != nullptr) {
-            target.draw(*renderable.shape);
+            renderable.shape->setPosition(transformable->transformable.getPosition());
         }
 
         if (sprite != nullptr) {
-            target.draw(*sprite->sprite);
+            sprite->sprite->setPosition(transformable->transformable.getPosition());
         }
+    }
 
-        if (darkness != nullptr && transformable != nullptr) {
-            target.draw(*darkness->shape, darkness->shader);
-        }
+    if (renderable.shape != nullptr) {
+        target.draw(*renderable.shape);
+    }
+
+    if (sprite != nullptr) {
+        target.draw(*sprite->sprite);
+    }
+
+    if (darkness != nullptr && transformable != nullptr) {
+        target.draw(*darkness->shape, darkness->shader);
     }
 }
