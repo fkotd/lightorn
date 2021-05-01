@@ -4,6 +4,7 @@
 
 #include "Components/Collideable.hpp"
 #include "Components/RigidBody.hpp"
+#include "Core/Entity.hpp"
 
 class CollisionSystem : public System {
 public:

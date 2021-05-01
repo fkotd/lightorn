@@ -3,6 +3,10 @@
 #include "AnimationSystem.hpp"
 
 #include "Components/Sprite.hpp"
+#include "Core/Entity.hpp";
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/System/Vector2.hpp>
+#include <set>
 
 void AnimationSystem::Update(World& world)
 {

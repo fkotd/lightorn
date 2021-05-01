@@ -1,8 +1,7 @@
 #pragma once
 
-#include "Core/World.hpp"
-
 #include "Components/Animation.hpp"
+#include "Core/World.hpp"
 
 class AnimationSystem : public System {
 public:
