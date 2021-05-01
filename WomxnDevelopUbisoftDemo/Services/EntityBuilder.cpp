@@ -5,13 +5,13 @@
 #include "Components/Animation.hpp"
 #include "Components/CameraCenter.hpp"
 #include "Components/Collideable.hpp"
+#include "Components/Darkness.hpp"
 #include "Components/Dynamic.hpp"
 #include "Components/Fatal.hpp"
 #include "Components/Feel.hpp"
 #include "Components/Grippable.hpp"
 #include "Components/Gripper.hpp"
 #include "Components/Mortal.hpp"
-#include "Components/Obscurity.hpp"
 #include "Components/PhysicBody.hpp"
 #include "Components/Reborner.hpp"
 #include "Components/Renderable.hpp"
@@ -193,11 +193,11 @@ EntityBuilder& EntityBuilder::AddObscurity(World& world)
 
     sf::Shader* shader = new sf::Shader();
 
-    if (!shader->loadFromFile("Shader/obscurity_shader.frag", sf::Shader::Fragment)) {
+    if (!shader->loadFromFile("Shaders/darkness_shader.frag", sf::Shader::Fragment)) {
         std::cout << "Unable to load shader" << std::endl;
     }
 
-    world.AddComponentToEntity<Obscurity>(entity, shape, shader, 100.f, 300.f, 700.f);
+    world.AddComponentToEntity<Darkness>(entity, shape, shader, 100.f, 300.f, 700.f);
 
     return *this;
 }

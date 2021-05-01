@@ -209,6 +209,7 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Core\Event.cpp" />
+    <ClCompile Include="Systems\DarknessSystem.cpp" />
     <ClCompile Include="Systems\FeelSystem.cpp" />
     <ClCompile Include="Services\EntityBuilder.cpp" />
     <ClCompile Include="Systems\DestroySystem.cpp" />
@@ -237,7 +238,8 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Components\Dynamic.hpp" />
     <ClInclude Include="Components\Static.hpp" />
     <ClInclude Include="Core\Event.hpp" />
-    <ClInclude Include="Components\Obscurity.hpp" />
+    <ClInclude Include="Components\Darkness.hpp" />
+    <ClInclude Include="Systems\DarknessSystem.hpp" />
     <ClInclude Include="Systems\FeelSystem.hpp" />
     <ClInclude Include="Services\EntityBuilder.hpp" />
     <ClInclude Include="Components\Sprite.hpp" />
@@ -284,7 +286,7 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Core\World.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shader\obscurity_shader.frag" />
+    <None Include="Shaders\darkness_shader.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

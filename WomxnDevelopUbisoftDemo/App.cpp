@@ -4,13 +4,13 @@
 #include "Components/Animation.hpp"
 #include "Components/CameraCenter.hpp"
 #include "Components/Collideable.hpp"
+#include "Components/Darkness.hpp"
 #include "Components/Dynamic.hpp"
 #include "Components/Fatal.hpp"
 #include "Components/Feel.hpp"
 #include "Components/Grippable.hpp"
 #include "Components/Gripper.hpp"
 #include "Components/Mortal.hpp"
-#include "Components/Obscurity.hpp"
 #include "Components/PhysicBody.hpp"
 #include "Components/Reborner.hpp"
 #include "Components/Renderable.hpp"
@@ -157,6 +157,7 @@ void App::DisplayLevelScreen(sf::Clock& lightDropClock, sf::Clock& lightBallCloc
     feelSystem->Update(*world);
     collisionSystem->Update(*world, deltaTime);
     commitSystem->Commit(*world);
+    darknessSystem->Update(*world);
 
     if (animationClock.getElapsedTime().asMilliseconds() >= animationInterval.asMilliseconds()) {
         animationSystem->Update(*world);
@@ -200,7 +201,7 @@ void App::RegisterComponents()
     world->RegisterComponent<Reborner>();
     world->RegisterComponent<Sprite>();
     world->RegisterComponent<Feel>();
-    world->RegisterComponent<Obscurity>();
+    world->RegisterComponent<Darkness>();
 }
 
 void App::RegisterSystems()
@@ -216,6 +217,7 @@ void App::RegisterSystems()
     animationSystem = world->RegisterSystem<AnimationSystem, Animation, Sprite>();
     destroySystem = world->RegisterSystem<DestroySystem, Transformable>();
     feelSystem = world->RegisterSystem<FeelSystem, Grippable, Feel, Sprite>();
+    darknessSystem = world->RegisterSystem<DarknessSystem, Darkness, Transformable, RigidBody>();
 }
 
 void App::SetLevelLimits(const sf::Vector2f& topLeft, const sf::Vector2f& size)

@@ -3,7 +3,7 @@
 #include <SFML/Graphics/Shader.hpp>
 #include <SFML/Graphics/Shape.hpp>
 
-struct Obscurity {
+struct Darkness {
     sf::Shape* shape;
     sf::Shader* shader;
     float centerRadius;
