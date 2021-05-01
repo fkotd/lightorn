@@ -15,11 +15,11 @@ void TransformSystem::Update(World& world, float deltaTime)
         RigidBody& rigidBody = world.GetComponent<RigidBody>(entity);
 
         //transformable.draftTransform.move(rigidBody.velocity * deltaTime);
-        transformable.draftTransform.setPosition(transformable.transform.getPosition() + rigidBody.velocity * deltaTime);
+        transformable.draftTransformable.setPosition(transformable.transformable.getPosition() + rigidBody.velocity * deltaTime);
 
         Collideable* collideable = world.GetComponentIfExists<Collideable>(entity);
         if (collideable != nullptr) {
-            collideable->draftBoxCollideable.SetCenter(transformable.draftTransform.getPosition());
+            collideable->draftBoxCollideable.SetCenter(transformable.draftTransformable.getPosition());
         }
     }
 }

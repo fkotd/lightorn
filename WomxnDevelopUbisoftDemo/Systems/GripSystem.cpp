@@ -57,7 +57,7 @@ void GripSystem::UpdateGripperVelocity(World& world, sf::FloatRect levelLimits, 
 
     // TODO: set better top level limit because here it is a bit non sense
     // Avoid the character entity to be removed
-    if (gripperTransformable.transform.getPosition().y < levelLimits.top - 450) {
+    if (gripperTransformable.transformable.getPosition().y < levelLimits.top - 450) {
         ResetGripperVelocity(world, gripperEntity);
     }
 }

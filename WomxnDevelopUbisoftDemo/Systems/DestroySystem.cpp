@@ -11,7 +11,7 @@ void DestroySystem::DestroyOffScreen(World& world, sf::FloatRect levelLimits)
     for (auto entity : entities) {
         Transformable& transformable = world.GetComponent<Transformable>(entity);
 
-        if (transformable.transform.getPosition().y > levelLimits.height + 800 || transformable.transform.getPosition().y < levelLimits.top - 500) {
+        if (transformable.transformable.getPosition().y > levelLimits.height + 800 || transformable.transformable.getPosition().y < levelLimits.top - 500) {
             world.RemoveEntity(entity);
         }
     }

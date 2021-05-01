@@ -77,7 +77,7 @@ void CollisionSystem::CuteSweeptAABB(World& world, Entity dynamicEntity, Entity 
 
     Transformable* transformable = world.GetComponentIfExists<Transformable>(dynamicEntity);
     if (transformable != nullptr) {
-        transformable->draftTransform.setPosition(transformable->transform.getPosition() + sf::Vector2f(rigidBody.velocity.x * deltaTime, rigidBody.velocity.y * deltaTime));
+        transformable->draftTransformable.setPosition(transformable->transformable.getPosition() + sf::Vector2f(rigidBody.velocity.x * deltaTime, rigidBody.velocity.y * deltaTime));
     }
 }
 

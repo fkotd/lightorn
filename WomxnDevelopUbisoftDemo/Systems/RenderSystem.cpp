@@ -46,7 +46,7 @@ void RenderSystem::RenderLayer(World& world, sf::RenderTarget& target, const std
             Transformable& transformable = world.GetComponent<Transformable>(entity);
             // Update the view
             sf::View view = target.getView();
-            view.setCenter(view.getCenter().x, transformable.transform.getPosition().y);
+            view.setCenter(view.getCenter().x, transformable.transformable.getPosition().y);
             target.setView(view);
         }
 
@@ -57,11 +57,11 @@ void RenderSystem::RenderLayer(World& world, sf::RenderTarget& target, const std
 
         if (transformable != nullptr) {
             if (renderable.shape != nullptr) {
-                renderable.shape->setPosition(transformable->transform.getPosition());
+                renderable.shape->setPosition(transformable->transformable.getPosition());
             }
 
             if (sprite != nullptr) {
-                sprite->sprite->setPosition(transformable->transform.getPosition());
+                sprite->sprite->setPosition(transformable->transformable.getPosition());
             }
         }
 
@@ -75,7 +75,7 @@ void RenderSystem::RenderLayer(World& world, sf::RenderTarget& target, const std
 
         if (obscurity != nullptr && transformable != nullptr) {
             Transformable* characterTransformable = world.GetComponentIfExists<Transformable>(characterEntity);
-            sf::Vector2f characterPosition = characterTransformable->transform.getPosition();
+            sf::Vector2f characterPosition = characterTransformable->transformable.getPosition();
 
             obscurity->shape->setPosition(characterPosition);
             sf::Vector2f obscurityShapePosition = obscurity->shape->getPosition();

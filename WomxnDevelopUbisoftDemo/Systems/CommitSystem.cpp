@@ -10,7 +10,7 @@ void CommitSystem::Commit(World& world)
 
     for (auto entity : entities) {
         Transformable& transformable = world.GetComponent<Transformable>(entity);
-        transformable.transform.setPosition(transformable.draftTransform.getPosition());
+        transformable.transformable.setPosition(transformable.draftTransformable.getPosition());
 
         Collideable* collideable = world.GetComponentIfExists<Collideable>(entity);
         if (collideable != nullptr) {
@@ -18,6 +18,6 @@ void CommitSystem::Commit(World& world)
         }
 
         // Reset draft
-        transformable.draftTransform.setPosition(0, 0);
+        transformable.draftTransformable.setPosition(0, 0);
     }
 }
