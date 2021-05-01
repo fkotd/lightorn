@@ -4,6 +4,7 @@
 #include "Components/RigidBody.hpp"
 #include "Components/Transformable.hpp"
 #include "Core/Entity.hpp"
+#include "Core/Event.hpp"
 #include "DarknessSystem.hpp"
 #include "Tools/Messages.hpp"
 #include <SFML/System/Vector2.hpp>

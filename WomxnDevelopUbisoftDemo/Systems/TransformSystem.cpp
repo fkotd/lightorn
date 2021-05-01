@@ -5,6 +5,8 @@
 #include "Components/Collideable.hpp"
 #include "Components/RigidBody.hpp"
 #include "Components/Transformable.hpp"
+#include "Core/Entity.hpp"
+#include <set>
 
 void TransformSystem::Update(World& world, float deltaTime)
 {
@@ -14,7 +16,6 @@ void TransformSystem::Update(World& world, float deltaTime)
         Transformable& transformable = world.GetComponent<Transformable>(entity);
         RigidBody& rigidBody = world.GetComponent<RigidBody>(entity);
 
-        //transformable.draftTransform.move(rigidBody.velocity * deltaTime);
         transformable.draftTransformable.setPosition(transformable.transformable.getPosition() + rigidBody.velocity * deltaTime);
 
         Collideable* collideable = world.GetComponentIfExists<Collideable>(entity);

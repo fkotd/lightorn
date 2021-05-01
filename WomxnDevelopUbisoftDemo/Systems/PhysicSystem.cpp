@@ -5,17 +5,13 @@
 #include "Components/PhysicBody.hpp"
 #include "Components/RigidBody.hpp"
 #include "Components/Transformable.hpp"
-
+#include "Core/Entity.hpp"
 #include <cmath>
+#include <set>
 
 PhysicSystem::PhysicSystem()
     : gravity { 0.f, 100.f }
 {
-}
-
-void PhysicSystem::SetGravity(sf::Vector2f newGravity)
-{
-    gravity = newGravity;
 }
 
 void PhysicSystem::Update(World& world, float deltaTime)

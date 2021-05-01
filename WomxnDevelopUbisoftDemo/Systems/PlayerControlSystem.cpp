@@ -4,6 +4,9 @@
 
 #include "Components/PhysicBody.hpp"
 #include "Components/RigidBody.hpp"
+#include "Core/Entity.hpp"
+#include <SFML/Window/Keyboard.hpp>
+#include <set>
 
 void PlayerControlSystem::Update(World& world)
 {

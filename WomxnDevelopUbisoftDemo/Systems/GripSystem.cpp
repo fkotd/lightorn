@@ -7,9 +7,13 @@
 #include "Components/Gripper.hpp"
 #include "Components/RigidBody.hpp"
 #include "Components/Transformable.hpp"
+#include "Core/Event.hpp"
+#include "Tools/Feeling.hpp"
 #include "Tools/Messages.hpp"
+#include <SFML/Window/Keyboard.hpp>
+#include <set>
 
-const float Y_VELOCITY_AFTER_GRIP = 200.f;
+static const float Y_VELOCITY_AFTER_GRIP = 200.f;
 
 void GripSystem::Update(World& world, sf::FloatRect levelLimits)
 {

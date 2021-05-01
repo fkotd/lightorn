@@ -1,8 +1,11 @@
 #include "stdafx.h"
 
 #include "CommitSystem.hpp"
+
 #include "Components/Collideable.hpp"
 #include "Components/Transformable.hpp"
+#include "Core/Entity.hpp"
+#include <set>
 
 void CommitSystem::Commit(World& world)
 {

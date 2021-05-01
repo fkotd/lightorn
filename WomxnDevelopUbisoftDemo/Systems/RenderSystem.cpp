@@ -9,29 +9,24 @@
 #include "Components/RigidBody.hpp"
 #include "Components/Sprite.hpp"
 #include "Components/Transformable.hpp"
+#include "Core/Signature.hpp"
 #include "Tools/Layer.hpp"
+#include <SFML/Graphics/View.hpp>
 
 void RenderSystem::Render(World& world, sf::RenderTarget& target)
 {
     std::set<Entity> entities = world.Find(GetSignature());
 
-    // TODO: move in a function
-    Signature cameraCenterSignature = *world.GetSignature<CameraCenter>();
-    std::set<Entity> cameraCenterEntities = world.Find(cameraCenterSignature);
-    auto it = cameraCenterEntities.begin();
-    Entity characterEntity = *it;
-
     ImGui::Begin("Render Menu");
     ImGui::Text("Number of entities: %d", entities.size());
+    ImGui::End();
 
     for (int layer = Layer::Back; layer < Layer::Top + 1; layer++) {
-        RenderLayer(world, target, entities, static_cast<Layer>(layer), characterEntity);
+        RenderLayer(world, target, entities, static_cast<Layer>(layer));
     }
-
-    ImGui::End();
 }
 
-void RenderSystem::RenderLayer(World& world, sf::RenderTarget& target, const std::set<Entity>& entities, Layer layer, Entity characterEntity)
+void RenderSystem::RenderLayer(World& world, sf::RenderTarget& target, const std::set<Entity>& entities, Layer layer)
 {
     for (auto entity : entities) {
         Renderable& renderable = world.GetComponent<Renderable>(entity);

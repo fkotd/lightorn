@@ -6,10 +6,14 @@
 #include "Components/Feel.hpp"
 #include "Components/Gripper.hpp"
 #include "Components/Sprite.hpp"
+#include "Core/Entity.hpp"
+#include "Core/Event.hpp"
 #include "Tools/Messages.hpp"
+#include <SFML/Graphics/Color.hpp>
+#include <set>
 
-const uint8_t FADE_OUT = 4;
-const uint8_t FADE_IN = 20;
+static const uint8_t FADE_OUT = 4;
+static const uint8_t FADE_IN = 20;
 
 void FeelSystem::Update(World& world)
 {
@@ -27,11 +31,11 @@ void FeelSystem::Update(World& world)
 
         sf::Color spriteColor = sprite.sprite->getColor();
         if (feel.feeling != gripFeeling && gripFeeling != Feeling::Neutral) {
-            // fade out
+            // Fade out
             uint8_t a = std::max(0, spriteColor.a - FADE_OUT);
             sprite.sprite->setColor(sf::Color(spriteColor.r, spriteColor.g, spriteColor.b, a));
         } else {
-            // fade in
+            // Fade in
             uint8_t a = std::min(255, spriteColor.a + FADE_IN);
             sprite.sprite->setColor(sf::Color(spriteColor.r, spriteColor.g, spriteColor.b, a));
         }

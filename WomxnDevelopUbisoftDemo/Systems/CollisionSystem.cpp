@@ -7,9 +7,12 @@
 #include "Components/Mortal.hpp"
 #include "Components/Reborner.hpp"
 #include "Components/Transformable.hpp"
+#include "Core/Event.hpp"
 #include "Engine/Collision.h"
 #include "Tools/Messages.hpp"
+#include <SFML/Graphics/Rect.hpp>
 #include <cmath>
+#include <set>
 
 void CollisionSystem::Update(World& world, float deltaTime)
 {
@@ -26,10 +29,6 @@ void CollisionSystem::Update(World& world, float deltaTime)
                 Collideable& staticCollideable = world.GetComponent<Collideable>(staticEntity);
 
                 if (dynamicCollideable.draftBoxCollideable.IsColliding(staticCollideable.draftBoxCollideable)) {
-
-                    //if (IsFatalCollision(world, dynamicEntity, staticEntity)) {
-                    //    world.AddGameEvent(END_GAME_DEATH, Event(true, false));
-                    //}
 
                     if (IsRebornCollision(world, dynamicEntity, staticEntity)) {
                         world.AddGameEvent(END_GAME_REBORN, Event(true, false));
@@ -145,25 +144,6 @@ bool CollisionSystem::IsCollidingY(Collideable& dynamicCollideable, Collideable&
     bool isColliding = deltaY * deltaY2 < 0;
 
     return isColliding;
-}
-
-const bool CollisionSystem::IsFatalCollision(World& world, Entity entity, Entity otherEntity)
-{
-    Fatal* fatal = world.GetComponentIfExists<Fatal>(entity);
-    Mortal* mortal = world.GetComponentIfExists<Mortal>(entity);
-
-    Fatal* otherFatal = world.GetComponentIfExists<Fatal>(otherEntity);
-    Mortal* otherMortal = world.GetComponentIfExists<Mortal>(otherEntity);
-
-    if (fatal != nullptr && otherMortal != nullptr) {
-        return true;
-    }
-
-    if (mortal != nullptr && otherFatal != nullptr) {
-        return true;
-    }
-
-    return false;
 }
 
 const bool CollisionSystem::IsRebornCollision(World& world, Entity entity, Entity otherEntity)

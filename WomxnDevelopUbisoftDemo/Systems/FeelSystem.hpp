@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Core/System.hpp"
 #include "Core/World.hpp"
 #include "Tools/Feeling.hpp"
 
