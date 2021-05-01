@@ -29,7 +29,8 @@ private:
     void SetLevelLimits(const sf::Vector2f& levelTopLeft, const sf::Vector2f& levelSize);
     void DisplayStartScreen();
     void DisplayLevelScreen(sf::Clock& lightDropClock, sf::Clock& lightBallClock, sf::Clock& animationClock, sf::Time lightDropSpawnInterval, sf::Time lightBallSpawnInterval, sf::Time animationInterval, float deltaTime);
-    void DisplayEndScreen();
+    void DisplayGameOverScreen();
+    void DisplayRebornScreen();
     bool IsLevelEndedByDeath();
     bool IsLevelEndedByReborn();
 
@@ -57,5 +58,6 @@ private:
     Screen gameOverScreen;
     Screen rebornScreen;
     bool isLevelStared;
-    bool isLevelEnded;
+    bool isLevelEndedByDeath;
+    bool isLevelEndedByReborn;
 };

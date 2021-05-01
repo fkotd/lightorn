@@ -32,7 +32,8 @@ App::App(const char* appName)
     , gameOverScreen { "Game over...", "Assets/end_screen.png" }
     , rebornScreen { "Thank you for playing", "Assets/end_screen.png" }
     , isLevelStared { false }
-    , isLevelEnded { false }
+    , isLevelEndedByDeath { false }
+    , isLevelEndedByReborn { false }
 {
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(static_cast<uint32_t>(APP_MAX_FRAMERATE));
@@ -105,16 +106,18 @@ void App::Run()
         window.clear(sf::Color(0, 0, 0));
         ImGui::SFML::Update(window, clock.restart());
 
-        if (!isLevelStared && !isLevelEnded) {
+        if (!isLevelStared && !isLevelEndedByDeath && !isLevelEndedByReborn) {
             DisplayStartScreen();
         }
         //else {
         //    DisplayLevelScreen(lightDropClock, lightBallClock, animationClock, lightDropSpawnInterval, lightBallSpawnInterval, animationInterval, deltaTime);
         //}
-        else if (isLevelStared && !isLevelEnded) {
+        else if (isLevelStared && !isLevelEndedByDeath && !isLevelEndedByReborn) {
             DisplayLevelScreen(lightDropClock, lightBallClock, animationClock, lightDropSpawnInterval, lightBallSpawnInterval, animationInterval, deltaTime);
-        } else if (isLevelStared && isLevelEnded) {
-            DisplayEndScreen();
+        } else if (isLevelStared && isLevelEndedByDeath) {
+            DisplayGameOverScreen();
+        } else if (isLevelStared && isLevelEndedByReborn) {
+            DisplayRebornScreen();
         }
 
         ImGui::EndFrame();
@@ -127,15 +130,6 @@ void App::Run()
 
     world->ClearAllEvents();
     music.stop();
-}
-
-void App::DisplayStartScreen()
-{
-    startScreen.Draw(window);
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
-        isLevelStared = true;
-    }
 }
 
 void App::DisplayLevelScreen(sf::Clock& lightDropClock, sf::Clock& lightBallClock, sf::Clock& animationClock, sf::Time lightDropSpawnInterval, sf::Time lightBallSpawnInterval, sf::Time animationInterval, float deltaTime)
@@ -172,18 +166,40 @@ void App::DisplayLevelScreen(sf::Clock& lightDropClock, sf::Clock& lightBallCloc
     destroySystem->DestroyOffScreen(*world, levelLimits);
 
     if (IsLevelEndedByDeath()) {
-        isLevelEnded = true;
+        isLevelEndedByDeath = true;
         ImGui::TextColored(ImVec4(255.f, 0.f, 0.f, 1.f), "Game Over");
     } else if (IsLevelEndedByReborn()) {
-        isLevelEnded = true;
+        isLevelEndedByReborn = true;
         ImGui::TextColored(ImVec4(255.f, 0.f, 0.f, 1.f), "Reborn");
     }
 }
 
-void App::DisplayEndScreen()
+// TODO: factorize
+void App::DisplayStartScreen()
+{
+    startScreen.Draw(window);
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
+        isLevelStared = true;
+    }
+}
+
+// TODO: factorize
+void App::DisplayGameOverScreen()
 {
     window.setView(initialView);
     gameOverScreen.Draw(window);
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
+        isLevelStared = true;
+    }
+}
+
+// TODO: factorize
+void App::DisplayRebornScreen()
+{
+    window.setView(initialView);
+    rebornScreen.Draw(window);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
         isLevelStared = true;
