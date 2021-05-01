@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Tools/LoopMode.hpp"
+#include <SFML/System/Vector2.hpp>
 #include <map>
 
 struct Animation {
