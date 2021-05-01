@@ -1,8 +1,10 @@
 #pragma once
 
-#include <cmath>
-
 #include "stdafx.h"
+
+#include <SFML/Graphics/Shape.hpp>
+#include <SFML/System/Vector2.hpp>
+#include <cmath>
 
 class EllipseShape : public sf::Shape {
 public:
