@@ -230,6 +230,9 @@
     <ClInclude Include="Core\Event.hpp">
       <Filter>Game\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Components\Obscurity.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -259,5 +262,13 @@
     <Filter Include="Game\UI">
       <UniqueIdentifier>{30a99847-f940-4220-9f42-7fd7b4da6c6e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Shader">
+      <UniqueIdentifier>{df6626bf-9275-4f8a-b3e9-655ca159fe46}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\obscurity_shader.frag">
+      <Filter>Game\Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

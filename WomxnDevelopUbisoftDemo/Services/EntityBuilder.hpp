@@ -25,6 +25,7 @@ public:
     EntityBuilder& AddReborner(World& world);
     EntityBuilder& AddDynamic(World& world);
     EntityBuilder& AddStatic(World& world);
+    EntityBuilder& AddObscurity(World& world);
 
     Entity Build();
 

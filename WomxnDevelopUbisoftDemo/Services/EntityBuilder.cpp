@@ -11,6 +11,7 @@
 #include "Components/Grippable.hpp"
 #include "Components/Gripper.hpp"
 #include "Components/Mortal.hpp"
+#include "Components/Obscurity.hpp"
 #include "Components/PhysicBody.hpp"
 #include "Components/Reborner.hpp"
 #include "Components/Renderable.hpp"
@@ -26,7 +27,7 @@ EntityBuilder::EntityBuilder(World& world)
 
 EntityBuilder& EntityBuilder::AddRenderable(World& world, const sf::Vector2f& center, const sf::Vector2f& size, const sf::Color& color, const Layer layer, bool shapeVisible)
 {
-    // TOD:O: how to delete the new
+    // TODO: how to delete the new
     sf::RectangleShape* shape = new sf::RectangleShape();
     shape->setPosition(center);
     shape->setOrigin(size * 0.5f);
@@ -172,6 +173,31 @@ EntityBuilder& EntityBuilder::AddDynamic(World& world)
 EntityBuilder& EntityBuilder::AddStatic(World& world)
 {
     world.AddComponentToEntity<Static>(entity);
+
+    return *this;
+}
+
+EntityBuilder& EntityBuilder::AddObscurity(World& world)
+{
+    // TODO: make it relative to window size
+    sf::Vector2f size { 3000.f, 1000.f };
+
+    sf::RectangleShape* shape = new sf::RectangleShape();
+    shape->setPosition(0, 0);
+    shape->setOrigin(size.x / 2.0, size.y / 2.0);
+    shape->setSize(size);
+
+    shape->setFillColor(sf::Color::Black);
+    shape->setOutlineThickness(1);
+    shape->setOutlineColor(sf::Color::Black);
+
+    sf::Shader* shader = new sf::Shader();
+
+    if (!shader->loadFromFile("Shader/obscurity_shader.frag", sf::Shader::Fragment)) {
+        std::cout << "Unable to load shader" << std::endl;
+    }
+
+    world.AddComponentToEntity<Obscurity>(entity, shape, shader);
 
     return *this;
 }

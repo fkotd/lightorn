@@ -237,6 +237,7 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Components\Dynamic.hpp" />
     <ClInclude Include="Components\Static.hpp" />
     <ClInclude Include="Core\Event.hpp" />
+    <ClInclude Include="Components\Obscurity.hpp" />
     <ClInclude Include="Systems\FeelSystem.hpp" />
     <ClInclude Include="Services\EntityBuilder.hpp" />
     <ClInclude Include="Components\Sprite.hpp" />
@@ -281,6 +282,9 @@ xcopy /y /d  "$(SolutionDir)external\SFML-2.5.1\bin\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Core\SystemManager.hpp" />
     <ClInclude Include="Systems\TransformSystem.hpp" />
     <ClInclude Include="Core\World.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\obscurity_shader.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -10,6 +10,7 @@
 #include "Components/Grippable.hpp"
 #include "Components/Gripper.hpp"
 #include "Components/Mortal.hpp"
+#include "Components/Obscurity.hpp"
 #include "Components/PhysicBody.hpp"
 #include "Components/Reborner.hpp"
 #include "Components/Renderable.hpp"
@@ -199,6 +200,7 @@ void App::RegisterComponents()
     world->RegisterComponent<Reborner>();
     world->RegisterComponent<Sprite>();
     world->RegisterComponent<Feel>();
+    world->RegisterComponent<Obscurity>();
 }
 
 void App::RegisterSystems()

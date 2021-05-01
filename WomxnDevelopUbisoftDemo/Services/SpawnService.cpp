@@ -138,6 +138,7 @@ Entity SpawnService::SpawnCharacter(World& world, const sf::FloatRect& levelLimi
         .AddRenderable(world, center, size, sf::Color::Magenta, Layer::Top, false)
         .AddSprite(world, center, size, "Assets/eevy.png", spriteOriginFactor, spriteScaleFactor, false)
         .AddFeel(world, feeling)
+        .AddObscurity(world)
         .Build();
 }
 
