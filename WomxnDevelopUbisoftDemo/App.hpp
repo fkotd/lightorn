@@ -14,6 +14,12 @@
 #include "Systems/RenderSystem.hpp"
 #include "Systems/TransformSystem.hpp"
 #include "UI/Screen.hpp"
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/View.hpp>
+#include <SFML/System/Clock.hpp>
+#include <SFML/System/Time.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <memory>
 
 class App {
@@ -27,12 +33,11 @@ private:
     void RegisterComponents();
     void RegisterSystems();
     void SetLevelLimits(const sf::Vector2f& levelTopLeft, const sf::Vector2f& levelSize);
-    void DisplayStartScreen();
     void DisplayLevelScreen(sf::Clock& lightDropClock, sf::Clock& lightBallClock, sf::Clock& animationClock, sf::Time lightDropSpawnInterval, sf::Time lightBallSpawnInterval, sf::Time animationInterval, float deltaTime);
-    void DisplayGameOverScreen();
-    void DisplayRebornScreen();
-    bool IsLevelEndedByDeath();
-    bool IsLevelEndedByReborn();
+    void DisplayUIScreen(Screen screen);
+    bool IsLevelEnded(std::string eventName);
+    //bool IsLevelEndedByDeath();
+    //bool IsLevelEndedByReborn();
 
     sf::RenderWindow window;
     sf::FloatRect levelLimits;

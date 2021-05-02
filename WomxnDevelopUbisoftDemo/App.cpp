@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "App.hpp"
+
 #include "Components/Animation.hpp"
 #include "Components/CameraCenter.hpp"
 #include "Components/Collideable.hpp"
@@ -18,8 +19,13 @@
 #include "Components/Sprite.hpp"
 #include "Components/Static.hpp"
 #include "Components/Transformable.hpp"
+#include "Core/Event.hpp"
 #include "Tools/Messages.hpp"
 #include "Tools/Random.hpp"
+#include <SFML/Audio/Music.hpp>
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/VideoMode.hpp>
 
 static const int APP_WINDOW_WIDTH { 1620 };
 static const int APP_WINDOW_HEIGHT { 780 };
@@ -46,6 +52,14 @@ App::App(const char* appName)
     SetLevelLimits(levelTopLeft, levelSize);
 
     ImGui::SFML::Init(window);
+}
+
+void App::SetLevelLimits(const sf::Vector2f& topLeft, const sf::Vector2f& size)
+{
+    levelLimits.left = topLeft.x;
+    levelLimits.top = topLeft.y;
+    levelLimits.width = size.x;
+    levelLimits.height = size.y;
 }
 
 App::~App()
@@ -107,17 +121,13 @@ void App::Run()
         ImGui::SFML::Update(window, clock.restart());
 
         if (!isLevelStared && !isLevelEndedByDeath && !isLevelEndedByReborn) {
-            DisplayStartScreen();
-        }
-        //else {
-        //    DisplayLevelScreen(lightDropClock, lightBallClock, animationClock, lightDropSpawnInterval, lightBallSpawnInterval, animationInterval, deltaTime);
-        //}
-        else if (isLevelStared && !isLevelEndedByDeath && !isLevelEndedByReborn) {
+            DisplayUIScreen(startScreen);
+        } else if (isLevelStared && !isLevelEndedByDeath && !isLevelEndedByReborn) {
             DisplayLevelScreen(lightDropClock, lightBallClock, animationClock, lightDropSpawnInterval, lightBallSpawnInterval, animationInterval, deltaTime);
         } else if (isLevelStared && isLevelEndedByDeath) {
-            DisplayGameOverScreen();
+            DisplayUIScreen(gameOverScreen);
         } else if (isLevelStared && isLevelEndedByReborn) {
-            DisplayRebornScreen();
+            DisplayUIScreen(rebornScreen);
         }
 
         ImGui::EndFrame();
@@ -165,45 +175,32 @@ void App::DisplayLevelScreen(sf::Clock& lightDropClock, sf::Clock& lightBallCloc
     renderSystem->Render(*world, window);
     destroySystem->DestroyOffScreen(*world, levelLimits);
 
-    if (IsLevelEndedByDeath()) {
+    if (IsLevelEnded(END_GAME_DEATH)) {
         isLevelEndedByDeath = true;
         ImGui::TextColored(ImVec4(255.f, 0.f, 0.f, 1.f), "Game Over");
-    } else if (IsLevelEndedByReborn()) {
+    } else if (IsLevelEnded(END_GAME_REBORN)) {
         isLevelEndedByReborn = true;
         ImGui::TextColored(ImVec4(255.f, 0.f, 0.f, 1.f), "Reborn");
     }
 }
 
-// TODO: factorize
-void App::DisplayStartScreen()
+void App::DisplayUIScreen(Screen screen)
 {
-    startScreen.Draw(window);
+    window.setView(initialView);
+    screen.Draw(window);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
-        isLevelStared = true;
+        isLevelStared = !isLevelStared;
     }
 }
 
-// TODO: factorize
-void App::DisplayGameOverScreen()
+bool App::IsLevelEnded(std::string eventName)
 {
-    window.setView(initialView);
-    gameOverScreen.Draw(window);
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
-        isLevelStared = true;
+    Event* event = world->GetGameEvent(eventName);
+    if (event != nullptr) {
+        return event->GetValue<bool>();
     }
-}
-
-// TODO: factorize
-void App::DisplayRebornScreen()
-{
-    window.setView(initialView);
-    rebornScreen.Draw(window);
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
-        isLevelStared = true;
-    }
+    return false;
 }
 
 void App::RegisterComponents()
@@ -240,30 +237,4 @@ void App::RegisterSystems()
     collisionSystem = world->RegisterSystem<CollisionSystem, Collideable, Static>();
     transformSystem = world->RegisterSystem<TransformSystem, Transformable, RigidBody>();
     playerControlSystem = world->RegisterSystem<PlayerControlSystem, RigidBody, PhysicBody>();
-}
-
-void App::SetLevelLimits(const sf::Vector2f& topLeft, const sf::Vector2f& size)
-{
-    levelLimits.left = topLeft.x;
-    levelLimits.top = topLeft.y;
-    levelLimits.width = size.x;
-    levelLimits.height = size.y;
-}
-
-bool App::IsLevelEndedByDeath()
-{
-    Event* deathEvent = world->GetGameEvent(END_GAME_DEATH);
-    if (deathEvent != nullptr) {
-        return deathEvent->GetValue<bool>();
-    }
-    return false;
-}
-
-bool App::IsLevelEndedByReborn()
-{
-    Event* rebornEvent = world->GetGameEvent(END_GAME_REBORN);
-    if (rebornEvent != nullptr) {
-        return rebornEvent->GetValue<bool>();
-    }
-    return false;
 }
