@@ -16,8 +16,9 @@ private:
     void SpawnLimitElements(World& world, const sf::FloatRect& levelLimits);
     void SpawnPlatforms(World& world, const sf::FloatRect& levelLimits);
     void SpawnPlateform(World& world, const sf::FloatRect& levelLimits, float yMin, float yMax, float probability);
+    Entity SpawnPlatform(World& world, const sf::Vector2f center, const sf::Vector2f size, sf::Vector2f spriteOriginFactor, sf::Vector2f spriteScaleFactor, const sf::Color color, bool isShapeVisible);
     Entity SpawnCharacter(World& world, const sf::FloatRect& levelLimits);
     Entity SpawnHeart(World& world, const sf::FloatRect& levelLimits);
     Entity SpawnGround(World& world, const sf::FloatRect& levelLimits);
-    Entity SpawnElement(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color, bool isShapeVisible);
+    Entity SpawnEdge(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color, bool isShapeVisible);
 };

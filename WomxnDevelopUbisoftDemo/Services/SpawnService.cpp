@@ -45,7 +45,7 @@ void SpawnService::SpawnLimitElements(World& world, const sf::FloatRect& levelLi
     float leftEdgeWidth = 10.f;
     float leftEdgeHeight = levelHeight * 2;
 
-    Entity leftEdge = SpawnElement(
+    Entity leftEdge = SpawnEdge(
         world,
         sf::Vector2f { leftEdgeX, leftEdgeY },
         sf::Vector2f { leftEdgeWidth, leftEdgeHeight },
@@ -59,7 +59,7 @@ void SpawnService::SpawnLimitElements(World& world, const sf::FloatRect& levelLi
     float rightEdgeWidth = 10.f;
     float rightEdgeHeight = levelHeight * 2;
 
-    Entity rightEdge = SpawnElement(
+    Entity rightEdge = SpawnEdge(
         world,
         sf::Vector2f { rightEdgeX, rightEdgeY },
         sf::Vector2f { rightEdgeWidth, rightEdgeHeight },
@@ -76,7 +76,7 @@ void SpawnService::SpawnPlateform(World& world, const sf::FloatRect& levelLimits
 
     // Get a virtual platform, it may be not created
     float platformY = GetRandomFloatBetween(yMin, yMax);
-    float plateformHeight = 50.f;
+    float plateformHeight = 40.f;
 
     // Get new y min and max for next elements
     float aboveYMin = yMin;
@@ -93,14 +93,16 @@ void SpawnService::SpawnPlateform(World& world, const sf::FloatRect& levelLimits
         float rightLimit = levelLimits.left + levelLimits.width;
         float plateformX = GetRandomFloatBetween(leftLimit, rightLimit);
 
-        float platformWidth = 200.f; // TODO: randomize
+        float platformWidth = 220.f;
 
-        Entity plateform = SpawnElement(
+        Entity plateform = SpawnPlatform(
             world,
             sf::Vector2f { plateformX, platformY },
             sf::Vector2f { platformWidth, plateformHeight },
+            sf::Vector2f { 6.8f, 5.5f },
+            sf::Vector2f { 3.5f, 3.5f },
             sf::Color::Cyan,
-            true);
+            false);
         std::cout << "Platform entity id = " << plateform << std::endl;
     } else {
         std::cout << "Don't make it..."
@@ -196,7 +198,7 @@ Entity SpawnService::SpawnGround(World& world, const sf::FloatRect& levelLimits)
     float x = windowWidth / 2.f;
     float y = levelHeight;
     float width = windowWidth;
-    float height = 5.f; // TODO: change value
+    float height = 3.f;
 
     sf::Vector2f center { x, y };
     sf::Vector2f size { width, height };
@@ -205,13 +207,13 @@ Entity SpawnService::SpawnGround(World& world, const sf::FloatRect& levelLimits)
 
     std::map<int, sf::Vector2i> keyframes;
     keyframes[0] = sf::Vector2i(0, 0);
-    keyframes[1] = sf::Vector2i(0, 32);
-    keyframes[2] = sf::Vector2i(0, 64);
+    keyframes[1] = sf::Vector2i(0, 64);
+    keyframes[2] = sf::Vector2i(0, 2 * 64);
 
-    sf::Vector2i texureSizeByFrame(1000, 32);
+    sf::Vector2i texureSizeByFrame(1000, 64);
 
     return EntityBuilder(world)
-        .AddRenderable(world, center, size, sf::Color::Yellow, Layer::Middle, true)
+        .AddRenderable(world, center, size, sf::Color::Yellow, Layer::Middle, false)
         .AddSprite(world, center, size, "Assets/ground_spritesheet.png", spriteOriginFactor, spriteScaleFactor, true)
         .AddCollideable(world, center, size)
         .AddFatal(world)
@@ -220,7 +222,17 @@ Entity SpawnService::SpawnGround(World& world, const sf::FloatRect& levelLimits)
         .Build();
 }
 
-Entity SpawnService::SpawnElement(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color, bool isShapeVisible)
+Entity SpawnService::SpawnPlatform(World& world, const sf::Vector2f center, const sf::Vector2f size, sf::Vector2f spriteOriginFactor, sf::Vector2f spriteScaleFactor, const sf::Color color, bool isShapeVisible)
+{
+    return EntityBuilder(world)
+        .AddRenderable(world, center, size, color, Layer::Middle, isShapeVisible)
+        .AddSprite(world, center, size, "Assets/platform.png", spriteOriginFactor, spriteScaleFactor, true)
+        .AddCollideable(world, center, size)
+        .AddStatic(world)
+        .Build();
+}
+
+Entity SpawnService::SpawnEdge(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color, bool isShapeVisible)
 {
     return EntityBuilder(world)
         .AddRenderable(world, center, size, sf::Color::Cyan, Layer::Middle, isShapeVisible)
