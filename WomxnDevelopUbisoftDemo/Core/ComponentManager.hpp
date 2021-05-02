@@ -126,11 +126,8 @@ private:
 
     void RemoveComponents(Entity entity)
     {
-        // Find all components of the entity
-
-        // Get the entity signature
         Signature signature = entitiesSignature.at(entity);
-        // Iterate over all bit set to one
+
         for (int componentId = 0; componentId < MAX_COMPONENTS; componentId++) {
             if (signature[componentId] == 1) {
                 componentsInfo.at(componentId).RemoveEntityCallBack(entity);
