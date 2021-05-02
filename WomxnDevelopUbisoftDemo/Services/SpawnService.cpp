@@ -184,7 +184,6 @@ Entity SpawnService::SpawnHeart(World& world, const sf::FloatRect& levelLimits)
         .AddRigidBody(world, sf::Vector2f { 0, 0 }, 0)
         .AddCollideable(world, center, size)
         .AddGrippable(world)
-        //.AddStatic(world)
         .AddReborner(world)
         .AddSprite(world, center, size, "Assets/heart_spritesheet.png", spriteOriginFactor, spriteScaleFactor, false)
         .AddAnimation(world, keyframes, LoopMode::LoopReverse, 0, true, texureSizeByFrame)
@@ -223,7 +222,7 @@ Entity SpawnService::SpawnGround(World& world, const sf::FloatRect& levelLimits)
         .Build();
 }
 
-Entity SpawnService::SpawnPlatform(World& world, const sf::Vector2f center, const sf::Vector2f size, sf::Vector2f spriteOriginFactor, sf::Vector2f spriteScaleFactor, const sf::Color color, bool isShapeVisible)
+Entity SpawnService::SpawnPlatform(World& world, const sf::Vector2f& center, const sf::Vector2f& size, const sf::Vector2f& spriteOriginFactor, const sf::Vector2f& spriteScaleFactor, const sf::Color& color, bool isShapeVisible)
 {
     return EntityBuilder(world)
         .AddRenderable(world, center, size, color, Layer::Middle, isShapeVisible)
@@ -233,7 +232,7 @@ Entity SpawnService::SpawnPlatform(World& world, const sf::Vector2f center, cons
         .Build();
 }
 
-Entity SpawnService::SpawnEdge(World& world, const sf::Vector2f center, const sf::Vector2f size, const sf::Color color, bool isShapeVisible)
+Entity SpawnService::SpawnEdge(World& world, const sf::Vector2f& center, const sf::Vector2f& size, const sf::Color& color, bool isShapeVisible)
 {
     return EntityBuilder(world)
         .AddRenderable(world, center, size, sf::Color::Cyan, Layer::Middle, isShapeVisible)
@@ -242,7 +241,7 @@ Entity SpawnService::SpawnEdge(World& world, const sf::Vector2f center, const sf
         .Build();
 }
 
-void SpawnService::SpawnLightDrop(World& world, const sf::FloatRect& levelLimits)
+void SpawnService::SpawnLightDrop(World& world, const sf::FloatRect& levelLimits, const sf::Color& color)
 {
     int depth = GetRandomIntBetween(2, 5);
     float width = 3.f;
@@ -254,7 +253,6 @@ void SpawnService::SpawnLightDrop(World& world, const sf::FloatRect& levelLimits
 
     sf::Vector2f center = sf::Vector2f { x, y };
     sf::Vector2f size = sf::Vector2f { width, length };
-    sf::Color color = sf::Color { 140, 130, 215, 100 };
     sf::Color outlineColor = sf::Color { 140, 130, 215, 50 };
     sf::Vector2f velocity = sf::Vector2f { 0, speed };
 

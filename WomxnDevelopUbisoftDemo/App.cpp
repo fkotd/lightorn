@@ -31,6 +31,11 @@ static const int APP_WINDOW_WIDTH { 1620 };
 static const int APP_WINDOW_HEIGHT { 780 };
 static constexpr float APP_MAX_FRAMERATE { 60.0f };
 static const sf::Vector2u APP_WINDOW_SIZE { APP_WINDOW_WIDTH, APP_WINDOW_HEIGHT };
+static const int ANIMATION_INTERVAL = 500;
+static const int MIN_LIGHTDROP_SPAWN_INTERAVAL = 50;
+static const int MAX_LIGHTDROP_SPAWN_INTERAVAL = 100;
+static const int MIN_LIGHTBALL_SPAWN_INTERAVAL = 500;
+static const int MAX_LIGHTBALL_SPAWN_INTERAVAL = 1000;
 
 App::App(const char* appName)
     : window { sf::VideoMode(APP_WINDOW_SIZE.x, APP_WINDOW_SIZE.y), appName, sf::Style::Titlebar | sf::Style::Close }
@@ -85,9 +90,9 @@ void App::Run()
     sf::Clock lightDropClock;
     sf::Clock lightBallClock;
     sf::Clock animationClock;
-    sf::Time lightDropSpawnInterval = sf::milliseconds(GetRandomIntBetween(50, 100));
-    sf::Time lightBallSpawnInterval = sf::seconds(static_cast<float>(GetRandomIntBetween(1, 1)));
-    sf::Time animationInterval = sf::milliseconds(500);
+    sf::Time lightDropSpawnInterval = sf::milliseconds(GetRandomIntBetween(MIN_LIGHTDROP_SPAWN_INTERAVAL, MAX_LIGHTDROP_SPAWN_INTERAVAL));
+    sf::Time lightBallSpawnInterval = sf::milliseconds(GetRandomFloatBetween(MIN_LIGHTBALL_SPAWN_INTERAVAL, MAX_LIGHTBALL_SPAWN_INTERAVAL));
+    sf::Time animationInterval = sf::milliseconds(ANIMATION_INTERVAL);
     sf::Music music;
 
     if (!music.openFromFile("Assets/main_theme.wav")) {
@@ -146,16 +151,17 @@ void App::DisplayLevelScreen(sf::Clock& lightDropClock, sf::Clock& lightBallCloc
 {
     // TODO : move in a function
     if (lightDropClock.getElapsedTime().asMilliseconds() >= lightDropSpawnInterval.asMilliseconds()) {
-        spawnService->SpawnLightDrop(*world, levelLimits);
+        sf::Color lightDropColor = GetGrippedFeelingColor();
+        spawnService->SpawnLightDrop(*world, levelLimits, lightDropColor);
         lightDropClock.restart();
-        lightDropSpawnInterval = sf::milliseconds(GetRandomIntBetween(50, 100));
+        lightDropSpawnInterval = sf::milliseconds(GetRandomIntBetween(MIN_LIGHTDROP_SPAWN_INTERAVAL, MAX_LIGHTDROP_SPAWN_INTERAVAL));
     }
 
     // TODO : move in a function
     if (lightBallClock.getElapsedTime().asSeconds() >= lightBallSpawnInterval.asSeconds()) {
         spawnService->SpawnLightBall(*world, levelLimits);
         lightBallClock.restart();
-        lightBallSpawnInterval = sf::seconds(static_cast<float>(GetRandomIntBetween(1, 1)));
+        lightBallSpawnInterval = sf::milliseconds(GetRandomFloatBetween(MIN_LIGHTBALL_SPAWN_INTERAVAL, MAX_LIGHTBALL_SPAWN_INTERAVAL));
     }
 
     playerControlSystem->Update(*world);
@@ -194,13 +200,25 @@ void App::DisplayUIScreen(Screen screen)
     }
 }
 
-bool App::IsLevelEnded(std::string eventName)
+bool App::IsLevelEnded(const std::string& eventName) const
 {
     Event* event = world->GetGameEvent(eventName);
     if (event != nullptr) {
         return event->GetValue<bool>();
     }
     return false;
+}
+
+sf::Color App::GetGrippedFeelingColor() const
+{
+    Event* gripFeelingEvent = world->GetGameEvent(GRIP_FEELING);
+    Feeling gripFeeling = Feeling::Neutral;
+
+    if (gripFeelingEvent != nullptr) {
+        gripFeeling = gripFeelingEvent->GetValue<Feeling>();
+    }
+
+    return FeelingColor().GetFeelingColor(gripFeeling);
 }
 
 void App::RegisterComponents()
