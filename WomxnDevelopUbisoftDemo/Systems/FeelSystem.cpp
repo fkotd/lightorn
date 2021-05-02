@@ -43,7 +43,7 @@ void FeelSystem::Update(World& world)
     }
 }
 
-Feeling FeelSystem::GetFeelingChange(World& world)
+Feeling FeelSystem::GetFeelingChange(World& world) const
 {
     Event* gripFeelingEvent = world.GetGameEvent(GRIP_FEELING);
     Feeling gripFeeling = Feeling::Neutral;

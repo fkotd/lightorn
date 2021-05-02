@@ -9,5 +9,5 @@ public:
     void Update(World& world);
 
 private:
-    Feeling GetFeelingChange(World& world);
+    Feeling GetFeelingChange(World& world) const;
 };
