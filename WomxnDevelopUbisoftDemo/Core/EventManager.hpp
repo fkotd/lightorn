@@ -2,6 +2,7 @@
 
 #include "Entity.hpp"
 #include "Event.hpp"
+#include <string>
 #include <unordered_map>
 
 class EventManager {
