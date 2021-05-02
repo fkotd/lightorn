@@ -1,12 +1,16 @@
 #pragma once
 
+#include "Component.hpp"
 #include "ComponentManager.hpp"
 #include "Entity.hpp"
 #include "EntityManager.hpp"
+#include "Event.hpp"
 #include "EventManager.hpp"
 #include "Signature.hpp"
 #include "SystemManager.hpp"
 #include <memory>
+#include <set>
+#include <string>
 
 class World {
 public:
@@ -83,17 +87,17 @@ public:
         return signature;
     }
 
-    void AddGameEvent(std::string name, Event event) // TODO: pass by const ref / std::string_view
+    void AddGameEvent(const std::string& name, Event event)
     {
         eventManager.AddGameEvent(name, event);
     }
 
-    void RemoveGameEvent(std::string name)
+    void RemoveGameEvent(const std::string& name)
     {
         eventManager.RemoveGameEvent(name);
     }
 
-    Event* GetGameEvent(std::string name) // TODO
+    Event* GetGameEvent(const std::string& name)
     {
         return eventManager.GetGameEvent(name);
     }

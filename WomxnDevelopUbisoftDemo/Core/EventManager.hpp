@@ -6,17 +6,17 @@
 
 class EventManager {
 public:
-    void AddGameEvent(std::string name, Event event)
+    void AddGameEvent(const std::string& name, Event event)
     {
         gameEvents.emplace(name, event);
     }
 
-    void RemoveGameEvent(std::string name)
+    void RemoveGameEvent(const std::string& name)
     {
         gameEvents.erase(name);
     }
 
-    Event* GetGameEvent(std::string name)
+    Event* GetGameEvent(const std::string& name)
     {
         auto it = gameEvents.find(name);
         if (it == gameEvents.end()) {
