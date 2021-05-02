@@ -15,7 +15,7 @@ void main() {
 		opacity = 0.0;	
 	} else if (dist < middleRadius) {
 		opacity = 0.3;	
-	} else if (dist < outerRadius ){
+	} else if (dist < outerRadius ) {
 		opacity = 0.7;	
 	}
 	
