@@ -28,8 +28,10 @@ void DarknessSystem::Update(World& world)
         Transformable& transformable = world.GetComponent<Transformable>(entity);
         RigidBody& rigidBody = world.GetComponent<RigidBody>(entity);
 
-        if (IsDarknessLevelFatal(darkness.outerRadius)) {
-            SendFatalDarknessEvent(world);
+        if (IsDarknessLevelFatal(world, darkness.outerRadius)) {
+            SendDarknessEvent(world, END_GAME_DEATH);
+        } else if (IsDarknessLevelReborn(world, darkness.outerRadius)) {
+            SendDarknessEvent(world, END_GAME_REBORN);
         }
 
         darkness.shape->setPosition(transformable.transformable.getPosition());
@@ -53,12 +55,26 @@ void DarknessSystem::Update(World& world)
     }
 }
 
-bool DarknessSystem::IsDarknessLevelFatal(float darknessOuterRadius)
+const bool DarknessSystem::IsDarknessLevelFatal(World& world, float darknessOuterRadius)
 {
-    return darknessOuterRadius <= MIN_OUTER_RADIUS;
+    return darknessOuterRadius <= MIN_OUTER_RADIUS && !IsGrippedToReborner(world);
 }
 
-void DarknessSystem::SendFatalDarknessEvent(World& world)
+const bool DarknessSystem::IsDarknessLevelReborn(World& world, float darknessOuterRadius)
 {
-    world.AddGameEvent(END_GAME_DEATH, Event(true, false));
+    return darknessOuterRadius <= MIN_OUTER_RADIUS && IsGrippedToReborner(world);
+}
+
+const bool DarknessSystem::IsGrippedToReborner(World& world)
+{
+    Event* event = world.GetGameEvent(GRIP_TO_REBORNER);
+    if (event != nullptr) {
+        return event->GetValue<bool>();
+    }
+    return false;
+}
+
+const void DarknessSystem::SendDarknessEvent(World& world, std::string message)
+{
+    world.AddGameEvent(message, Event(true, false));
 }

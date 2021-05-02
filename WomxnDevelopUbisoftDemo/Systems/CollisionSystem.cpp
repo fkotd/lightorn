@@ -4,8 +4,6 @@
 
 #include "Components/Dynamic.hpp"
 #include "Components/Fatal.hpp"
-#include "Components/Mortal.hpp"
-#include "Components/Reborner.hpp"
 #include "Components/Transformable.hpp"
 #include "Core/Event.hpp"
 #include "Engine/Collision.h"
@@ -30,10 +28,6 @@ void CollisionSystem::Update(World& world, float deltaTime)
                 Collideable& staticCollideable = world.GetComponent<Collideable>(staticEntity);
 
                 if (dynamicCollideable.draftBoxCollideable.IsColliding(staticCollideable.draftBoxCollideable)) {
-
-                    if (IsRebornCollision(world, dynamicEntity, staticEntity)) {
-                        world.AddGameEvent(END_GAME_REBORN, Event(true, false));
-                    }
 
                     CuteSweeptAABB(world, dynamicEntity, staticEntity, deltaTime);
                 }
@@ -145,23 +139,4 @@ bool CollisionSystem::IsCollidingY(Collideable& dynamicCollideable, Collideable&
     bool isColliding = deltaY * deltaY2 < 0;
 
     return isColliding;
-}
-
-const bool CollisionSystem::IsRebornCollision(World& world, Entity entity, Entity otherEntity)
-{
-    Reborner* reborner = world.GetComponentIfExists<Reborner>(entity);
-    Mortal* mortal = world.GetComponentIfExists<Mortal>(entity);
-
-    Reborner* otherReborner = world.GetComponentIfExists<Reborner>(otherEntity);
-    Mortal* otherMortal = world.GetComponentIfExists<Mortal>(otherEntity);
-
-    if (reborner != nullptr && otherMortal != nullptr) {
-        return true;
-    }
-
-    if (mortal != nullptr && otherReborner != nullptr) {
-        return true;
-    }
-
-    return false;
 }

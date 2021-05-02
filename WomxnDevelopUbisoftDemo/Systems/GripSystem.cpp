@@ -5,6 +5,8 @@
 #include "Components/Collideable.hpp"
 #include "Components/Feel.hpp"
 #include "Components/Gripper.hpp"
+#include "Components/Mortal.hpp"
+#include "Components/Reborner.hpp"
 #include "Components/RigidBody.hpp"
 #include "Components/Transformable.hpp"
 #include "Core/Event.hpp"
@@ -36,6 +38,10 @@ void GripSystem::Update(World& world, sf::FloatRect levelLimits)
                     && sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 
                     hasCollided = true;
+
+                    if (IsGrippedToReborner(world, gripperEntity, grippableEntity)) {
+                        SendGripToRebornerEvent(world);
+                    }
 
                     UpdateGripperFeeling(world, gripperEntity, grippableEntity);
                     UpdateGripperVelocity(world, levelLimits, gripperEntity, grippableEntity);
@@ -99,4 +105,28 @@ void GripSystem::ResetGripperVelocity(World& world, Entity gripperEntity)
     if (gripperRigidBody.velocity.y < 0) {
         gripperRigidBody.velocity.y = Y_VELOCITY_AFTER_GRIP;
     }
+}
+
+const bool GripSystem::IsGrippedToReborner(World& world, Entity entity, Entity otherEntity)
+{
+    Reborner* reborner = world.GetComponentIfExists<Reborner>(entity);
+    Mortal* mortal = world.GetComponentIfExists<Mortal>(entity);
+
+    Reborner* otherReborner = world.GetComponentIfExists<Reborner>(otherEntity);
+    Mortal* otherMortal = world.GetComponentIfExists<Mortal>(otherEntity);
+
+    if (reborner != nullptr && otherMortal != nullptr) {
+        return true;
+    }
+
+    if (mortal != nullptr && otherReborner != nullptr) {
+        return true;
+    }
+
+    return false;
+}
+
+const void GripSystem::SendGripToRebornerEvent(World& world)
+{
+    world.AddGameEvent(GRIP_TO_REBORNER, Event(true, false));
 }

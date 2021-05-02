@@ -183,7 +183,8 @@ Entity SpawnService::SpawnHeart(World& world, const sf::FloatRect& levelLimits)
         .AddRenderable(world, center, size, sf::Color::Green, Layer::Middle, false)
         .AddRigidBody(world, sf::Vector2f { 0, 0 }, 0)
         .AddCollideable(world, center, size)
-        .AddStatic(world)
+        .AddGrippable(world)
+        //.AddStatic(world)
         .AddReborner(world)
         .AddSprite(world, center, size, "Assets/heart_spritesheet.png", spriteOriginFactor, spriteScaleFactor, false)
         .AddAnimation(world, keyframes, LoopMode::LoopReverse, 0, true, texureSizeByFrame)
@@ -243,8 +244,6 @@ Entity SpawnService::SpawnEdge(World& world, const sf::Vector2f center, const sf
 
 void SpawnService::SpawnLightDrop(World& world, const sf::FloatRect& levelLimits)
 {
-    //Entity lightDrop = world.AddEntity();
-
     int depth = GetRandomIntBetween(2, 5);
     float width = 3.f;
     float length = 20.f * depth;

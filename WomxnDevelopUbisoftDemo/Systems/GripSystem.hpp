@@ -14,4 +14,6 @@ private:
     void UpdateGripperFeeling(World& world, Entity gripperEntity, Entity grippableEntity);
     void ResetGripperFeeling(World& world, Entity gripperEntity);
     void ResetGripperVelocity(World& world, Entity gripperEntity);
+    const bool IsGrippedToReborner(World& world, Entity entity, Entity otherEntity);
+    const void SendGripToRebornerEvent(World& world);
 };
