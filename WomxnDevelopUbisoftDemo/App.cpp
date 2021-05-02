@@ -27,11 +27,11 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/VideoMode.hpp>
 
-static const int APP_WINDOW_WIDTH { 1620 };
-static const int APP_WINDOW_HEIGHT { 780 };
+static const int APP_WINDOW_WIDTH { 1536 };
+static const int APP_WINDOW_HEIGHT { 768 };
 static constexpr float APP_MAX_FRAMERATE { 60.0f };
 static const sf::Vector2u APP_WINDOW_SIZE { APP_WINDOW_WIDTH, APP_WINDOW_HEIGHT };
-static const int ANIMATION_INTERVAL = 500;
+static const int ANIMATION_INTERVAL = 250;
 static const int MIN_LIGHTDROP_SPAWN_INTERAVAL = 50;
 static const int MAX_LIGHTDROP_SPAWN_INTERAVAL = 100;
 static const int MIN_LIGHTBALL_SPAWN_INTERAVAL = 500;
@@ -39,9 +39,9 @@ static const int MAX_LIGHTBALL_SPAWN_INTERAVAL = 1000;
 
 App::App(const char* appName)
     : window { sf::VideoMode(APP_WINDOW_SIZE.x, APP_WINDOW_SIZE.y), appName, sf::Style::Titlebar | sf::Style::Close }
-    , startScreen { "Press X to start", "Assets/start_screen.png" }
-    , gameOverScreen { "Game over...", "Assets/end_screen.png" }
-    , rebornScreen { "Thank you for playing", "Assets/end_screen.png" }
+    , startScreen { "Press X to start", "Assets/start_screen.png", APP_WINDOW_SIZE }
+    , gameOverScreen { "Game over...", "Assets/end_screen.png", APP_WINDOW_SIZE }
+    , rebornScreen { "Thank you for playing", "Assets/end_screen.png", APP_WINDOW_SIZE }
     , isLevelStared { false }
     , isLevelEndedByDeath { false }
     , isLevelEndedByReborn { false }

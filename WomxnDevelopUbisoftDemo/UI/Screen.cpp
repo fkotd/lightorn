@@ -6,7 +6,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <iostream>
 
-Screen::Screen(const std::string& string, const std::string& backgroundTexturePath)
+Screen::Screen(const std::string& string, const std::string& backgroundTexturePath, const sf::Vector2u& appWindowSize)
 {
     if (font.loadFromFile("Assets/arial.ttf")) {
         std::cout << "Unable to load font" << std::endl;
@@ -16,15 +16,14 @@ Screen::Screen(const std::string& string, const std::string& backgroundTexturePa
     message.setCharacterSize(50);
     message.setFillColor(sf::Color::White);
     message.setStyle(sf::Text::Bold);
-    message.move(sf::Vector2f { 650.f, 400.f }); // TODO: make it relative to window size ?
+    message.move(sf::Vector2f { (appWindowSize.x / 2.f) - 200.f, appWindowSize.y / 2.f });
 
     if (!backgroundTexture.loadFromFile(backgroundTexturePath)) {
         std::cout << "Unable to load asset" << std::endl;
     }
 
     backgroundSprite.setTexture(backgroundTexture);
-    backgroundSprite.scale(sf::Vector2f { 6.1f, 6.1f }); // TODO: make it relative ?
-    backgroundSprite.move(60.f, 0);
+    backgroundSprite.scale(sf::Vector2f { 6.f, 6.f });
 }
 
 void Screen::Draw(sf::RenderTarget& target) const

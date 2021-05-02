@@ -12,7 +12,7 @@ class RenderTarget;
 
 class Screen {
 public:
-    Screen(const std::string& string, const std::string& backgroundTexturePath);
+    Screen(const std::string& string, const std::string& backgroundTexturePath, const sf::Vector2u& appWindowSize);
     void Draw(sf::RenderTarget& target) const;
 
 private:
