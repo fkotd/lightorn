@@ -7,6 +7,7 @@
 #include "Signature.hpp"
 #include <any>
 #include <memory>
+#include <set>
 #include <unordered_map>
 
 class ComponentManager {
@@ -74,27 +75,20 @@ public:
 
         // The component does not exists or hasn't been registered
         if (componentIdIterator == componentIds.end()) {
-            // TODO: log component not found
             return;
         }
 
         // This is the first component of the entity
-        // TODO: move that in another function
         if (entitySignatureIterator == entitiesSignature.end()) {
-            // TODO: log entity not found
             Signature signature;
-            // TODO: log the new signature
             entitiesSignature.emplace(entity, signature);
             entitySignatureIterator = entitiesSignature.find(entity);
         }
 
         Component componentType = componentIdIterator->second;
-
         entitySignatureIterator->second.set(componentType);
 
-        // Add the compoment to the component data
         auto componentData = GetComponentData<T>(componentType);
-
         componentData->AddComponent(entity, component);
     }
 

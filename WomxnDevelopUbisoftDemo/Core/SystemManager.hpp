@@ -2,6 +2,8 @@
 
 #include "Signature.hpp"
 #include "System.hpp"
+#include <memory>
+#include <unordered_map>
 
 class SystemManager {
 public:
@@ -10,7 +12,7 @@ public:
     {
         const char* systemName = typeid(T).name();
 
-        // TODO: Test that we do not register the same system more than once
+        // TODO: test that we do not register the same system more than once
 
         std::shared_ptr<T> system = std::make_shared<T>();
         systems.emplace(systemName, system);

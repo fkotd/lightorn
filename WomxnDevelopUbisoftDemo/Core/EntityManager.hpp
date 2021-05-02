@@ -2,7 +2,6 @@
 
 #include "Entity.hpp"
 #include <iostream>
-#include <queue>
 
 class EntityManager {
 public:

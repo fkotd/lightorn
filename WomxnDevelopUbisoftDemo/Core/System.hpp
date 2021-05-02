@@ -1,8 +1,6 @@
 #pragma once
 
-#include "Entity.hpp"
 #include "Signature.hpp"
-#include <set>
 
 class System {
 public:
