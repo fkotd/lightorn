@@ -10,4 +10,5 @@ public:
 private:
     int NextKeyframe(Animation& animation);
     int NextKeyframeInLoopReverseMode(Animation& animation);
+    int NextKeyframeInLoopMode(Animation& animation);
 };

@@ -35,7 +35,7 @@ int AnimationSystem::NextKeyframe(Animation& animation)
 {
     switch (animation.loopMode) {
     case Loop:
-        break;
+        return NextKeyframeInLoopMode(animation);
     case LoopReverse:
         return NextKeyframeInLoopReverseMode(animation);
     default:
@@ -64,6 +64,17 @@ int AnimationSystem::NextKeyframeInLoopReverseMode(Animation& animation)
     // Continue decreasing
     if (!animation.increase) {
         return animation.currentKeyframe - 1;
+    }
+
+    return -1;
+}
+
+int AnimationSystem::NextKeyframeInLoopMode(Animation& animation)
+{
+    if (animation.increase) {
+        return (animation.currentKeyframe + 1) % animation.keyframes.size();
+    } else if (!animation.increase) {
+        return (animation.currentKeyframe - 1) % animation.keyframes.size();
     }
 
     return -1;

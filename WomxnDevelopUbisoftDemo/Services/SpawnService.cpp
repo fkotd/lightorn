@@ -136,6 +136,19 @@ Entity SpawnService::SpawnCharacter(World& world, const sf::FloatRect& levelLimi
     sf::Vector2f spriteScaleFactor { 2.9f, 2.9f };
     Feeling feeling = Feeling::Neutral;
 
+    std::map<int, sf::Vector2i> keyframes;
+    keyframes[0] = sf::Vector2i(0, 0);
+    keyframes[1] = sf::Vector2i(0, 32);
+    keyframes[2] = sf::Vector2i(0, 32 * 2);
+    keyframes[3] = sf::Vector2i(0, 32 * 3);
+    keyframes[4] = sf::Vector2i(0, 32 * 4);
+    keyframes[5] = sf::Vector2i(0, 32 * 5);
+    keyframes[6] = sf::Vector2i(0, 32 * 6);
+    keyframes[7] = sf::Vector2i(0, 32 * 7);
+    keyframes[8] = sf::Vector2i(0, 32 * 8);
+
+    sf::Vector2i texureSizeByFrame(32, 32);
+
     return EntityBuilder(world)
         .AddCameraCenter(world)
         .AddDynamic(world)
@@ -146,7 +159,8 @@ Entity SpawnService::SpawnCharacter(World& world, const sf::FloatRect& levelLimi
         .AddPhysicBody(world, 400.f, 30.f, 0.90f, 50.f, 10.f)
         .AddRigidBody(world, sf::Vector2f { 0, 0 }, 400.f) // FIXME: duplicate propriety
         .AddRenderable(world, center, size, sf::Color::Magenta, Layer::Top, false)
-        .AddSprite(world, center, size, "Assets/eevy.png", spriteOriginFactor, spriteScaleFactor, false)
+        .AddSprite(world, center, size, "Assets/eevy_spritesheet.png", spriteOriginFactor, spriteScaleFactor, false)
+        .AddAnimation(world, keyframes, LoopMode::Loop, 0, true, texureSizeByFrame)
         .AddFeel(world, feeling)
         .AddObscurity(world)
         .Build();
