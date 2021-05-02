@@ -12,5 +12,5 @@ private:
     const bool IsDarknessLevelFatal(World& world, float darknessOuterRadius);
     const bool IsDarknessLevelReborn(World& world, float darknessOuterRadius);
     const bool IsGrippedToReborner(World& world);
-    const void SendDarknessEvent(World& world, std::string message);
+    const void SendDarknessEvent(World& world, const std::string& message);
 };

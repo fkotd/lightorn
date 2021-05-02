@@ -74,7 +74,7 @@ const bool DarknessSystem::IsGrippedToReborner(World& world)
     return false;
 }
 
-const void DarknessSystem::SendDarknessEvent(World& world, std::string message)
+const void DarknessSystem::SendDarknessEvent(World& world, const std::string& message)
 {
     world.AddGameEvent(message, Event(true, false));
 }

@@ -6,5 +6,5 @@
 
 class DestroySystem : public System {
 public:
-    void DestroyOffScreen(World& world, sf::FloatRect levelLimits);
+    void DestroyOffScreen(World& world, const sf::FloatRect& levelLimits);
 };

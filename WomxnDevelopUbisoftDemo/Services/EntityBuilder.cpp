@@ -65,7 +65,7 @@ EntityBuilder& EntityBuilder::AddEllipseRenderable(World& world, const sf::Vecto
     return *this;
 }
 
-EntityBuilder& EntityBuilder::AddSprite(World& world, const sf::Vector2f& center, const sf::Vector2f& size, std::string spritePath, const sf::Vector2f& spriteOriginFactor, const sf::Vector2f& spriteScaleFactor, bool repeat)
+EntityBuilder& EntityBuilder::AddSprite(World& world, const sf::Vector2f& center, const sf::Vector2f& size, const std::string& spritePath, const sf::Vector2f& spriteOriginFactor, const sf::Vector2f& spriteScaleFactor, bool repeat)
 {
     sf::Texture* texture = new sf::Texture {};
     if (!texture->loadFromFile(spritePath)) {
@@ -100,7 +100,7 @@ EntityBuilder& EntityBuilder::AddTransformable(World& world, const sf::Vector2f&
     return *this;
 }
 
-EntityBuilder& EntityBuilder::AddAnimation(World& world, std::map<int, sf::Vector2i>& keyframes, LoopMode loopMode, int currentKeyframe, bool increase, sf::Vector2i& textureSize)
+EntityBuilder& EntityBuilder::AddAnimation(World& world, const std::map<int, sf::Vector2i>& keyframes, const LoopMode loopMode, int currentKeyframe, bool increase, const sf::Vector2i& textureSize)
 {
     world.AddComponentToEntity<Animation>(entity, keyframes, loopMode, currentKeyframe, increase, textureSize);
 

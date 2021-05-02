@@ -6,7 +6,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <iostream>
 
-Screen::Screen(std::string string, std::string backgroundTexturePath)
+Screen::Screen(const std::string& string, const std::string& backgroundTexturePath)
 {
     if (font.loadFromFile("Assets/arial.ttf")) {
         std::cout << "Unable to load font" << std::endl;
